@@ -1,4 +1,5 @@
 import type { PresetAgentType } from '@/types/acpTypes';
+import { logger } from '@common/monitoring';
 
 export type AssistantPreset = {
   id: string;

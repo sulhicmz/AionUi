@@ -5,6 +5,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@common/monitoring';
 
 // 选中文本的位置信息 / Selection position information
 export interface SelectionPosition {

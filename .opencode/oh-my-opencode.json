@@ -1,0 +1,100 @@
+{
+  "google_auth": false,
+  "agents": {
+    "frontend-ui-ux-engineer": { "model": "google/antigravity-gemini-3-pro", "temperature": 0.1 },
+    "document-writer": { "model": "google/antigravity-gemini-3-flash", "temperature": 0.3 },
+    "multimodal-looker": { "model": "google/antigravity-gemini-3-flash", "temperature": 0.1 },
+    "oracle": { "model": "openai/gpt-5.2", "temperature": 0.2 },
+    "librarian": { "model": "anthropic/claude-sonnet-4.5", "temperature": 0.1 },
+    "explore": { "model": "xai/grok-code", "temperature": 0.1 },
+    "sisyphus": {
+      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "temperature": 0.1,
+      "variant": "max",
+      "autonomous": true,
+      "self_healing": true,
+      "self_learning": true,
+      "self_evolving": true
+    }
+  },
+  "background_tasks": {
+    "max_concurrent": 8,
+    "timeout": 600000,
+    "auto_retry": true,
+    "max_retries": 3,
+    "learning_enabled": true
+  },
+  "skills": {
+    "playwright": { "enabled": true },
+    "git-master": { "enabled": true, "atomic_commits": true },
+    "frontend-ui-ux": { "enabled": true },
+    "dev-browser": { "enabled": true },
+    "proffesor-for-testing-agentic-qe-skill-builder": { "enabled": true },
+    "maxritter-claude-codepro-backend-models-standards": { "enabled": true },
+    "obra-superpowers-systematic-debugging": { "enabled": true },
+    "modu-ai-moai-adk-moai-tool-opencode": { "enabled": true },
+    "muratcankoylan-agent-skills-for-context-engineering-memory-systems": { "enabled": true },
+    "madappgang-claude-code-debugging-strategies": { "enabled": true },
+    "vasilyu1983-ai-agents-public-git-commit-message": { "enabled": true }
+  },
+  "hooks": {
+    "disabled_hooks": [],
+    "todo_enforcement": true,
+    "comment_checker": true,
+    "self_healing": {
+      "enabled": true,
+      "error_detection": true,
+      "auto_recovery": true,
+      "fallback_strategies": true
+    },
+    "self_learning": {
+      "enabled": true,
+      "pattern_recognition": true,
+      "knowledge_retention": true,
+      "performance_tracking": true
+    },
+    "self_evolving": {
+      "enabled": true,
+      "behavior_adaptation": true,
+      "strategy_optimization": true,
+      "continuous_improvement": true
+    }
+  },
+  "mcp": {
+    "context7": { "enabled": true },
+    "websearch": { "enabled": true, "provider": "exa" },
+    "grep_app": { "enabled": true }
+  },
+  "lsp": {
+    "enabled": true,
+    "refactoring": true,
+    "diagnostics": true,
+    "auto_fix": true,
+    "code_analysis": true
+  },
+  "categories": {
+    "visual-engineering": { "description": "Frontend, UI/UX, design, styling, animation", "default_agent": "frontend-ui-ux-engineer" },
+    "business-logic": { "description": "Backend logic, API development, data processing", "default_agent": "oracle" },
+    "autonomous-development": { "description": "Self-healing, self-learning, self-evolving development tasks", "default_agent": "sisyphus" }
+  },
+  "autonomous_behavior": {
+    "self_healing": {
+      "enabled": true,
+      "error_threshold": 3,
+      "recovery_timeout": 30000,
+      "learning_from_failures": true
+    },
+    "self_learning": {
+      "enabled": true,
+      "knowledge_base_update": true,
+      "pattern_learning": true,
+      "success_rate_tracking": true
+    },
+    "self_evolving": {
+      "enabled": true,
+      "strategy_evolution": true,
+      "performance_optimization": true,
+      "adaptive_behavior": true
+    }
+  }
+}

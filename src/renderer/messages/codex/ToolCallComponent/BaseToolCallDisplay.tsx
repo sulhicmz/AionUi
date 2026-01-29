@@ -8,6 +8,7 @@ import { Card, Tag } from '@arco-design/web-react';
 import type { ReactNode } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 export const StatusTag: React.FC<{ status: string }> = ({ status }) => {
   const { t } = useTranslation();

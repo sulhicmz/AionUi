@@ -1,0 +1,203 @@
+<complete_examples>
+  <example name="complete_opencode_integration">
+    <scenario>
+      Complete integration of OpenCode CLI with oh-my-opencode, antigravity-auth, and SkillHub skills to create an autonomous agent system with self-healing, self-learning, and self-evolving capabilities.
+    </scenario>
+
+    <user_request>
+      Integrate OpenCode CLI with supplemental repositories and skills to create an autonomous agent with self-healing, self-learning, and self-evolving behaviors.
+    </user_request>
+
+    <workflow>
+      <step number="1">
+        <description>Assess current OpenCode CLI installation</description>
+        <approach>
+          Check OpenCode CLI version, verify .opencode directory structure, and review existing configurations.
+          Outcome: Confirm OpenCode CLI v1.1.40 is installed with basic configuration.
+        </approach>
+        <expected_outcome>Current installation status verified and baseline configuration documented</expected_outcome>
+      </step>
+
+      <step number="2">
+        <description>Install and configure plugins</description>
+        <approach>
+          Verify oh-my-opencode and opencode-antigravity-auth are already configured in opencode.json.
+          Outcome: Both plugins are properly configured and ready for use.
+        </approach>
+        <analysis>Plugins are already installed, proceed to authentication setup</analysis>
+      </step>
+
+      <step number="3">
+        <description>Set up authentication for premium models</description>
+        <approach>
+          Run opencode auth login to configure Google OAuth for antigravity models.
+          Outcome: Authentication configured for accessing premium models.
+        </approach>
+        <expected_outcome>Google OAuth authentication set up successfully</expected_outcome>
+      </step>
+
+      <step number="4">
+        <description>Install SkillHub skills</description>
+        <approach>
+          Install all required skills using SkillHub API:
+          - proffesor-for-testing-agentic-qe-skill-builder
+          - maxritter-claude-codepro-backend-models-standards
+          - obra-superpowers-systematic-debugging
+          - modu-ai-moai-adk-moai-tool-opencode
+          - muratcankoylan-agent-skills-for-context-engineering-memory-systems
+          - madappgang-claude-code-debugging-strategies
+          - vasilyu1983-ai-agents-public-git-commit-message
+          
+          Outcome: All skills installed and available in .opencode/skill directory.
+        </approach>
+        <expected_outcome>All required skills installed and ready for configuration</expected_outcome>
+      </step>
+
+      <step number="5">
+        <description>Configure autonomous agent behaviors</description>
+        <approach>
+          Update oh-my-opencode.json to enable:
+          - Sisyphus agent with autonomous capabilities
+          - Self-healing mechanisms (error detection, recovery, fallbacks)
+          - Self-learning features (pattern recognition, knowledge retention)
+          - Self-evolution capabilities (behavior adaptation, optimization)
+          
+          Outcome: Autonomous behaviors configured and ready for testing.
+        </approach>
+        <expected_outcome>Autonomous agent configuration completed</expected_outcome>
+      </step>
+
+      <step number="6">
+        <description>Integrate skills with agent workflows</description>
+        <approach>
+          Map skills to appropriate agents:
+          - Debugging skills → oracle agent
+          - Frontend skills → frontend-ui-ux-engineer
+          - Testing skills → sisyphus agent
+          - Git skills → all agents
+          
+          Outcome: Skills properly integrated and accessible in workflows.
+        </approach>
+        <expected_outcome>Skills integrated with agent workflows</expected_outcome>
+      </step>
+
+      <step number="7">
+        <description>Test and validate integration</description>
+        <approach>
+          Verify:
+          - All plugins load correctly
+          - Premium models are accessible
+          - Skills function properly
+          - Autonomous behaviors work as expected
+          - System performance is acceptable
+          
+          Outcome: Integration tested and validated.
+        </approach>
+        <expected_outcome>Complete integration verified and functional</expected_outcome>
+      </step>
+    </workflow>
+
+    <completion>
+      Successfully integrated OpenCode CLI with oh-my-opencode and opencode-antigravity-auth plugins, installed all required SkillHub skills, and configured autonomous agent behaviors including self-healing, self-learning, and self-evolution capabilities. The system is now ready for autonomous development tasks.
+    </completion>
+
+    <key_takeaways>
+      <takeaway>Always verify existing installations before adding new components</takeaway>
+      <takeaway>Enable autonomous features incrementally to ensure stability</takeaway>
+      <takeaway>Map skills to agent expertise for optimal performance</takeaway>
+      <takeaway>Test each component thoroughly before proceeding to the next</takeaway>
+    </key_takeaways>
+  </example>
+
+  <example name="autonomous_agent_configuration">
+    <scenario>
+      Configure an autonomous agent with self-healing, self-learning, and self-evolving capabilities using the Sisyphus agent framework.
+    </scenario>
+
+    <user_request>
+      Set up an autonomous agent that can heal itself, learn from experience, and evolve its behavior over time.
+    </user_request>
+
+    <workflow>
+      <step number="1">
+        <description>Configure Sisyphus agent for autonomous operation</description>
+        <approach>
+          Update agent configuration in oh-my-opencode.json:
+          - Set autonomous: true
+          - Enable self_healing, self_learning, self_evolving
+          - Configure model with thinking variant for enhanced reasoning
+          
+          Outcome: Sisyphus agent configured for autonomous operation.
+        </approach>
+        <expected_outcome>Sisyphus agent ready for autonomous tasks</expected_outcome>
+      </step>
+
+      <step number="2">
+        <description>Enable self-healing mechanisms</description>
+        <approach>
+          Configure self-healing hooks:
+          - Error detection with threshold of 3 failures
+          - Auto-recovery with 30-second timeout
+          - Fallback strategies for critical failures
+          - Maximum of 3 retry attempts
+          
+          Outcome: Self-healing mechanisms active and monitoring.
+        </approach>
+        <expected_outcome>Agent can automatically recover from errors</expected_outcome>
+      </step>
+
+      <step number="3">
+        <description>Setup self-learning capabilities</description>
+        <approach>
+          Configure learning features:
+          - Pattern recognition for identifying successful strategies
+          - Knowledge retention in persistent memory
+          - Performance tracking for continuous improvement
+          - Learning rate of 0.1 for gradual adaptation
+          
+          Outcome: Self-learning system ready to accumulate knowledge.
+        </approach>
+        <expected_outcome>Agent can learn from interactions and improve over time</expected_outcome>
+      </step>
+
+      <step number="4">
+        <description>Configure self-evolution features</description>
+        <approach>
+          Set up evolution mechanisms:
+          - Behavior adaptation based on performance metrics
+          - Strategy optimization for task completion
+          - Continuous improvement with evolution rate of 0.05
+          - Adaptation threshold of 0.8 for significant changes
+          
+          Outcome: Self-evolution capabilities configured and active.
+        </approach>
+        <expected_outcome>Agent can evolve its behavior based on experience</expected_outcome>
+      </step>
+
+      <step number="5">
+        <description>Test autonomous behaviors</description>
+        <approach>
+          Run comprehensive tests:
+          - Trigger errors to verify self-healing
+          - Perform tasks to observe learning
+          - Monitor behavior changes for evolution
+          - Validate all autonomous features work together
+          
+          Outcome: Autonomous behaviors tested and validated.
+        </approach>
+        <expected_outcome>All autonomous features functioning correctly</expected_outcome>
+      </step>
+    </workflow>
+
+    <completion>
+      Successfully configured an autonomous agent with comprehensive self-healing, self-learning, and self-evolving capabilities. The agent can now recover from errors, learn from experience, and adapt its behavior for continuous improvement.
+    </completion>
+
+    <key_takeaways>
+      <takeaway>Configure autonomous features incrementally to ensure stability</takeaway>
+      <takeaway>Set appropriate thresholds and limits for autonomous behaviors</takeaway>
+      <takeaway>Test each autonomous feature thoroughly before deployment</takeaway>
+      <takeaway>Monitor autonomous behavior to ensure it aligns with expectations</takeaway>
+    </key_takeaways>
+  </example>
+</complete_examples>

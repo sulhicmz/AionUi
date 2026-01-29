@@ -10,6 +10,7 @@ import type { ReactNode } from 'react';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConfirmationHandler, usePermissionState, usePermissionStorageCleanup } from '@/common/codex/utils/permissionUtils';
+import { logger } from '@common/monitoring';
 
 const { Text } = Typography;
 

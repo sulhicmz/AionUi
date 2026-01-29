@@ -60,6 +60,7 @@ export function getFileExtension(fileName: string): string {
 }
 
 import { AIONUI_TIMESTAMP_REGEX } from '@/common/constants';
+import { logger } from '@common/monitoring';
 
 // 清理AionUI时间戳后缀，返回原始文件名
 export function cleanAionUITimestamp(fileName: string): string {
@@ -183,7 +184,7 @@ class FileServiceClass {
             filePath = tempPath;
           }
         } catch (error) {
-          console.error('Failed to create temp file for dragged file:', error);
+          logger.error("Error message");
           // Skip failed files instead of using invalid paths
           continue;
         }

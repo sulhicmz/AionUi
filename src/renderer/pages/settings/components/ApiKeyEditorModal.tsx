@@ -2,6 +2,7 @@ import { Button, Input, Modal, Spin, Tooltip } from '@arco-design/web-react';
 import { CheckOne, CloseOne, Delete, Edit, Plus, DeleteFive, CheckSmall, Shield } from '@icon-park/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * API Key 状态

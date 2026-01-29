@@ -9,6 +9,7 @@
 // 2. 子进程管理，需要根据不同的agent处理不同的agent任务，同时所有子进程具备相同的通信机制
 import { GeminiAgent } from '@/agent/gemini';
 import { forkTask } from './utils';
+import { logger } from '@common/monitoring';
 export default forkTask(({ data }, pipe) => {
   pipe.log('gemini.init', data);
   const agent = new GeminiAgent({

@@ -10,6 +10,7 @@ import type { PreviewContentType } from '@/common/types/preview';
 import { useConversationContextSafe } from '@/renderer/context/ConversationContext';
 import { usePreviewContext } from '@/renderer/pages/conversation/preview';
 import { useCallback, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 预览启动选项 / Preview launch options
@@ -138,7 +139,7 @@ export const usePreviewLauncher = () => {
           }
         }
       } catch (error) {
-        console.error('[usePreviewLauncher] Failed to open preview:', error);
+        logger.error("Error message");
       } finally {
         setLoading(false);
       }

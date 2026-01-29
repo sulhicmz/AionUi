@@ -6,6 +6,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Tooltip } from '@arco-design/web-react';
+import { logger } from '@common/monitoring';
 
 const SettingsSider: React.FC<{ collapsed?: boolean }> = ({ collapsed = false }) => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const SettingsSider: React.FC<{ collapsed?: boolean }> = ({ collapsed = false })
               })}
               onClick={() => {
                 Promise.resolve(navigate(`/settings/${item.path}`, { replace: true })).catch((error) => {
-                  console.error('Navigation failed:', error);
+                  logger.error("Error message");
                 });
               }}
             >

@@ -1,5 +1,6 @@
 import { Spin } from '@arco-design/web-react';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 const AppLoader: React.FC = () => {
   return (

@@ -1,8 +1,10 @@
-import { Button, Message, Collapse, Tag } from '@arco-design/web-react';
+import { Button, Message, Collapse, Tag, Tabs } from '@arco-design/web-react';
 import React, { useState } from 'react';
 import StepsWrapper from '@/renderer/components/base/StepsWrapper';
 import ModalWrapper from '@/renderer/components/base/ModalWrapper';
+import { ErrorBoundaryTest } from '@/renderer/components/ErrorBoundary/ErrorBoundaryTest';
 import { Check } from '@icon-park/react';
+import { logger } from '@common/monitoring';
 
 const ComponentsShowcase: React.FC = () => {
   const [message, contextHolder] = Message.useMessage();
@@ -139,6 +141,12 @@ const ComponentsShowcase: React.FC = () => {
             <p className='mt-2 text-t-secondary'>特性：圆角 12px、自定义关闭按钮、主题背景色。</p>
           </div>
         </ModalWrapper>
+      </section>
+
+      {/* Error Boundaries */}
+      <section className='space-y-4'>
+        <h2 className='text-xl font-semibold'>Error Boundaries - 错误边界</h2>
+        <ErrorBoundaryTest />
       </section>
     </div>
   );

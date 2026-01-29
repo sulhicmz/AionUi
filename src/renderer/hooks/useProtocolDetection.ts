@@ -7,6 +7,7 @@
 import type { ProtocolDetectionResponse } from '@/common/utils/protocolDetector';
 import { ipcBridge } from '@/common';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 协议检测 Hook 配置

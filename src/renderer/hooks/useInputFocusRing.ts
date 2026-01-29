@@ -1,4 +1,5 @@
 import { useThemeContext } from '@/renderer/context/ThemeContext';
+import { logger } from '@common/monitoring';
 
 export const useInputFocusRing = () => {
   const { theme } = useThemeContext();

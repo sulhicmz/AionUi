@@ -12,6 +12,7 @@ import { app } from 'electron';
 import { TokenMiddleware } from '@/webserver/auth/middleware/TokenMiddleware';
 import { AUTH_CONFIG } from '../config/constants';
 import { createRateLimiter } from '../middleware/security';
+import { logger } from '@common/monitoring';
 
 /**
  * 注册静态资源和页面路由
@@ -58,7 +59,7 @@ export function registerStaticRoutes(app: Express): void {
       res.setHeader('Content-Type', 'text/html');
       res.send(htmlContent);
     } catch (error) {
-      console.error('Error serving index.html:', error);
+      logger.error("Error message");
       res.status(500).send('Internal Server Error');
     }
   };

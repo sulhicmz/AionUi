@@ -7,6 +7,7 @@
 import type React from 'react';
 import { useEffect } from 'react';
 import usePwaMode from '@/renderer/hooks/usePwaMode';
+import { logger } from '@common/monitoring';
 
 /**
  * Lightweight pull-to-refresh for iOS PWA standalone mode.

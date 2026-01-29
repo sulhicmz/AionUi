@@ -10,6 +10,7 @@ import { getSystemDir, ProcessEnv } from '../initStorage';
 import { copyDirectoryRecursively } from '../utils';
 import WorkerManage from '../WorkerManage';
 import { getZoomFactor, setZoomFactor } from '../utils/zoom';
+import { logger } from '@common/monitoring';
 
 export function initApplicationBridge(): void {
   ipcBridge.application.restart.provider(() => {

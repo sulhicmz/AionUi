@@ -12,6 +12,7 @@ import type { CodexSessionManager } from '@/agent/codex/handlers/CodexSessionMan
 import type { CodexFileOperationHandler } from '@/agent/codex/handlers/CodexFileOperationHandler';
 import { getConfiguredAppClientName, getConfiguredAppClientVersion, getConfiguredCodexMcpProtocolVersion } from '../../../common/utils/appConfig';
 import { lt } from 'semver';
+import { logger } from '@common/monitoring';
 
 interface LegacyNetworkErrorDetails {
   networkErrorType?: string;

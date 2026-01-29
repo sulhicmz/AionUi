@@ -5,6 +5,7 @@
  */
 
 import type { ToolCallConfirmationDetails, ToolResultDisplay } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 // Only defining the state enum needed by the UI
 export enum StreamingState {

@@ -1,0 +1,145 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run security audit weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test:coverage
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Upload coverage reports
+        if: matrix.node-version == '20.x'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run package
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-${{ matrix.os }}
+          path: out/
+
+  security:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: npm audit --audit-level=moderate
+
+      - name: Run security audit with JSON output
+        run: npm audit --json > security-audit.json || true
+
+      - name: Upload security audit results
+        uses: actions/upload-artifact@v3
+        with:
+          name: security-audit-${{ github.run_number }}
+          path: security-audit.json
+          retention-days: 30
+
+      - name: Check for high severity vulnerabilities
+        run: |
+          if [ "$(npm audit --json | jq '.metadata.vulnerabilities.high')" -gt 0 ]; then
+            echo "❌ HIGH severity vulnerabilities found!"
+            npm audit --audit-level=high
+            exit 1
+          else
+            echo "✅ No HIGH severity vulnerabilities found"
+          fi
+
+      - name: Comment PR with security results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const auditReport = JSON.parse(fs.readFileSync('security-audit.json', 'utf8'));
+
+            const highVulns = auditReport.metadata.vulnerabilities.high;
+            const moderateVulns = auditReport.metadata.vulnerabilities.moderate;
+
+            const comment = `## 🔒 Security Scan Results
+
+            **Vulnerabilities Found:**
+            - 🔴 High: ${highVulns}
+            - 🟡 Moderate: ${moderateVulns}
+            - 📊 Total: ${auditReport.metadata.vulnerabilities.total}
+
+            ${highVulns > 0 ? '⚠️ **Action Required**: High severity vulnerabilities detected. Please address before merging.' : '✅ **Ready to merge**: No high severity vulnerabilities found.'}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

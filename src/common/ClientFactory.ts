@@ -11,6 +11,7 @@ import { GeminiRotatingClient, type GeminiClientConfig } from './adapters/Gemini
 import { AnthropicRotatingClient, type AnthropicClientConfig } from './adapters/AnthropicRotatingClient';
 import type { RotatingApiClientOptions } from './RotatingApiClient';
 import { getProviderAuthType } from './utils/platformAuthType';
+import { logger } from '@common/monitoring';
 
 export interface ClientOptions {
   timeout?: number;

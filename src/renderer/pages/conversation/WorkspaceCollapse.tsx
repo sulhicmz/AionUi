@@ -7,6 +7,7 @@
 import { Down } from '@icon-park/react';
 import classNames from 'classnames';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 interface WorkspaceCollapseProps {
   /** 是否展开 */

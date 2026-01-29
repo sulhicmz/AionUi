@@ -6,6 +6,7 @@
 
 import { shell } from 'electron';
 import { ipcBridge } from '../../common';
+import { logger } from '@common/monitoring';
 
 export function initShellBridge(): void {
   ipcBridge.shell.openFile.provider(async (path) => {

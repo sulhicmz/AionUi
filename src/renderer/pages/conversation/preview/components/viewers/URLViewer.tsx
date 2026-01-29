@@ -7,6 +7,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Left, Right, Refresh, Loading } from '@icon-park/react';
+import { logger } from '@common/monitoring';
 
 interface URLViewerProps {
   /** URL to display */
@@ -206,7 +207,7 @@ const URLViewer: React.FC<URLViewerProps> = ({ url }) => {
           `
         window.addEventListener('message', function(e) {
           if (e.data && e.data.type === '__URL_VIEWER_NAVIGATE__') {
-            console.log('__URL_VIEWER_NAVIGATE__', JSON.stringify(e.data));
+            logger.info("Log message");
           }
         });
         true;

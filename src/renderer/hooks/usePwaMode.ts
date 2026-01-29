@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * Detect whether the app is running as a PWA (standalone display mode).

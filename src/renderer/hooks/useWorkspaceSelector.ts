@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import { useSWRConfig } from 'swr';
 import type { TChatConversation } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 export type WorkspaceEventPrefix = 'gemini' | 'acp' | 'codex';
 
@@ -52,7 +53,7 @@ export const useWorkspaceSelector = (conversationId: string, eventPrefix: Worksp
       emitter.emit('chat.history.refresh');
       Message.success(t('common.saveSuccess'));
     } catch (error) {
-      console.error('Failed to select workspace:', error);
+      logger.error("Error message");
       Message.error(t('common.saveFailed'));
     }
   }, [conversationId, eventPrefix, mutate, t]);

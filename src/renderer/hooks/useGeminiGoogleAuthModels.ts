@@ -10,6 +10,7 @@ import { getGeminiModeList, type GeminiModeOption } from './useModeModeList';
 import useSWR from 'swr';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 export interface GeminiGoogleAuthModelResult {
   geminiModeOptions: GeminiModeOption[];

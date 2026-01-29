@@ -8,6 +8,7 @@ import type { GroundingMetadata } from '@google/genai';
 import { Type } from '@google/genai';
 import type { ToolResult, ToolInvocation, ToolLocation, ToolCallConfirmationDetails, Config, MessageBus } from '@office-ai/aioncli-core';
 import { BaseDeclarativeTool, BaseToolInvocation, Kind, getErrorMessage, ToolErrorType, getResponseText } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 interface GroundingChunkWeb {
   uri?: string;

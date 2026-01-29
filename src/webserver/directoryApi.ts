@@ -9,6 +9,7 @@ import path from 'path';
 import fs from 'fs';
 import os from 'os';
 import { fileOperationLimiter } from './middleware/security';
+import { logger } from '@common/monitoring';
 
 // Allow browsing within the running workspace and the current user's home directory only
 // 仅允许在工作目录与当前用户主目录中浏览
@@ -184,7 +185,7 @@ router.get('/browse', fileOperationLimiter, (req, res) => {
       canGoUp: safeDir !== path.parse(safeDir).root,
     });
   } catch (error) {
-    console.error('Directory browse error:', error);
+    logger.error("Error message");
     res.status(500).json({ error: 'Failed to read directory' });
   }
 });
@@ -246,7 +247,7 @@ router.post('/validate', fileOperationLimiter, (req, res) => {
       name: path.basename(safeValidatedPath),
     });
   } catch (error) {
-    console.error('Path validation error:', error);
+    logger.error("Error message");
     const errorMessage = error instanceof Error ? error.message : 'Failed to validate path';
     res.status(error instanceof Error && error.message.includes('access denied') ? 403 : 500).json({ error: errorMessage });
   }
@@ -289,7 +290,7 @@ router.get('/shortcuts', fileOperationLimiter, (_req, res) => {
 
     res.json(shortcuts);
   } catch (error) {
-    console.error('Shortcuts error:', error);
+    logger.error("Error message");
     res.status(500).json({ error: 'Failed to get shortcuts' });
   }
 });

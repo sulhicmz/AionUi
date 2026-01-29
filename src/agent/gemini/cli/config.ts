@@ -14,9 +14,9 @@ import { getCurrentGeminiAgent } from '../index';
 
 // Simple console logger for now - replace with actual logger if available
 const logger = {
-  debug: (...args: unknown[]) => console.debug('[DEBUG]', ...args),
-  warn: (...args: unknown[]) => console.warn('[WARN]', ...args),
-  error: (...args: unknown[]) => console.error('[ERROR]', ...args),
+  debug: (...args) => logger.debug('DEBUG', ...args)('[DEBUG]', ...args),
+  warn: (...args: unknown[]) => logger.warn("Warning message"),
+  error: (...args: unknown[]) => logger.error("Error message"),
 };
 
 export interface CliArgs {
@@ -50,6 +50,7 @@ export interface CliArgs {
 }
 
 import type { ConversationToolConfig } from './tools/conversation-tool-config';
+import { logger } from '@common/monitoring';
 
 export interface LoadCliConfigOptions {
   workspace: string;
@@ -92,7 +93,7 @@ export async function loadCliConfig({ workspace, settings, extensions, sessionId
   if (skillsDir) {
     try {
       builtinSkills = await loadSkillsFromDir(skillsDir);
-      console.log(`[Config] Loaded ${builtinSkills.length} builtin skills from ${skillsDir}`);
+      logger.info(`Config Loaded ${builtinSkills.length} builtin skills from ${skillsDir}`);
 
       // 根据 enabledSkills 过滤 skills
       // Filter skills based on enabledSkills
@@ -100,10 +101,10 @@ export async function loadCliConfig({ workspace, settings, extensions, sessionId
         const enabledSet = new Set(enabledSkills);
         const originalCount = builtinSkills.length;
         builtinSkills = builtinSkills.filter((skill) => enabledSet.has(skill.name));
-        console.log(`[Config] Filtered skills: ${builtinSkills.length}/${originalCount} enabled (${enabledSkills.join(', ')})`);
+        logger.info(`Config Filtered skills: ${builtinSkills.length}/${originalCount} enabled (${enabledSkills.join(', ')})`);
       }
     } catch (error) {
-      console.warn(`[Config] Failed to load builtin skills from ${skillsDir}:`, error);
+      logger.warn(`Config Failed to load builtin skills from ${skillsDir}:`);
     }
   }
 
@@ -295,7 +296,7 @@ export async function loadCliConfig({ workspace, settings, extensions, sessionId
         // 避免返回 'retry_once' 导致无限重试循环
         // Single key mode, return 'stop' to stop retrying
         // Avoid returning 'retry_once' which causes infinite retry loop
-        console.log('[FallbackHandler] Single key mode, stopping retry');
+        logger.info("Log message");
         return 'stop';
       }
 
@@ -313,7 +314,7 @@ export async function loadCliConfig({ workspace, settings, extensions, sessionId
       // All keys exhausted or blacklisted, stop retrying
       return 'stop';
     } catch (e) {
-      console.error(`[FallbackHandler] Handler error:`, e);
+      logger.error(`FallbackHandler Handler error:`);
       // 发生错误时返回 'stop'，停止重试
       // On error, return 'stop' to stop retrying
       return 'stop';
@@ -350,7 +351,7 @@ function mergeMcpServers(settings: Settings, extensions: GeminiCLIExtension[], u
         logger.warn(`Overriding existing MCP config for server with key "${key}" with UI configuration.`);
       }
       mcpServers[key] = server;
-      console.log(`[MCP] Added UI-configured server: ${key}`);
+      logger.info(`MCP Added UI-configured server: ${key}`);
     });
   }
 

@@ -7,6 +7,7 @@
 import { Popover } from '@arco-design/web-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 // Common emoji categories with popular emojis
 const EMOJI_CATEGORIES = {

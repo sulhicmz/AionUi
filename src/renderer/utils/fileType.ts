@@ -5,6 +5,7 @@
  */
 
 import type { PreviewContentType } from '@/common/types/preview';
+import { logger } from '@common/monitoring';
 
 interface FileTypeInfo {
   contentType: PreviewContentType;

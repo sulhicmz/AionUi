@@ -9,6 +9,7 @@ import React from 'react';
 import AssistantManagement from '@/renderer/pages/settings/AssistantManagement';
 import AionScrollArea from '@/renderer/components/base/AionScrollArea';
 import { useSettingsViewMode } from '../settingsViewContext';
+import { logger } from '@common/monitoring';
 
 const AgentModalContent: React.FC = () => {
   const [agentMessage, agentMessageContext] = Message.useMessage({ maxCount: 10 });

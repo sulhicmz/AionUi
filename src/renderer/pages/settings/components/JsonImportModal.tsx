@@ -6,6 +6,7 @@ import CodeMirror from '@uiw/react-codemirror';
 import { json } from '@codemirror/lang-json';
 import { useThemeContext } from '@/renderer/context/ThemeContext';
 import AionModal from '@/renderer/components/base/AionModal';
+import { logger } from '@common/monitoring';
 
 interface JsonImportModalProps {
   visible: boolean;
@@ -92,13 +93,13 @@ const JsonImportModal: React.FC<JsonImportModalProps> = ({ visible, server, onCa
 
     if (Array.isArray(mcpServers)) {
       // TODO: 支持数组格式的导入
-      console.warn('Array format not supported yet');
+      logger.warn("Warning message");
       return;
     }
 
     const serverKeys = Object.keys(mcpServers);
     if (serverKeys.length === 0) {
-      console.warn('No MCP server found in configuration');
+      logger.warn("Warning message");
       return;
     }
 
@@ -259,7 +260,7 @@ const JsonImportModal: React.FC<JsonImportModalProps> = ({ visible, server, onCa
                       setCopyStatus('success');
                       setTimeout(() => setCopyStatus('idle'), 2000);
                     } catch (err) {
-                      console.error('Copy failed 复制失败:', err);
+                      logger.error("Error message");
                       setCopyStatus('error');
                       setTimeout(() => setCopyStatus('idle'), 2000);
                     }

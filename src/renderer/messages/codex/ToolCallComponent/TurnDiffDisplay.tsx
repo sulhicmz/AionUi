@@ -10,6 +10,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Diff2Html from '../../../components/Diff2Html';
 import BaseToolCallDisplay from './BaseToolCallDisplay';
+import { logger } from '@common/monitoring';
 
 type TurnDiffContent = Extract<CodexToolCallUpdate, { subtype: 'turn_diff' }>;
 

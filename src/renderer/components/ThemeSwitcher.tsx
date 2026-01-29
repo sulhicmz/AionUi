@@ -8,6 +8,7 @@ import { useThemeContext } from '@/renderer/context/ThemeContext';
 import AionSelect from '@/renderer/components/base/AionSelect';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * 主题切换器组件 / Theme switcher component

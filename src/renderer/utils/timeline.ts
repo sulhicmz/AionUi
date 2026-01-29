@@ -10,6 +10,7 @@
  */
 
 import type { TChatConversation } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 /**
  * Calculate the difference in days between two timestamps

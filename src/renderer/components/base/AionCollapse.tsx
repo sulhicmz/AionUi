@@ -7,6 +7,7 @@
 import classNames from 'classnames';
 import type { CSSProperties } from 'react';
 import React, { useMemo, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 可折叠面板组件属性 / Collapsible panel component props

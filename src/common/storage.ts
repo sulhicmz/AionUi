@@ -6,6 +6,7 @@
 
 import type { AcpBackend, AcpBackendConfig } from '@/types/acpTypes';
 import { storage } from '@office-ai/platform';
+import { logger } from '@common/monitoring';
 
 /**
  * @description 聊天相关的存储

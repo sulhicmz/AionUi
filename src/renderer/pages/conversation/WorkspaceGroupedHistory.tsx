@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useConversationTabs } from './context/ConversationTabsContext';
 import WorkspaceCollapse from './WorkspaceCollapse';
+import { logger } from '@common/monitoring';
 
 interface WorkspaceGroup {
   workspace: string; // 完整路径
@@ -181,7 +182,7 @@ const WorkspaceGroupedHistory: React.FC<{ onSessionClick?: () => void; collapsed
           }
         })
         .catch((error) => {
-          console.error('[WorkspaceGroupedHistory] Failed to load conversations:', error);
+          logger.error("Error message");
           setConversations([]);
         });
     };
@@ -281,7 +282,7 @@ const WorkspaceGroupedHistory: React.FC<{ onSessionClick?: () => void; collapsed
           }
         })
         .catch((error) => {
-          console.error('Failed to remove conversation:', error);
+          logger.error("Error message");
         });
     },
     [id, navigate]
@@ -306,7 +307,7 @@ const WorkspaceGroupedHistory: React.FC<{ onSessionClick?: () => void; collapsed
         emitter.emit('chat.history.refresh');
       }
     } catch (error) {
-      console.error('Failed to update conversation name:', error);
+      logger.error("Error message");
     } finally {
       setEditingId(null);
       setEditingName('');

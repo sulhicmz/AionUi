@@ -12,6 +12,7 @@ import type { TokenUsageData } from '@/common/storage';
 
 // 从 modelContextLimits 导入默认上下文限制
 import { DEFAULT_CONTEXT_LIMIT } from '@/renderer/utils/modelContextLimits';
+import { logger } from '@common/monitoring';
 
 interface ContextUsageIndicatorProps {
   tokenUsage: TokenUsageData | null;

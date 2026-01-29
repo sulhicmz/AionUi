@@ -7,6 +7,7 @@ import { Check } from '@icon-park/react';
 import { iconColors } from '@/renderer/theme/colors';
 import AionSteps from '@/renderer/components/base/AionSteps';
 import AionModal from '@/renderer/components/base/AionModal';
+import { logger } from '@common/monitoring';
 
 interface OneClickImportModalProps {
   visible: boolean;
@@ -43,7 +44,7 @@ const OneClickImportModal: React.FC<OneClickImportModalProps> = ({ visible, onCa
             }
           }
         } catch (error) {
-          console.error('Failed to load agents:', error);
+          logger.error("Error message");
         }
       };
       void loadAgents();
@@ -97,7 +98,7 @@ const OneClickImportModal: React.FC<OneClickImportModalProps> = ({ visible, onCa
         throw new Error(mcpResponse.msg || 'Failed to get MCP configs');
       }
     } catch (error) {
-      console.error('Failed to import from CLI:', error);
+      logger.error("Error message");
       setImportableServers([]);
     } finally {
       setLoadingImport(false);

@@ -7,6 +7,7 @@
 import { Steps } from '@arco-design/web-react';
 import type { StepsProps } from '@arco-design/web-react/es/Steps';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 interface StepsWrapperProps extends StepsProps {
   className?: string;

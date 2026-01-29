@@ -1,5 +1,6 @@
 import { AcpAgent } from '../agent/acp';
 import { forkTask } from './utils';
+import { logger } from '@common/monitoring';
 
 export default forkTask(({ data }, pipe) => {
   const agent = new AcpAgent({

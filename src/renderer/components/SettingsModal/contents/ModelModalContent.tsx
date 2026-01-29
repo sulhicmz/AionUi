@@ -18,6 +18,7 @@ import { iconColors } from '@/renderer/theme/colors';
 import AionCollapse from '@/renderer/components/base/AionCollapse';
 import AionScrollArea from '@/renderer/components/base/AionScrollArea';
 import { useSettingsViewMode } from '../settingsViewContext';
+import { logger } from '@common/monitoring';
 
 // Calculate API Key count
 const getApiKeyCount = (apiKey: string): number => {
@@ -51,7 +52,7 @@ const ModelModalContent: React.FC = () => {
         }
       })
       .catch((error) => {
-        console.error('Failed to save model config:', error);
+        logger.error("Error message");
         message.error(t('settings.saveModelConfigFailed'));
       });
   };

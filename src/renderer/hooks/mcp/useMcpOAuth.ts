@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { mcpService } from '@/common/ipcBridge';
 import type { IMcpServer } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 export interface McpOAuthStatus {
   isAuthenticated: boolean;
@@ -58,7 +59,7 @@ export const useMcpOAuth = () => {
         }));
       }
     } catch (error) {
-      console.error('Failed to check OAuth status:', error);
+      logger.error("Error message");
       setOAuthStatus((prev) => ({
         ...prev,
         [server.id]: {

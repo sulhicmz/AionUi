@@ -7,6 +7,7 @@
 import type { IResponseMessage } from '@/common/ipcBridge';
 import type { PreviewContentType } from '@/common/types/preview';
 import { uuid } from '@/common/utils';
+import { logger } from '@common/monitoring';
 
 /**
  * Navigation tools that should be intercepted for preview

@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { vs, vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import SelectionToolbar from '../renderers/SelectionToolbar';
+import { logger } from '@common/monitoring';
 
 interface CodePreviewProps {
   content: string; // 代码内容 / Code content

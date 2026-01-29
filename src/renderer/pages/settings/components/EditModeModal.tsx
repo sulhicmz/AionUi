@@ -26,6 +26,7 @@ import ModelScopeLogo from '@/renderer/assets/logos/modelscope.svg';
 import InfiniAILogo from '@/renderer/assets/logos/infiniai.svg';
 import CtyunLogo from '@/renderer/assets/logos/ctyun.svg';
 import StepFunLogo from '@/renderer/assets/logos/stepfun.svg';
+import { logger } from '@common/monitoring';
 
 /**
  * 供应商配置（包含名称、URL、Logo）

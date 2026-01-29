@@ -3,6 +3,7 @@ import { AuthType } from '@office-ai/aioncli-core';
 import type { RotatingApiClientOptions } from '../RotatingApiClient';
 import { RotatingApiClient } from '../RotatingApiClient';
 import { OpenAI2GeminiConverter, type OpenAIChatCompletionParams, type OpenAIChatCompletionResponse } from './OpenAI2GeminiConverter';
+import { logger } from '@common/monitoring';
 
 export interface GeminiClientConfig {
   model?: string;
@@ -80,7 +81,7 @@ export class GeminiRotatingClient extends RotatingApiClient<GoogleGenAI> {
       const geminiResponse = await client.models.generateContent(geminiRequest);
 
       // Convert Gemini response back to OpenAI format using converter
-      return this.converter.convertResponse(geminiResponse, params.model);
+      return this.converter.convertResponse(geminiResponse as any, params.model);
     });
   }
 }

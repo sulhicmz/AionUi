@@ -11,6 +11,7 @@ import { CodexMessageProcessor } from '@/agent/codex/messaging/CodexMessageProce
 import { CodexToolHandlers } from '@/agent/codex/handlers/CodexToolHandlers';
 import { PermissionType } from '@/common/codex/types/permissionTypes';
 import { createPermissionOptionsForType, getPermissionDisplayInfo } from '@/common/codex/utils';
+import { logger } from '@common/monitoring';
 
 export class CodexEventHandler {
   private messageProcessor: CodexMessageProcessor;

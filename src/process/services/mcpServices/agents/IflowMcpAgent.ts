@@ -9,6 +9,7 @@ import { promisify } from 'util';
 import type { McpOperationResult } from '../McpProtocol';
 import { AbstractMcpAgent } from '../McpProtocol';
 import type { IMcpServer } from '../../../../common/storage';
+import { logger } from '@common/monitoring';
 
 const execAsync = promisify(exec);
 
@@ -89,7 +90,7 @@ export class IflowMcpAgent extends AbstractMcpAgent {
               const testResult = await this.testMcpConnection(transportObj);
               tools = testResult.tools || [];
             } catch (error) {
-              console.warn(`[IflowMcpAgent] Failed to get tools for ${name.trim()}:`, error);
+              logger.warn(`IflowMcpAgent Failed to get tools for ${name.trim()}:`);
               // 如果获取tools失败，继续使用空数组
             }
           }
@@ -128,10 +129,10 @@ export class IflowMcpAgent extends AbstractMcpAgent {
         }
       }
 
-      console.log(`[IflowMcpAgent] Detection complete: found ${mcpServers.length} server(s)`);
+      logger.info(`IflowMcpAgent Detection complete: found ${mcpServers.length} server(s)`);
       return mcpServers;
     } catch (error) {
-      console.warn('[IflowMcpAgent] Failed to get iFlow CLI MCP config:', error);
+      logger.warn("Warning message");
       return [];
     }
   }
@@ -161,7 +162,7 @@ export class IflowMcpAgent extends AbstractMcpAgent {
           }
 
           if (server.transport.type === 'streamable_http') {
-            console.warn(`Skipping ${server.name}: iFlow CLI does not support streamable_http transport type`);
+            logger.warn(`Skipping ${server.name}: iFlow CLI does not support streamable_http transport type`);
             continue;
           }
 
@@ -205,7 +206,7 @@ export class IflowMcpAgent extends AbstractMcpAgent {
             // 执行添加命令
             await execAsync(addCommand, { timeout: 10000 });
           } catch (error) {
-            console.warn(`Failed to add MCP server ${server.name} to iFlow:`, error);
+            logger.warn(`Failed to add MCP server ${server.name} to iFlow:`);
             // 继续处理其他服务器，不要因为一个失败就停止整个过程
           }
         }

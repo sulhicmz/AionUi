@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useSettingsViewMode } from '../settingsViewContext';
 import packageJson from '../../../../../package.json';
+import { logger } from '@common/monitoring';
 
 const AboutModalContent: React.FC = () => {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ const AboutModalContent: React.FC = () => {
     try {
       await ipcBridge.shell.openExternal.invoke(url);
     } catch (error) {
-      console.log('Failed to open link:', error);
+      logger.info("Log message");
     }
   };
 
@@ -85,7 +86,7 @@ const AboutModalContent: React.FC = () => {
             <Typography.Text className='text-14px text-t-secondary mb-12px text-center'>{t('settings.appDescription')}</Typography.Text>
             <div className='flex items-center justify-center gap-8px mb-16px'>
               <span className='px-10px py-4px rd-6px text-13px bg-fill-2 text-t-primary font-500'>v{packageJson.version}</span>
-              <div className='text-t-primary cursor-pointer hover:text-t-secondary transition-colors p-4px' onClick={() => openLink('https://github.com/iOfficeAI/AionUi').catch((error) => console.error('Failed to open link:', error))}>
+              <div className='text-t-primary cursor-pointer hover:text-t-secondary transition-colors p-4px' onClick={() => openLink('https://github.com/iOfficeAI/AionUi').catch((error) => logger.error("Error message")}>
                 <Github theme='outline' size='20' />
               </div>
             </div>
@@ -114,7 +115,7 @@ const AboutModalContent: React.FC = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  openLink(item.url).catch((error) => console.error('Failed to open link:', error));
+                  openLink(item.url).catch((error) => logger.error("Error message");
                 }}
               >
                 <Typography.Text className='text-14px text-t-primary'>{item.title}</Typography.Text>

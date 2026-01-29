@@ -5,6 +5,7 @@
  */
 
 import type { AuthUser } from '@/webserver/auth/repository/UserRepository';
+import { logger } from '@common/monitoring';
 
 declare global {
   namespace Express {

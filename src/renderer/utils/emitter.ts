@@ -9,6 +9,7 @@ import type { DependencyList } from 'react';
 import { useEffect } from 'react';
 import type { FileOrFolderItem } from '@/renderer/types/files';
 import type { PreviewContentType } from '@/common/types/preview';
+import { logger } from '@common/monitoring';
 
 interface EventTypes {
   'gemini.selected.file': [Array<string | FileOrFolderItem>];

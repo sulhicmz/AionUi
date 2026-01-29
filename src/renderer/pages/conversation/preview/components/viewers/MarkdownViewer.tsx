@@ -25,6 +25,7 @@ import { Streamdown } from 'streamdown';
 import MarkdownEditor from '../editors/MarkdownEditor';
 import SelectionToolbar from '../renderers/SelectionToolbar';
 import { useContainerScroll, useContainerScrollTarget } from '../../hooks/useScrollSyncHelpers';
+import { logger } from '@common/monitoring';
 
 interface MarkdownPreviewProps {
   content: string; // Markdown 内容 / Markdown content
@@ -105,7 +106,7 @@ const MarkdownImage: React.FC<MarkdownImageProps> = ({ src, alt, baseDir, ...pro
               }
             })
             .catch((error) => {
-              console.error('[MarkdownPreview] Failed to fetch remote image:', src, error);
+              logger.error("Error message");
               if (!cancelled) {
                 setResolvedSrc(src);
               }
@@ -132,7 +133,7 @@ const MarkdownImage: React.FC<MarkdownImageProps> = ({ src, alt, baseDir, ...pro
           }
         })
         .catch((error) => {
-          console.error('[MarkdownPreview] Failed to load local image:', { src, absolutePath, error });
+          logger.error("Error message");
           if (!cancelled) {
             setResolvedSrc(src);
           }
@@ -288,7 +289,7 @@ const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ content, onClose, hid
           img.src = dataUrl;
         })
         .catch((error) => {
-          console.error('[MarkdownPreview] Failed to inline rendered image:', { rawAttr, absolutePath, error });
+          logger.error("Error message");
         })
         .finally(() => {
           seen.add(img);

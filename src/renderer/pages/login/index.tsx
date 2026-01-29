@@ -6,6 +6,7 @@ import AppLoader from '../../components/AppLoader';
 import { useAuth } from '../../context/AuthContext';
 import loginLogo from '@renderer/assets/logos/app.png';
 import './LoginPage.css';
+import { logger } from '@common/monitoring';
 
 type MessageState = {
   type: 'error' | 'success';
@@ -125,10 +126,10 @@ const LoginPage: React.FC = () => {
     (event: React.ChangeEvent<HTMLSelectElement>) => {
       const nextLanguage = event.target.value;
       i18n.changeLanguage(nextLanguage).catch((error) => {
-        console.error('Failed to change language:', error);
+        logger.error("Error message");
       });
       ConfigStorage.set('language', nextLanguage).catch((error) => {
-        console.error('Failed to persist language preference:', error);
+        logger.error("Error message");
       });
     },
     [i18n]

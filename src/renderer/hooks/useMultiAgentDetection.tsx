@@ -6,6 +6,7 @@ import { ipcBridge } from '@/common';
 import { Message } from '@arco-design/web-react';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 export const useMultiAgentDetection = () => {
   const { t } = useTranslation();
@@ -34,12 +35,12 @@ export const useMultiAgentDetection = () => {
         }
       } catch (error) {
         // 静默处理错误，避免影响应用启动
-        console.log('Multi-agent detection failed:', error);
+        logger.info("Log message");
       }
     };
 
     checkMultiAgentMode().catch((error) => {
-      console.error('Multi-agent detection failed:', error);
+      logger.error("Error message");
     });
   }, []); // 空依赖数组确保只在组件初始化时执行一次
 

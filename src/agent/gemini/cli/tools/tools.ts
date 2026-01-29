@@ -8,6 +8,7 @@ import type { FunctionDeclaration, PartListUnion } from '@google/genai';
 import { ToolErrorType } from '@office-ai/aioncli-core';
 import type { DiffUpdateResult } from '../ide/ideContext';
 import { SchemaValidator } from '../utils/schemaValidator';
+import { logger } from '@common/monitoring';
 
 /**
  * Represents a validated and ready-to-execute tool call.

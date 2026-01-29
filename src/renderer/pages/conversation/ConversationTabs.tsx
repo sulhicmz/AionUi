@@ -15,6 +15,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useConversationTabs } from './context/ConversationTabsContext';
+import { logger } from '@common/monitoring';
 
 const TAB_OVERFLOW_THRESHOLD = 10;
 
@@ -149,11 +150,11 @@ const ConversationTabs: React.FC = () => {
             emitter.emit('chat.history.refresh');
           })
           .catch((error) => {
-            console.error('Failed to create conversation:', error);
+            logger.error("Error message");
           });
       })
       .catch((error) => {
-        console.error('Failed to load conversations:', error);
+        logger.error("Error message");
         void navigate('/guid');
       });
   }, [navigate, openTabs, activeTabId, openTab]);

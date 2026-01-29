@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { Down, PreviewOpen } from '@icon-park/react';
 import { iconColors } from '@/renderer/theme/colors';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * 文件变更项数据 / File change item data

@@ -11,6 +11,7 @@ import { AuthType, Config } from '@office-ai/aioncli-core';
 import { ImageGenerationTool } from './img-gen';
 import { WebFetchTool } from './web-fetch';
 import { WebSearchTool } from './web-search';
+import { logger } from '@common/monitoring';
 
 interface ConversationToolConfigOptions {
   proxy: string;
@@ -76,7 +77,7 @@ export class ConversationToolConfig {
 
       return null;
     } catch (error) {
-      console.error('[ConversationTools] Error finding Gemini model:', error);
+      logger.error("Error message");
       return null;
     }
   }
@@ -157,7 +158,7 @@ export class ConversationToolConfig {
         }
         // Google未登录时静默跳过，不影响其他工具
       } catch (error) {
-        console.warn('Failed to register gemini_web_search tool:', error);
+        logger.warn("Warning message");
         // 异常时也不影响其他工具的注册
       }
     }

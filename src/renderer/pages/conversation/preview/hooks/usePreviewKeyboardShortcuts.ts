@@ -5,6 +5,7 @@
  */
 
 import { useEffect } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 预览面板快捷键配置

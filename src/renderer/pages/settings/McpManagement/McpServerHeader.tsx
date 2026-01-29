@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import McpAgentStatusDisplay from './McpAgentStatusDisplay';
 import type { McpOAuthStatus } from '@/renderer/hooks/mcp/useMcpOAuth';
 import { iconColors } from '@/renderer/theme/colors';
+import { logger } from '@common/monitoring';
 
 interface McpServerHeaderProps {
   server: IMcpServer;

@@ -14,6 +14,7 @@ import AionCollapse from '@/renderer/components/base/AionCollapse';
 import { iconColors } from '@/renderer/theme/colors';
 import { Down, Up } from '@icon-park/react';
 import { useSettingsViewMode } from '../settingsViewContext';
+import { logger } from '@common/monitoring';
 
 /**
  * 偏好设置行组件 / Preference row component

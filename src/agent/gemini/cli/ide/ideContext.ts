@@ -5,6 +5,7 @@
  */
 
 import { z } from 'zod';
+import { logger } from '@common/monitoring';
 
 /**
  * Zod schema for validating a file context from the IDE.

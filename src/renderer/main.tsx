@@ -9,6 +9,7 @@ import Layout from './layout';
 import Router from './router';
 import Sider from './sider';
 import { useAuth } from './context/AuthContext';
+import { logger } from '@common/monitoring';
 
 const Main = () => {
   const { ready } = useAuth();

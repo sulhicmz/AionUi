@@ -1,5 +1,6 @@
 import { ipcBridge } from '@/common';
 import useSWR from 'swr';
+import { logger } from '@common/monitoring';
 
 export interface GeminiModeOption {
   label: string;

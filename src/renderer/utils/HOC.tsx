@@ -6,6 +6,7 @@
 
 import type { PropsWithChildren } from 'react';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 const HOC = <HOCProps extends {}>(HOCComponent: React.FC<PropsWithChildren<HOCProps>>, hocProps?: Partial<HOCProps>) => {
   return <Props extends Record<string, any>>(Component: React.FC<Props>): React.FC<Props> => {

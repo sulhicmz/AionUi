@@ -51,10 +51,14 @@ export const rendererConfig: Configuration = {
   optimization: {
     realContentHash: true,
     minimize: !isDevelopment,
+    minimizer: !isDevelopment ? [
+      '...' // Use default minimizers
+    ] : undefined,
     splitChunks: isDevelopment ? false : {
       chunks: 'all',
-      maxInitialRequests: 25,
-      minSize: 20000,
+      maxInitialRequests: 30,
+      minSize: 10000,
+      maxSize: 250000,
       cacheGroups: {
         react: {
           test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
@@ -80,6 +84,14 @@ export const rendererConfig: Configuration = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           priority: 10,
+          minChunks: 2,
+        },
+        common: {
+          name: 'common',
+          minChunks: 2,
+          chunks: 'all',
+          priority: 5,
+          reuseExistingChunk: true,
         },
       },
     },

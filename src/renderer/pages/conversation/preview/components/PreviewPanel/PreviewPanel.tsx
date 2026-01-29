@@ -6,6 +6,7 @@
 
 import { ipcBridge } from '@/common';
 import { useLayoutContext } from '@/renderer/context/LayoutContext';
+import { FeatureErrorBoundary } from '@/renderer/components/ErrorBoundary';
 import { PreviewToolbarExtrasProvider, type PreviewToolbarExtras } from '../../context/PreviewToolbarExtrasContext';
 import { usePreviewContext } from '../../context/PreviewContext';
 import { useResizableSplit } from '@/renderer/hooks/useResizableSplit';
@@ -27,6 +28,7 @@ import { PreviewTabs, PreviewToolbar, PreviewContextMenu, PreviewConfirmModals, 
 import { DEFAULT_SPLIT_RATIO, FILE_TYPES_WITH_BUILTIN_OPEN, MAX_SPLIT_WIDTH, MIN_SPLIT_WIDTH } from '../../constants';
 import { usePreviewHistory, usePreviewKeyboardShortcuts, useScrollSync, useTabOverflow, useThemeDetection } from '../../hooks';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * 预览面板主组件
@@ -336,7 +338,7 @@ const PreviewPanel: React.FC = () => {
       document.body.removeChild(link);
       URL.revokeObjectURL(url); // 释放 URL 对象 / Release URL object
     } catch (error) {
-      console.error('[PreviewPanel] Failed to download file:', error);
+      logger.error("Error message");
       messageApi.error(t('messages.downloadFailed', { defaultValue: 'Failed to download' }));
     }
   }, [content, contentType, metadata?.fileName, metadata?.filePath, metadata?.language, messageApi, t]);
@@ -539,66 +541,68 @@ const PreviewPanel: React.FC = () => {
   }));
 
   return (
-    <PreviewToolbarExtrasProvider value={toolbarExtrasContextValue}>
-      <div className='h-full flex flex-col bg-1 rounded-[16px]'>
-        {messageContextHolder}
+    <FeatureErrorBoundary featureName='PreviewPanel' operation='preview-content'>
+      <PreviewToolbarExtrasProvider value={toolbarExtrasContextValue}>
+        <div className='h-full flex flex-col bg-1 rounded-[16px]'>
+          {messageContextHolder}
 
-        {/* 确认对话框 / Confirmation modals */}
-        {/* eslint-disable-next-line max-len */}
-        <PreviewConfirmModals showExitConfirm={showExitConfirm} closeTabConfirm={closeTabConfirm} onConfirmExit={handleConfirmExit} onCancelExit={handleCancelExit} onSaveAndCloseTab={handleSaveAndCloseTab} onCloseWithoutSave={handleCloseWithoutSave} onCancelCloseTab={handleCancelCloseTab} />
+          {/* 确认对话框 / Confirmation modals */}
+          {/* eslint-disable-next-line max-len */}
+          <PreviewConfirmModals showExitConfirm={showExitConfirm} closeTabConfirm={closeTabConfirm} onConfirmExit={handleConfirmExit} onCancelExit={handleCancelExit} onSaveAndCloseTab={handleSaveAndCloseTab} onCloseWithoutSave={handleCloseWithoutSave} onCancelCloseTab={handleCancelCloseTab} />
 
-        {/* Tab 栏 / Tab bar */}
-        {/* eslint-disable-next-line max-len */}
-        <PreviewTabs tabs={previewTabs} activeTabId={activeTabId} tabFadeState={tabFadeState} tabsContainerRef={tabsContainerRef} onSwitchTab={switchTab} onCloseTab={handleCloseTab} onContextMenu={handleTabContextMenu} onClosePanel={closePreview} />
+          {/* Tab 栏 / Tab bar */}
+          {/* eslint-disable-next-line max-len */}
+          <PreviewTabs tabs={previewTabs} activeTabId={activeTabId} tabFadeState={tabFadeState} tabsContainerRef={tabsContainerRef} onSwitchTab={switchTab} onCloseTab={handleCloseTab} onContextMenu={handleTabContextMenu} onClosePanel={closePreview} />
 
-        {/* 工具栏（URL 类型不显示工具栏，因为不需要下载/编辑等功能）/ Toolbar (hidden for URL type as it doesn't need download/edit features) */}
-        {contentType !== 'url' && (
-          <PreviewToolbar
-            contentType={contentType}
-            isMarkdown={isMarkdown}
-            isHTML={isHTML}
-            isEditable={isEditable}
-            isEditMode={isEditMode}
-            viewMode={viewMode}
-            isSplitScreenEnabled={isSplitScreenEnabled}
-            fileName={metadata?.fileName || activeTab.title}
-            showOpenInSystemButton={showOpenInSystemButton}
-            historyTarget={historyTarget}
-            snapshotSaving={snapshotSaving}
-            onViewModeChange={(mode) => {
-              setViewMode(mode);
-              setIsSplitScreenEnabled(false); // 切换视图模式时关闭分屏 / Disable split when switching view mode
-            }}
-            onSplitScreenToggle={() => setIsSplitScreenEnabled(!isSplitScreenEnabled)}
-            onEditClick={() => {
-              setIsEditMode(true);
-              // Code/TXT 类型进入编辑模式时自动开启分屏 / Auto enable split screen for Code/TXT when entering edit mode
-              if (contentType === 'code') {
-                setIsSplitScreenEnabled(true);
-              }
-            }}
-            onExitEdit={handleExitEdit}
-            onSaveSnapshot={handleSaveSnapshot}
-            onRefreshHistory={refreshHistory}
-            renderHistoryDropdown={renderHistoryDropdown}
-            onOpenInSystem={handleOpenInSystem}
-            onDownload={handleDownload}
-            onClose={closePreview}
-            inspectMode={inspectMode}
-            onInspectModeToggle={() => setInspectMode(!inspectMode)}
-            leftExtra={toolbarExtras?.left}
-            rightExtra={toolbarExtras?.right}
-          />
-        )}
+          {/* 工具栏（URL 类型不显示工具栏，因为不需要下载/编辑等功能）/ Toolbar (hidden for URL type as it doesn't need download/edit features) */}
+          {contentType !== 'url' && (
+            <PreviewToolbar
+              contentType={contentType}
+              isMarkdown={isMarkdown}
+              isHTML={isHTML}
+              isEditable={isEditable}
+              isEditMode={isEditMode}
+              viewMode={viewMode}
+              isSplitScreenEnabled={isSplitScreenEnabled}
+              fileName={metadata?.fileName || activeTab.title}
+              showOpenInSystemButton={showOpenInSystemButton}
+              historyTarget={historyTarget}
+              snapshotSaving={snapshotSaving}
+              onViewModeChange={(mode) => {
+                setViewMode(mode);
+                setIsSplitScreenEnabled(false); // 切换视图模式时关闭分屏 / Disable split when switching view mode
+              }}
+              onSplitScreenToggle={() => setIsSplitScreenEnabled(!isSplitScreenEnabled)}
+              onEditClick={() => {
+                setIsEditMode(true);
+                // Code/TXT 类型进入编辑模式时自动开启分屏 / Auto enable split screen for Code/TXT when entering edit mode
+                if (contentType === 'code') {
+                  setIsSplitScreenEnabled(true);
+                }
+              }}
+              onExitEdit={handleExitEdit}
+              onSaveSnapshot={handleSaveSnapshot}
+              onRefreshHistory={refreshHistory}
+              renderHistoryDropdown={renderHistoryDropdown}
+              onOpenInSystem={handleOpenInSystem}
+              onDownload={handleDownload}
+              onClose={closePreview}
+              inspectMode={inspectMode}
+              onInspectModeToggle={() => setInspectMode(!inspectMode)}
+              leftExtra={toolbarExtras?.left}
+              rightExtra={toolbarExtras?.right}
+            />
+          )}
 
-        {/* 预览内容 / Preview content */}
-        {renderContent()}
+          {/* 预览内容 / Preview content */}
+          {renderContent()}
 
-        {/* Tab 右键菜单 / Tab context menu */}
-        {/* eslint-disable-next-line max-len */}
-        <PreviewContextMenu contextMenu={contextMenu} tabs={previewTabs} currentTheme={currentTheme} onClose={() => setContextMenu({ show: false, x: 0, y: 0, tabId: null })} onCloseLeft={handleCloseLeft} onCloseRight={handleCloseRight} onCloseOthers={handleCloseOthers} onCloseAll={handleCloseAll} />
-      </div>
-    </PreviewToolbarExtrasProvider>
+          {/* Tab 右键菜单 / Tab context menu */}
+          {/* eslint-disable-next-line max-len */}
+          <PreviewContextMenu contextMenu={contextMenu} tabs={previewTabs} currentTheme={currentTheme} onClose={() => setContextMenu({ show: false, x: 0, y: 0, tabId: null })} onCloseLeft={handleCloseLeft} onCloseRight={handleCloseRight} onCloseOthers={handleCloseOthers} onCloseAll={handleCloseAll} />
+        </div>
+      </PreviewToolbarExtrasProvider>
+    </FeatureErrorBoundary>
   );
 };
 

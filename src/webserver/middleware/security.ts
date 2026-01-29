@@ -7,6 +7,7 @@
 import type { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
 import { CSRF_COOKIE_NAME, CSRF_HEADER_NAME, SECURITY_CONFIG } from '@/webserver/config/constants';
+import { logger } from '@common/monitoring';
 
 /**
  * 登录/注册等敏感操作的限流

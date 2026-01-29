@@ -8,6 +8,7 @@
  */
 
 import type { Request, Response, NextFunction } from 'express';
+import { logger } from '@common/monitoring';
 
 interface RateLimitConfig {
   windowMs: number; // Time window in milliseconds / 时间窗口（毫秒）

@@ -6,6 +6,7 @@
 
 import React from 'react';
 import classNames from 'classnames';
+import { logger } from '@common/monitoring';
 
 interface ShimmerTextProps {
   children: React.ReactNode;

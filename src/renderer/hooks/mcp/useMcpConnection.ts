@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { mcpService } from '@/common/ipcBridge';
 import type { IMcpServer } from '@/common/storage';
 import { globalMessageQueue } from './messageQueue';
+import { logger } from '@common/monitoring';
 
 /**
  * 截断过长的错误消息，保持可读性
@@ -38,7 +39,7 @@ export const useMcpConnection = (
         try {
           await saveMcpServers((prevServers) => prevServers.map((s) => (s.id === server.id ? { ...s, status, updatedAt: Date.now(), ...additionalData } : s)));
         } catch (error) {
-          console.error('Failed to update server status:', error);
+          logger.error("Error message");
         }
       };
 

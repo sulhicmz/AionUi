@@ -13,6 +13,7 @@ import { useCallback } from 'react';
 import type { MessageApi, RenameModalState, DeleteModalState } from '../types';
 import type { FileOrFolderItem } from '@/renderer/types/files';
 import { getPathSeparator, replacePathInList, updateTreeForRename } from '../utils/treeHelpers';
+import { logger } from '@common/monitoring';
 
 interface UseWorkspaceFileOpsOptions {
   workspace: string;

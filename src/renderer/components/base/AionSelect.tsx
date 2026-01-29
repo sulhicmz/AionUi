@@ -9,6 +9,7 @@ import type { SelectProps } from '@arco-design/web-react';
 import type { SelectHandle } from '@arco-design/web-react/es/Select/interface';
 import classNames from 'classnames';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 自定义下拉选择组件属性 / Custom select component props

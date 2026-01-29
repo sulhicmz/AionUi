@@ -1,5 +1,6 @@
 import type { ModalProps } from '@arco-design/web-react';
 import React, { useMemo, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 type TUseModalReturn<Props extends Record<string, any> = {}> = [
   {

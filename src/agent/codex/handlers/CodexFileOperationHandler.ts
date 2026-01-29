@@ -10,6 +10,7 @@ import type { FileChange } from '@/common/codex/types';
 import { ipcBridge } from '@/common';
 import fs from 'fs/promises';
 import path from 'path';
+import { logger } from '@common/monitoring';
 
 export interface FileOperation {
   method: string;
@@ -92,7 +93,7 @@ export class CodexFileOperationHandler {
 
       ipcBridge.fileStream.contentUpdate.emit(eventData);
     } catch (error) {
-      console.error('[CodexFileOperationHandler] ❌ Failed to emit file stream update:', error);
+      logger.error("Error message");
     }
 
     // 发送操作反馈消息
@@ -147,7 +148,7 @@ export class CodexFileOperationHandler {
           operation: 'delete',
         });
       } catch (error) {
-        console.error('[CodexFileOperationHandler] Failed to emit file stream delete:', error);
+        logger.error("Error message");
       }
 
       // 发送操作反馈消息

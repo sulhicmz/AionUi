@@ -6,7 +6,9 @@
 
 import type { IMessageAcpToolCall, IMessagePlan, IMessageText, TMessage } from '@/common/chatLib';
 import { uuid } from '@/common/utils';
+import type { AcpToolCallContent } from '@/common/types/message-types';
 import type { AcpBackend, AcpSessionUpdate, AgentMessageChunkUpdate, AgentThoughtChunkUpdate, AvailableCommandsUpdate, PlanUpdate, ToolCallUpdate, ToolCallUpdateStatus } from '@/types/acpTypes';
+import { logger } from '@common/monitoring';
 
 /**
  * Adapter class to convert ACP messages to AionUI message format
@@ -113,7 +115,7 @@ export class AcpAdapter {
       default: {
         // Handle unexpected session update types
         const unknownUpdate = update as { sessionUpdate?: string };
-        console.warn('Unknown session update type:', unknownUpdate.sessionUpdate);
+        logger.warn("Warning message");
         break;
       }
     }
@@ -163,7 +165,7 @@ export class AcpAdapter {
         ...baseMessage,
         type: 'tips',
         content: {
-          content: update.content.text,
+          message: update.content.text,
           type: 'warning',
         },
       };
@@ -187,7 +189,12 @@ export class AcpAdapter {
     const acpToolCallMessage: IMessageAcpToolCall = {
       ...baseMessage,
       type: 'acp_tool_call',
-      content: update, // 直接使用 ToolCallUpdate 作为 content
+      content: {
+        tool_name: update.update.title || 'unknown',
+        arguments: (update.update.rawInput as Record<string, any>) || {},
+        call_id: update.update.toolCallId,
+        status: update.update.status === 'pending' ? 'pending' : update.update.status === 'in_progress' ? 'running' : update.update.status === 'completed' ? 'completed' : 'failed',
+      },
     };
 
     this.activeToolCalls.set(toolCallId, acpToolCallMessage);
@@ -205,18 +212,14 @@ export class AcpAdapter {
     // Get existing message
     const existingMessage = this.activeToolCalls.get(toolCallId);
     if (!existingMessage) {
-      console.warn(`No existing tool call found for ID: ${toolCallId}`);
+      logger.warn(`No existing tool call found for ID: ${toolCallId}`);
       return null;
     }
 
-    // Update the ToolCallUpdate content with new status and content
-    const updatedContent: ToolCallUpdate = {
+    const updatedContent: AcpToolCallContent = {
       ...existingMessage.content,
-      update: {
-        ...existingMessage.content.update,
-        status: toolCallData.status,
-        content: toolCallData.content || existingMessage.content.update.content,
-      },
+      status: toolCallData.status === 'completed' ? 'completed' : 'failed',
+      result: toolCallData.content ? JSON.stringify(toolCallData.content) : undefined,
     };
 
     // Create updated message with the SAME msg_id so composeMessage will merge it

@@ -6,6 +6,7 @@
 
 import { CodexAgentEventType, EventDataMap, type McpInvocation, McpToolInfo, OutputFormat, RendererType, ToolAvailability, ToolCapabilities, ToolCategory, ToolDefinition, ToolRenderer } from '../types';
 import i18n from '../../../renderer/i18n';
+import { logger } from '@common/monitoring';
 
 // Re-export types for backward compatibility
 export { ToolCategory, OutputFormat, RendererType, ToolAvailability, ToolCapabilities, ToolRenderer, ToolDefinition, McpToolInfo, EventDataMap };

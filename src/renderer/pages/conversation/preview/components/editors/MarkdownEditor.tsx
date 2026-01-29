@@ -9,6 +9,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import CodeMirror from '@uiw/react-codemirror';
 import React, { useRef, useCallback } from 'react';
 import { useCodeMirrorScroll, useScrollSyncTarget } from '../../hooks/useScrollSyncHelpers';
+import { logger } from '@common/monitoring';
 
 interface MarkdownEditorProps {
   value: string; // 编辑器内容 / Editor content

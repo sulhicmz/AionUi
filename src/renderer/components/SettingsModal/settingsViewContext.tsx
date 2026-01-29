@@ -1,4 +1,5 @@
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 export type SettingsViewMode = 'modal' | 'page';
 

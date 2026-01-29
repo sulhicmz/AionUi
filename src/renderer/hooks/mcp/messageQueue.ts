@@ -39,7 +39,7 @@ class MessageQueue {
     // 检查队列长度，如果超过限制则丢弃新消息而不是旧消息
     // Check queue length, discard new message if limit exceeded (not old ones)
     if (this.queue.length >= this.maxQueueSize) {
-      console.warn(`Message queue size exceeded ${this.maxQueueSize}, dropping new message`);
+      logger.warn(`Message queue size exceeded ${this.maxQueueSize}, dropping new message`);
       return;
     }
     this.queue.push(showMessageFn);

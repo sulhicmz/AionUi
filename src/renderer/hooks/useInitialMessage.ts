@@ -5,6 +5,7 @@
 
 import { uuid } from '@/common/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 type InitialMessageState = 'idle' | 'waiting_auth' | 'sending' | 'sent' | 'failed';
 
@@ -66,7 +67,7 @@ export const useInitialMessage = (conversationId: string, acpStatus: string | nu
 
   useEffect(() => {
     processInitialMessage().catch((error) => {
-      console.error('Failed to process initial message:', error);
+      logger.error("Error message");
     });
   }, [processInitialMessage]);
 
@@ -77,7 +78,7 @@ export const useInitialMessage = (conversationId: string, acpStatus: string | nu
       processedRef.current = false;
       setError(null);
       processInitialMessage().catch((error) => {
-        console.error('Failed to retry initial message:', error);
+        logger.error("Error message");
       });
     },
   };

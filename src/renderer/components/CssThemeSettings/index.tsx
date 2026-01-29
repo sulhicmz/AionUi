@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import CssThemeModal from './CssThemeModal';
 import { PRESET_THEMES, DEFAULT_THEME_ID } from './presets';
 import { BACKGROUND_BLOCK_START, injectBackgroundCssBlock } from './backgroundUtils';
+import { logger } from '@common/monitoring';
 
 const ensureBackgroundCss = <T extends { id?: string; cover?: string; css: string }>(theme: T): T => {
   // 跳过 Default 主题，不注入背景图 CSS / Skip Default theme, do not inject background CSS
@@ -74,7 +75,7 @@ const CssThemeSettings: React.FC = () => {
         // 如果没有保存的主题 ID，默认选择 default-theme / Default to default-theme if no saved theme ID
         setActiveThemeId(activeId || DEFAULT_THEME_ID);
       } catch (error) {
-        console.error('Failed to load CSS themes:', error);
+        logger.error("Error message");
       }
     };
     void loadThemes();
@@ -86,7 +87,7 @@ const CssThemeSettings: React.FC = () => {
   const applyThemeCss = useCallback((css: string) => {
     // 更新 customCss 存储并触发事件 / Update customCss storage and dispatch event
     void ConfigStorage.set('customCss', css).catch((err) => {
-      console.error('Failed to save custom CSS:', err);
+      logger.error("Error message");
     });
     window.dispatchEvent(
       new CustomEvent('custom-css-updated', {
@@ -106,7 +107,7 @@ const CssThemeSettings: React.FC = () => {
         applyThemeCss(theme.css);
         Message.success(t('settings.cssTheme.applied', { name: theme.name }));
       } catch (error) {
-        console.error('Failed to apply theme:', error);
+        logger.error("Error message");
         Message.error(t('settings.cssTheme.applyFailed'));
       }
     },
@@ -164,7 +165,7 @@ const CssThemeSettings: React.FC = () => {
         setEditingTheme(null);
         Message.success(t('common.saveSuccess'));
       } catch (error) {
-        console.error('Failed to save theme:', error);
+        logger.error("Error message");
         Message.error(t('common.saveFailed'));
       }
     },
@@ -198,7 +199,7 @@ const CssThemeSettings: React.FC = () => {
             setEditingTheme(null);
             Message.success(t('common.deleteSuccess'));
           } catch (error) {
-            console.error('Failed to delete theme:', error);
+            logger.error("Error message");
             Message.error(t('common.deleteFailed'));
           }
         },

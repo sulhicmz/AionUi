@@ -8,6 +8,7 @@ import { ipcBridge } from '@/common';
 import { Image } from '@arco-design/web-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 interface ImagePreviewProps {
   filePath?: string;
@@ -46,7 +47,7 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({ filePath, content, fileName
         setImageSrc(base64);
       } catch (err) {
         if (!isMounted) return;
-        console.error('[ImagePreview] Failed to load image:', err);
+        logger.error("Error message");
         setError(t('messages.imageLoadFailed', { defaultValue: 'Failed to load image' }));
       } finally {
         if (isMounted) {

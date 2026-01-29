@@ -8,6 +8,7 @@ import { Steps } from '@arco-design/web-react';
 import type { StepsProps } from '@arco-design/web-react/es/Steps';
 import classNames from 'classnames';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 步骤条组件属性 / Steps component props

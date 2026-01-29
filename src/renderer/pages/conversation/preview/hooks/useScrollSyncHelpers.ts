@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useCallback, useRef } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 监听外部滚动同步请求的 Hook
@@ -64,7 +65,7 @@ export const useCodeMirrorScroll = (wrapperRef: React.RefObject<HTMLDivElement>,
       // CodeMirror's scroll container is the .cm-scroller element
       const scroller = wrapper.querySelector('.cm-scroller') as HTMLElement;
       if (!scroller) {
-        console.warn('[useCodeMirrorScroll] Could not find .cm-scroller element');
+        logger.warn("Warning message");
         return;
       }
 

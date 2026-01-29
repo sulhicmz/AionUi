@@ -14,6 +14,7 @@ import { GeminiMcpAgent } from './agents/GeminiMcpAgent';
 import { AionuiMcpAgent } from './agents/AionuiMcpAgent';
 import { CodexMcpAgent } from './agents/CodexMcpAgent';
 import type { IMcpProtocol, DetectedMcpServer, McpConnectionTestResult, McpSyncResult, McpSource } from './McpProtocol';
+import { logger } from '@common/monitoring';
 
 /**
  * MCP服务 - 负责协调各个Agent的MCP操作协议
@@ -105,7 +106,7 @@ export class McpService {
           name: 'Google Gemini CLI',
           cliPath: 'gemini',
         });
-        console.log('[McpService] Added native Gemini CLI for MCP detection');
+        logger.info("Log message");
       } catch {
         // 原生 Gemini CLI 未安装，跳过
       }
@@ -117,18 +118,18 @@ export class McpService {
         // 跳过 fork 的 Gemini（backend='gemini' 且 cliPath=undefined）
         // fork 的 Gemini 的 MCP 配置应该由 AionuiMcpAgent 管理
         if (agent.backend === 'gemini' && !agent.cliPath) {
-          console.log(`[McpService] Skipping fork Gemini (ACP only, MCP managed by AionuiMcpAgent)`);
+          logger.info(`McpService Skipping fork Gemini (ACP only, MCP managed by AionuiMcpAgent)`);
           return null;
         }
 
         const agentInstance = this.getAgent(agent.backend);
         if (!agentInstance) {
-          console.warn(`[McpService] No agent instance for backend: ${agent.backend}`);
+          logger.warn(`McpService No agent instance for backend: ${agent.backend}`);
           return null;
         }
 
         const servers = await agentInstance.detectMcpServers(agent.cliPath);
-        console.log(`[McpService] Detected ${servers.length} MCP servers for ${agent.backend} (cliPath: ${agent.cliPath || 'default'})`);
+        logger.info(`McpService Detected ${servers.length} MCP servers for ${agent.backend} (cliPath: ${agent.cliPath || 'default'})`);
 
         if (servers.length > 0) {
           return {
@@ -138,7 +139,7 @@ export class McpService {
         }
         return null;
       } catch (error) {
-        console.warn(`[McpService] Failed to detect MCP servers for ${agent.backend}:`, error);
+        logger.warn(`McpService Failed to detect MCP servers for ${agent.backend}:`);
         return null;
       }
     });
@@ -182,7 +183,7 @@ export class McpService {
       try {
         const agentInstance = this.getAgent(agent.backend);
         if (!agentInstance) {
-          console.warn(`[McpService] Skipping MCP sync for unsupported backend: ${agent.backend}`);
+          logger.warn(`McpService Skipping MCP sync for unsupported backend: ${agent.backend}`);
           return {
             agent: agent.name,
             success: true,
@@ -227,7 +228,7 @@ export class McpService {
       try {
         const agentInstance = this.getAgent(agent.backend);
         if (!agentInstance) {
-          console.warn(`[McpService] Skipping MCP removal for unsupported backend: ${agent.backend}`);
+          logger.warn(`McpService Skipping MCP removal for unsupported backend: ${agent.backend}`);
           return {
             agent: `${agent.backend}:${agent.name}`,
             success: true,

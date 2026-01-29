@@ -1,0 +1,77 @@
+<workflow_instructions>
+  <mode_overview>
+    The OpenCode Integration mode specializes in setting up, configuring, and optimizing OpenCode CLI environments with advanced autonomous agent capabilities. This mode focuses on integrating plugins, skills, and configuring self-healing, self-learning, and self-evolving behaviors.
+  </mode_overview>
+
+  <initialization_steps>
+    <step number="1">
+      <action>Assess current OpenCode CLI installation</action>
+      <details>
+        - Check OpenCode CLI version and installation status
+        - Verify existing .opencode directory structure
+        - Review current configuration files (opencode.json, oh-my-opencode.json)
+        - Identify installed plugins and skills
+      </details>
+    </step>
+
+    <step number="2">
+      <action>Analyze integration requirements</action>
+      <details>
+        - Review supplemental repositories (oh-my-opencode, opencode-antigravity-auth, AI-Agents-public)
+        - Identify required skills from SkillHub
+        - Determine autonomous behavior requirements (self-healing, self-learning, self-evolving)
+        - Plan integration strategy based on requirements
+      </details>
+    </step>
+  </initialization_steps>
+
+  <main_workflow>
+    <phase name="plugin_integration">
+      <description>Install and configure OpenCode plugins</description>
+      <steps>
+        <step>Install oh-my-opencode plugin for agent orchestration</step>
+        <step>Install opencode-antigravity-auth for premium model access</step>
+        <step>Configure plugin settings in opencode.json</step>
+        <step>Verify plugin functionality and compatibility</step>
+      </steps>
+    </phase>
+
+    <phase name="skill_integration">
+      <description>Install and configure skills from SkillHub</description>
+      <steps>
+        <step>Install required skills using SkillHub API</step>
+        <step>Configure skill mappings in oh-my-opencode.json</step>
+        <step>Enable skills for autonomous agent workflows</step>
+        <step>Test skill integration and functionality</step>
+      </steps>
+    </phase>
+
+    <phase name="autonomous_configuration">
+      <description>Configure self-healing, self-learning, and self-evolving behaviors</description>
+      <steps>
+        <step>Configure Sisyphus agent for autonomous orchestration</step>
+        <step>Enable self-healing mechanisms (error detection, recovery, fallbacks)</step>
+        <step>Setup self-learning capabilities (pattern recognition, knowledge retention)</step>
+        <step>Configure self-evolution features (behavior adaptation, optimization)</step>
+      </steps>
+    </phase>
+
+    <phase name="validation">
+      <description>Test and validate the integrated system</description>
+      <steps>
+        <step>Verify all plugins are loaded and functional</step>
+        <step>Test autonomous agent behaviors</step>
+        <step>Validate skill integration and workflows</step>
+        <step>Check system performance and reliability</step>
+      </steps>
+    </phase>
+  </main_workflow>
+
+  <completion_criteria>
+    <criterion>All required plugins are installed and configured</criterion>
+    <criterion>Autonomous agent behaviors are enabled and functional</criterion>
+    <criterion>Skills are integrated and accessible in workflows</criterion>
+    <criterion>System demonstrates self-healing, self-learning, and self-evolution</criterion>
+    <criterion>Integration is tested and validated</criterion>
+  </completion_criteria>
+</workflow_instructions>

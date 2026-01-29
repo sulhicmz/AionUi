@@ -6,6 +6,7 @@
 
 import { useCallback, useRef } from 'react';
 import { SCROLL_SYNC_DEBOUNCE } from '../constants';
+import { logger } from '@common/monitoring';
 
 /**
  * 滚动同步 Hook 配置

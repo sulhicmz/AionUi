@@ -20,6 +20,7 @@ import HorizontalFileList from '@/renderer/components/HorizontalFileList';
 import { usePreviewContext } from '@/renderer/pages/conversation/preview';
 import { useLatestRef } from '@/renderer/hooks/useLatestRef';
 import { useAutoTitle } from '@/renderer/hooks/useAutoTitle';
+import { logger } from '@common/monitoring';
 
 interface CodexDraftData {
   _type: 'codex';
@@ -328,7 +329,7 @@ const CodexSendBox: React.FC<{ conversation_id: string }> = ({ conversation_id }
     // 小延迟确保状态消息已经完全处理
     const timer = setTimeout(() => {
       processInitialMessage().catch((error) => {
-        console.error('Failed to process initial message:', error);
+        logger.error("Error message");
       });
     }, 200);
 

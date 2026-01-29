@@ -12,7 +12,7 @@
  * @template TOutput - Output request format (e.g., Gemini GenerateContentRequest)
  * @template TResponse - Final response format (e.g., OpenAI ChatCompletion)
  */
-export interface ProtocolConverter<TInput, TOutput, TResponse> {
+export interface ProtocolConverter<TInput, TOutput, TResponse, TTargetResponse = any> {
   /**
    * Convert input request to target protocol format
    */
@@ -21,7 +21,7 @@ export interface ProtocolConverter<TInput, TOutput, TResponse> {
   /**
    * Convert target protocol response back to standard format
    */
-  convertResponse(response: any, originalModel: string): TResponse;
+  convertResponse(response: TTargetResponse, originalModel: string): TResponse;
 }
 
 /**
@@ -33,5 +33,5 @@ export interface ConverterConfig {
   /** Custom model mapping rules */
   modelMapping?: Record<string, string>;
   /** Additional converter-specific options */
-  options?: Record<string, any>;
+  options?: Record<string, unknown>;
 }

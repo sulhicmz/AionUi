@@ -16,6 +16,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { existsSync } from 'fs';
 import { getSkillsDir } from '../initStorage';
+import { logger } from '@common/monitoring';
 
 /**
  * Skill 定义（与 aioncli-core 兼容）
@@ -136,7 +137,7 @@ export class AcpSkillManager {
 
     const skillsDir = this.skillsDir;
     if (!existsSync(skillsDir)) {
-      console.warn(`[AcpSkillManager] Skills directory not found: ${skillsDir}`);
+      logger.warn(`AcpSkillManager Skills directory not found: ${skillsDir}`);
       this.initialized = true;
       return;
     }
@@ -170,13 +171,13 @@ export class AcpSkillManager {
 
           this.skills.set(skillName, skillDef);
         } catch (error) {
-          console.warn(`[AcpSkillManager] Failed to load skill ${skillName}:`, error);
+          logger.warn(`AcpSkillManager Failed to load skill ${skillName}:`);
         }
       }
 
-      console.log(`[AcpSkillManager] Discovered ${this.skills.size} skills`);
+      logger.info(`AcpSkillManager Discovered ${this.skills.size} skills`);
     } catch (error) {
-      console.error(`[AcpSkillManager] Failed to discover skills:`, error);
+      logger.error(`AcpSkillManager Failed to discover skills:`);
     }
 
     this.initialized = true;
@@ -207,7 +208,7 @@ export class AcpSkillManager {
         const content = await fs.readFile(skill.location, 'utf-8');
         skill.body = extractBody(content);
       } catch (error) {
-        console.warn(`[AcpSkillManager] Failed to load skill body for ${name}:`, error);
+        logger.warn(`AcpSkillManager Failed to load skill body for ${name}:`);
         skill.body = '';
       }
     }

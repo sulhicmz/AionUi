@@ -7,6 +7,7 @@
 import type { IDirOrFile } from '@/common/ipcBridge';
 import type { NodeInstance } from '@arco-design/web-react/es/Tree/interface';
 import type { Message } from '@arco-design/web-react';
+import { logger } from '@common/monitoring';
 
 export type MessageApi = ReturnType<typeof Message.useMessage>[0];
 

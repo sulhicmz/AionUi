@@ -8,6 +8,7 @@ import type { IMessageAgentStatus } from '@/common/chatLib';
 import { Badge, Typography } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 const { Text } = Typography;
 

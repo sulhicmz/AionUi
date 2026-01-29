@@ -8,6 +8,7 @@ import { conversation } from '@/common/ipcBridge';
 import type { CodexPermissionOption } from '../types/permissionTypes';
 import { useState } from 'react';
 import { PermissionType, PermissionSeverity, PERMISSION_DECISION_MAP } from '../types/permissionTypes';
+import { logger } from '@common/monitoring';
 
 /**
  * 基础权限选项配置

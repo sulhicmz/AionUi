@@ -5,6 +5,7 @@
  */
 
 import type { PreviewContentType } from '@/common/types/preview';
+import { logger } from '@common/monitoring';
 
 /**
  * 文件扩展名到内容类型的映射配置

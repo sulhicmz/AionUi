@@ -4,6 +4,7 @@ import { LoadingTwo } from '@icon-park/react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { createContext } from '../utils/createContext';
 import { iconColors } from '@/renderer/theme/colors';
+import { logger } from '@common/monitoring';
 
 const [useLocalImage, LocalImageProvider, useUpdateLocalImage] = createContext({ root: '' });
 
@@ -36,7 +37,7 @@ const LocalImageView: React.FC<{
         setLoading(false);
       })
       .catch((error) => {
-        console.error('[LocalImageView] Failed to load image:', {
+        logger.error('[LocalImageView] Failed to load image:', {
           path: absolutePath,
           error,
         });

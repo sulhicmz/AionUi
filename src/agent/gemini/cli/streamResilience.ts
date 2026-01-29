@@ -20,6 +20,7 @@
  */
 
 import type { ServerGeminiStreamEvent } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 // Stream Connection Configuration / 流式连接配置
 export interface StreamResilienceConfig {

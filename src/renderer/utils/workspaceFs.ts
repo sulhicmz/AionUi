@@ -5,6 +5,7 @@
  */
 
 import { ipcBridge } from '@/common';
+import { logger } from '@common/monitoring';
 
 interface IBridgeResponse<D = unknown> {
   success: boolean;

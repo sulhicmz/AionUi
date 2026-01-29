@@ -7,6 +7,7 @@
 import type { PreviewHistoryTarget, PreviewSnapshotInfo } from '@/common/types/preview';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * PreviewHistoryDropdown 组件属性

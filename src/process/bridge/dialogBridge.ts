@@ -6,6 +6,7 @@
 
 import { BrowserWindow, dialog } from 'electron';
 import { ipcBridge } from '../../common';
+import { logger } from '@common/monitoring';
 
 export function initDialogBridge(): void {
   ipcBridge.dialog.showOpen.provider((options) => {

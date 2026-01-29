@@ -6,6 +6,7 @@
 
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
 import { ADAPTER_BRIDGE_EVENT_KEY } from './adapter/constant';
+import { logger } from '@common/monitoring';
 
 /**
  * @description 注入到renderer进程中, 用于与main进程通信
@@ -21,7 +22,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
         })
       )
       .catch((error) => {
-        console.error('IPC invoke error:', error);
+        logger.error("Error message");
         throw error;
       });
   },

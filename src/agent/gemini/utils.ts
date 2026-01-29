@@ -11,6 +11,7 @@ import { MIME_TO_EXT_MAP, DEFAULT_IMAGE_EXTENSION } from '@/common/constants';
 import * as fs from 'fs';
 import * as path from 'path';
 import { StreamMonitor, globalToolCallGuard, type StreamConnectionEvent, type StreamResilienceConfig, DEFAULT_STREAM_RESILIENCE_CONFIG } from './cli/streamResilience';
+import { logger } from '@common/monitoring';
 
 enum StreamProcessingStatus {
   Completed,
@@ -72,7 +73,7 @@ export const processGeminiStreamEvents = async (stream: AsyncIterable<ServerGemi
     if (event.type === 'state_change') {
       console.debug(`[StreamMonitor] State changed to: ${event.state}`, event.reason || '');
     } else if (event.type === 'heartbeat_timeout') {
-      console.warn(`[StreamMonitor] Heartbeat timeout detected, last event: ${event.lastEventTime}`);
+      logger.warn(`StreamMonitor Heartbeat timeout detected, last event: ${event.lastEventTime}`);
     }
     // 传递给外部监听器
     monitorOptions?.onConnectionEvent?.(event);
@@ -87,7 +88,7 @@ export const processGeminiStreamEvents = async (stream: AsyncIterable<ServerGemi
 
       // 检查是否心跳超时（长时间无数据）
       if (monitor.isHeartbeatTimeout()) {
-        console.warn('[StreamMonitor] Stream heartbeat timeout, connection may be stale');
+        logger.warn("Warning message");
         // 不立即中断，让上层处理决定
       }
 
@@ -148,7 +149,7 @@ export const processGeminiStreamEvents = async (stream: AsyncIterable<ServerGemi
                   data: `![Generated Image](${relativePath})`,
                 });
               } catch (error) {
-                console.error('[InlineData] Failed to save image:', error);
+                logger.error("Error message");
                 onStreamEvent({
                   type: ServerGeminiEventType.Error,
                   data: `Failed to save generated image: ${error instanceof Error ? error.message : String(error)}`,
@@ -245,7 +246,7 @@ export const processGeminiStreamEvents = async (stream: AsyncIterable<ServerGemi
           // Some event types may not be handled yet
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const _unhandled: any = event;
-          console.warn('Unhandled event type:', _unhandled);
+          logger.warn("Warning message");
           break;
         }
       }
@@ -261,7 +262,7 @@ export const processGeminiStreamEvents = async (stream: AsyncIterable<ServerGemi
 
     // 检查是否是连接相关错误
     if (errorMessage.includes('fetch failed') || errorMessage.includes('network') || errorMessage.includes('timeout') || errorMessage.includes('ECONNRESET') || errorMessage.includes('socket hang up')) {
-      console.error('[StreamMonitor] Connection error detected:', errorMessage);
+      logger.error("Error message");
       return StreamProcessingStatus.ConnectionLost;
     }
 

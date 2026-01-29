@@ -11,6 +11,7 @@ import { dispatchWorkspaceHasFilesEvent } from '@/renderer/utils/workspaceEvents
 import { useCallback, useRef, useState } from 'react';
 import type { SelectedNodeRef } from '../types';
 import { getFirstLevelKeys } from '../utils/treeHelpers';
+import { logger } from '@common/monitoring';
 
 interface UseWorkspaceTreeOptions {
   workspace: string;

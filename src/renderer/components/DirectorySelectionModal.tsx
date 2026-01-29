@@ -8,6 +8,7 @@ import { Button, Modal, Spin } from '@arco-design/web-react';
 import { IconFile, IconFolder, IconUp } from '@arco-design/web-react/icon';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 interface DirectoryItem {
   name: string;
@@ -49,7 +50,7 @@ const DirectorySelectionModal: React.FC<DirectorySelectionModalProps> = ({ visib
         setDirectoryData(data);
         setCurrentPath(path);
       } catch (error) {
-        console.error('Failed to load directory:', error);
+        logger.error("Error message");
       } finally {
         setLoading(false);
       }
@@ -60,13 +61,13 @@ const DirectorySelectionModal: React.FC<DirectorySelectionModalProps> = ({ visib
   useEffect(() => {
     if (visible) {
       setSelectedPath('');
-      loadDirectory('').catch((error) => console.error('Failed to load initial directory:', error));
+      loadDirectory('').catch((error) => logger.error("Error message");
     }
   }, [visible, loadDirectory]);
 
   const handleItemClick = (item: DirectoryItem) => {
     if (item.isDirectory) {
-      loadDirectory(item.path).catch((error) => console.error('Failed to load directory:', error));
+      loadDirectory(item.path).catch((error) => logger.error("Error message");
     }
   };
 
@@ -82,7 +83,7 @@ const DirectorySelectionModal: React.FC<DirectorySelectionModalProps> = ({ visib
 
   const handleGoUp = () => {
     if (directoryData.parentPath !== undefined) {
-      loadDirectory(directoryData.parentPath).catch((error) => console.error('Failed to load parent directory:', error));
+      loadDirectory(directoryData.parentPath).catch((error) => logger.error("Error message");
     }
   };
 

@@ -8,6 +8,7 @@ import jaJP from './locales/ja-JP.json';
 import zhTW from './locales/zh-TW.json';
 import koKR from './locales/ko-KR.json';
 import { ConfigStorage } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 const resources = {
   'zh-CN': {
@@ -43,19 +44,19 @@ i18n
     },
   })
   .catch((error) => {
-    console.error('Failed to initialize i18n:', error);
+    logger.error("Error message");
   });
 
 ConfigStorage.get('language')
   .then((language) => {
     if (language) {
       i18n.changeLanguage(language).catch((error) => {
-        console.error('Failed to change language:', error);
+        logger.error("Error message");
       });
     }
   })
   .catch((error) => {
-    console.error('Failed to load language setting:', error);
+    logger.error("Error message");
   });
 
 export default i18n;

@@ -5,6 +5,7 @@
  */
 
 import { useRef, useLayoutEffect, useCallback } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 保持值的最新引用，避免闭包陷阱

@@ -7,6 +7,7 @@
 import { ipcBridge } from '@/common';
 import type { IResponseMessage } from '@/common/ipcBridge';
 import { NavigationInterceptor, NAVIGATION_TOOLS, type PreviewOpenData, type NavigationToolData, type NavigationToolName } from '@/common/navigation';
+import { logger } from '@common/monitoring';
 
 // Re-export from NavigationInterceptor for backward compatibility
 export { NAVIGATION_TOOLS, type NavigationToolName, type PreviewOpenData, type NavigationToolData };

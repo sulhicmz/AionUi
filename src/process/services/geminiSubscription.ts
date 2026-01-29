@@ -6,6 +6,7 @@
 
 import type { UserTierId } from '@office-ai/aioncli-core';
 import { getOauthInfoWithCache } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 export interface GeminiSubscriptionStatus {
   isSubscriber: boolean;

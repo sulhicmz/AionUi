@@ -15,6 +15,7 @@ import useSWR from 'swr';
 import AionScrollArea from '@/renderer/components/base/AionScrollArea';
 import classNames from 'classnames';
 import { useSettingsViewMode } from '../settingsViewContext';
+import { logger } from '@common/monitoring';
 
 /**
  * 目录选择输入组件 / Directory selection input component
@@ -44,7 +45,7 @@ const DirInputItem: React.FC<{
               }
             })
             .catch((error) => {
-              console.error('Failed to open directory dialog:', error);
+              logger.error("Error message");
             });
         };
 

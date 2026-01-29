@@ -11,6 +11,7 @@ import { Tag, Tooltip } from '@arco-design/web-react';
 import { LoadingOne } from '@icon-park/react';
 import React from 'react';
 import { iconColors } from '@/renderer/theme/colors';
+import { logger } from '@common/monitoring';
 
 interface McpAgentStatusDisplayProps {
   serverName: string;

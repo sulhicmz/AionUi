@@ -8,6 +8,7 @@ import type { ProtocolDetectionResponse, ProtocolType } from '@/common/utils/pro
 import { Loading } from '@icon-park/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * 协议检测状态组件

@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import type { FileOrFolderItem } from '@/renderer/types/files';
+import { logger } from '@common/monitoring';
 export type { FileOrFolderItem } from '@/renderer/types/files';
 
 type Draft =
@@ -106,7 +107,7 @@ export const getSendBoxDraftHook = <K extends TChatConversation['type']>(type: K
             { revalidate: false }
           )
           .catch((error) => {
-            console.error('Failed to mutate draft:', error);
+            logger.error("Error message");
           });
       },
       [conversation_id]

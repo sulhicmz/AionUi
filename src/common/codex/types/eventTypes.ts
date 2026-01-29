@@ -189,7 +189,7 @@ export enum CodexAgentEventType {
       type: 'apply_patch_approval_request',
       call_id: 'patch-7',
       changes: {
-        'src/app.ts': { type: 'update', unified_diff: '--- a\n+++ b\n+console.log("hi")\n', move_path: null },
+        'src/app.ts': { type: 'update', unified_diff: '--- a\n+++ b\n+logger.info("Log message")\n', move_path: null },
         'README.md': { type: 'add', content: '# Readme\n' },
       },
       reason: null,
@@ -234,7 +234,9 @@ export enum CodexAgentEventType {
   // MCP tool events
   /**
    * MCP工具调用开始事件 - 表示MCP工具调用开始
-   * tips: 需要先安装 codex mcp add 12306-mcp，12306-mcp 是一个 MCP 服务器, 更多MCP可查考 https://modelscope.cn/mcp?page=1 , 安装完成通过 codex mcp list 查看是否安装成功
+   * tips: 需要先安装 codex mcp add 12306-mcp，12306-mcp 是一个 MCP 服务器,
+     * 更多MCP可查考 https://modelscope.cn/mcp?page=1 
+     * 安装完成通过 codex mcp list 查看是否安装成功
    * prompt: 帮我查询 2025-10-10 从深圳到广州的高铁票
    * payload: {
       "type": "mcp_tool_call_begin",
@@ -276,7 +278,8 @@ export enum CodexAgentEventType {
           "Ok": {
           "content": [
             {
-            "text": "车次|出发站 -> 到达站|出发时间 -> 到达时间|历时\nG834 深圳北(telecode:IOQ) -> 广州南(telecode:IZQ) 06:10 -> 06:46 历时：00:36\n-……",
+            "text": "车次|出发站 -> 到达站|出发时间 -> 到达时间|历时\n" +
+             "G834 深圳北(telecode:IOQ) -> 广州南(telecode:IZQ) 06:10 -> 06:46 历时：00:36\n-……",
             "type": "text"
             }
           ]
@@ -321,8 +324,16 @@ export enum CodexAgentEventType {
    * prompt: 用命令 apply_patch <<'PATCH' … PATCH 写入一个文件，内容和文件名你自由发挥
    * payload: {
       "type": "turn_diff",
-      // eslint-disable-next-line max-len
-      "unified_diff": "diff --git a//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt b//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt\nnew file mode 100644\nindex 0000000000000000000000000000000000000000..151e31d7a6627e3fb0df2e49b3c0c179f96e46cc\n--- /dev/null\n+++ b//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt\n@@ -0,0 +1,2 @@\n+This file was created via apply_patch.\n+Line two says hello.\n"
+      "unified_diff": 
+        "diff --git a//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt " +
+        "b//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt\n" +
+        "new file mode 100644\n" +
+        "index 0000000000000000000000000000000000000000..151e31d7a6627e3fb0df2e49b3c0c179f96e46cc\n" +
+        "--- /dev/null\n" +
+        "+++ b//Users/pojian/Library/Application Support/AionUi/aionui/codex-temp-1759197123355/freestyle.txt\n" +
+        "@@ -0,0 +1,2 @@\n" +
+        "+This file was created via apply_patch.\n" +
+        "+Line two says hello.\n"
     }
    */
   TURN_DIFF = 'turn_diff',

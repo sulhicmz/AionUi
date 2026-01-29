@@ -130,7 +130,7 @@ export function generateInspectScript(inspectMode: boolean, messages: InspectMes
           const tag = getSimplifiedTag(element);
 
           // 通过 console.log 发送消息（webview 会捕获）/ Send message via console.log (webview will capture)
-          console.log('__INSPECT_ELEMENT__' + JSON.stringify({ html: html, tag: tag }));
+          logger.info("Log message");
 
           // 显示提示 / Show notification
           showNotification(${copySuccess});

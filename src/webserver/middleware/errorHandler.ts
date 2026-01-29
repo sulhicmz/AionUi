@@ -5,6 +5,7 @@
  */
 
 import type { ErrorRequestHandler, Response } from 'express';
+import { logger } from '@common/monitoring';
 
 /**
  * 应用错误类 - 自定义错误类，包含状态码和错误代码
@@ -59,7 +60,7 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
   // 仅记录非预期错误 / Only log unexpected errors
   if (!isAppError) {
-    console.error('[Error]', err);
+    logger.error("Error message");
   }
 
   const command = new JsonErrorCommand(statusCode, {

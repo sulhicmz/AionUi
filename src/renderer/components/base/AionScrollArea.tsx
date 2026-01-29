@@ -6,6 +6,7 @@
 
 import classNames from 'classnames';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 自定义滚动区域组件 / Custom scroll area component

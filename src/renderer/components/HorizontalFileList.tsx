@@ -6,6 +6,7 @@
 
 import { IconLeft, IconRight } from '@arco-design/web-react/icon';
 import React, { useRef, useState, useEffect } from 'react';
+import { logger } from '@common/monitoring';
 
 interface HorizontalFileListProps {
   children: React.ReactNode;

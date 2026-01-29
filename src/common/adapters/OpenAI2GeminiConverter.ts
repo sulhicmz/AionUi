@@ -5,6 +5,8 @@
  */
 
 import type { ProtocolConverter, ConverterConfig } from './ProtocolConverter';
+import type { FunctionParameterSchema, OpenAIFunctionParameters, GeminiFunctionParameters, GeminiResponse, OpenAIChoice, isValidGeminiResponse } from '@/common/types/ai-schemas';
+import { logger } from '@common/monitoring';
 
 // OpenAI types - compatible with actual OpenAI SDK types
 export interface OpenAIChatCompletionParams {
@@ -24,7 +26,7 @@ export interface OpenAIChatCompletionParams {
     function: {
       name: string;
       description?: string;
-      parameters?: any;
+      parameters?: FunctionParameterSchema;
     };
   }>;
   tool_choice?: 'auto' | 'none' | { type: 'function'; function: { name: string } };
@@ -70,7 +72,7 @@ export interface GeminiRequest {
     functionDeclarations: Array<{
       name: string;
       description?: string;
-      parameters?: any;
+      parameters?: FunctionParameterSchema;
     }>;
   }>;
 }
@@ -78,7 +80,7 @@ export interface GeminiRequest {
 /**
  * Converter for transforming OpenAI chat completion format to/from Gemini format
  */
-export class OpenAI2GeminiConverter implements ProtocolConverter<OpenAIChatCompletionParams, GeminiRequest, OpenAIChatCompletionResponse> {
+export class OpenAI2GeminiConverter implements ProtocolConverter<OpenAIChatCompletionParams, GeminiRequest, OpenAIChatCompletionResponse, GeminiResponse> {
   private readonly config: ConverterConfig;
 
   constructor(config: ConverterConfig = {}) {
@@ -158,7 +160,7 @@ export class OpenAI2GeminiConverter implements ProtocolConverter<OpenAIChatCompl
   /**
    * Convert Gemini response back to OpenAI chat completion format
    */
-  convertResponse(geminiResponse: any, requestedModel: string): OpenAIChatCompletionResponse {
+  convertResponse(geminiResponse: GeminiResponse, requestedModel: string): OpenAIChatCompletionResponse {
     const candidates = geminiResponse.candidates || [];
     const candidate = candidates[0];
 
@@ -194,7 +196,7 @@ export class OpenAI2GeminiConverter implements ProtocolConverter<OpenAIChatCompl
     }
 
     // Build OpenAI-compatible response
-    const choice: any = {
+    const choice: OpenAIChoice = {
       index: 0,
       message: {
         role: 'assistant',

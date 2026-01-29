@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Message } from '@arco-design/web-react';
 import type { FileMetadata } from '../services/FileService';
 import { isSupportedFile, FileService } from '../services/FileService';
+import { logger } from '@common/monitoring';
 
 export interface UseDragUploadOptions {
   supportedExts?: string[];
@@ -94,7 +95,7 @@ export const useDragUpload = ({ supportedExts = [], onFilesAdded }: UseDragUploa
           }
         }
       } catch (err) {
-        console.error('Failed to process dropped files:', err);
+        logger.error("Error message");
         Message.error(t('sendbox.dropFileError', 'Failed to process dropped files'));
       }
     },

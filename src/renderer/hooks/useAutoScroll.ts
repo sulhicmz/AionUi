@@ -5,6 +5,7 @@
  */
 
 import { useEffect } from 'react';
+import { logger } from '@common/monitoring';
 
 interface UseAutoScrollOptions {
   containerRef: React.RefObject<HTMLDivElement>; // 容器引用 / Container ref

@@ -8,6 +8,7 @@ import type { CodexToolCallUpdate } from '@/common/chatLib';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import BaseToolCallDisplay from './BaseToolCallDisplay';
+import { logger } from '@common/monitoring';
 
 type WebSearchUpdate = Extract<CodexToolCallUpdate, { subtype: 'web_search_begin' | 'web_search_end' }>;
 

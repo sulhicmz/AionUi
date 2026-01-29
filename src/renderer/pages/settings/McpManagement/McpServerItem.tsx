@@ -4,6 +4,7 @@ import type { IMcpServer } from '@/common/storage';
 import McpServerHeader from './McpServerHeader';
 import McpServerToolsList from './McpServerToolsList';
 import type { McpOAuthStatus } from '@/renderer/hooks/mcp/useMcpOAuth';
+import { logger } from '@common/monitoring';
 
 interface McpServerItemProps {
   server: IMcpServer;

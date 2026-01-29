@@ -8,6 +8,7 @@ import { bridge } from '@office-ai/platform';
 import React, { useCallback, useEffect, useState } from 'react';
 import { SHOW_OPEN_REQUEST_EVENT } from '../../adapter/constant';
 import DirectorySelectionModal from '../components/DirectorySelectionModal';
+import { logger } from '@common/monitoring';
 
 interface DirectorySelectionRequest {
   id: string;

@@ -9,6 +9,7 @@ import { spawn, execSync } from 'child_process';
 import type { CodexEventParams } from '@/common/codex/types';
 import { globalErrorService, fromNetworkError } from '../core/ErrorService';
 import { JSONRPC_VERSION } from '@/types/acpTypes';
+import { logger } from '@common/monitoring';
 
 type JsonRpcId = number | string;
 
@@ -174,7 +175,7 @@ export class CodexConnection {
           for (const line of lines) {
             if (!line.trim()) continue;
 
-            console.log('codex line ===>', line);
+            logger.info("Log message");
 
             // Check if this looks like a JSON-RPC message
             if (line.trim().startsWith('{') && line.trim().endsWith('}')) {

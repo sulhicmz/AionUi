@@ -6,6 +6,7 @@
 
 import type { IDirOrFile } from '@/common/ipcBridge';
 import type { NodeInstance } from '@arco-design/web-react/es/Tree/interface';
+import { logger } from '@common/monitoring';
 
 /**
  * 从 Tree 节点中提取数据引用

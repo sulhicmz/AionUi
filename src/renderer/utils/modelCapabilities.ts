@@ -5,6 +5,7 @@
  */
 
 import type { IProvider, ModelType } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 // 能力判断缓存
 const modelCapabilitiesCache = new Map<string, boolean | undefined>();

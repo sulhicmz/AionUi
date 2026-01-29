@@ -9,6 +9,7 @@ import { Tag } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import BaseToolCallDisplay from './BaseToolCallDisplay';
+import { logger } from '@common/monitoring';
 
 type McpToolUpdate = Extract<CodexToolCallUpdate, { subtype: 'mcp_tool_call_begin' | 'mcp_tool_call_end' }>;
 

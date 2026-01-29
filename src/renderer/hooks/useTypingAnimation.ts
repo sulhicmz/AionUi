@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 interface UseTypingAnimationOptions {
   content: string; // 原始内容 / Original content

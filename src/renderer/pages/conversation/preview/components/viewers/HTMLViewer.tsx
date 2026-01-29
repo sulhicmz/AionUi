@@ -8,6 +8,7 @@ import { Message } from '@arco-design/web-react';
 import MonacoEditor from '@monaco-editor/react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 interface HTMLPreviewProps {
   content: string;
@@ -401,7 +402,7 @@ const HTMLPreview: React.FC<HTMLPreviewProps> = ({ content, filePath, hideToolba
           <div
             className='px-12px py-6px text-13px text-t-primary hover:bg-bg-2 cursor-pointer transition-colors'
             onClick={() => {
-              console.log('[HTMLPreview] Element info:', contextMenu.element);
+              logger.info("Log message");
               messageApi.info(t('preview.html.printedToConsole'));
               setContextMenu(null);
             }}

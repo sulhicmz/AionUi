@@ -7,6 +7,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PreviewTab } from './PreviewTabs';
+import { logger } from '@common/monitoring';
 
 /**
  * 上下文菜单状态

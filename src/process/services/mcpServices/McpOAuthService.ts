@@ -9,6 +9,7 @@ import { MCPOAuthTokenStorage } from '@office-ai/aioncli-core/dist/src/mcp/oauth
 import type { MCPOAuthConfig } from '@office-ai/aioncli-core/dist/src/mcp/oauth-provider.js';
 import { EventEmitter } from 'node:events';
 import type { IMcpServer } from '../../../common/storage';
+import { logger } from '@common/monitoring';
 
 export interface OAuthStatus {
   isAuthenticated: boolean;
@@ -34,7 +35,7 @@ export class McpOAuthService {
 
     // 监听 OAuth 显示消息事件
     this.eventEmitter.on(OAUTH_DISPLAY_MESSAGE_EVENT, (message: string) => {
-      console.log('[McpOAuthService] OAuth Message:', message);
+      logger.info("Log message");
       // 可以通过 WebSocket 发送到前端
     });
   }
@@ -104,7 +105,7 @@ export class McpOAuthService {
         needsLogin: false,
       };
     } catch (error) {
-      console.error('[McpOAuthService] Error checking OAuth status:', error);
+      logger.error("Error message");
       return {
         isAuthenticated: false,
         needsLogin: false,
@@ -146,10 +147,10 @@ export class McpOAuthService {
       // 执行 OAuth 认证流程
       await this.oauthProvider.authenticate(server.name, config, url, this.eventEmitter);
 
-      console.log(`[McpOAuthService] OAuth login successful for ${server.name}`);
+      logger.info(`McpOAuthService OAuth login successful for ${server.name}`);
       return { success: true };
     } catch (error) {
-      console.error('[McpOAuthService] OAuth login failed:', error);
+      logger.error("Error message");
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
@@ -165,7 +166,7 @@ export class McpOAuthService {
       const config = oauthConfig || { enabled: true };
       return await this.oauthProvider.getValidToken(server.name, config);
     } catch (error) {
-      console.error('[McpOAuthService] Failed to get valid token:', error);
+      logger.error("Error message");
       return null;
     }
   }
@@ -176,9 +177,9 @@ export class McpOAuthService {
   async logout(serverName: string): Promise<void> {
     try {
       await this.tokenStorage.deleteCredentials(serverName);
-      console.log(`[McpOAuthService] Logged out from ${serverName}`);
+      logger.info(`McpOAuthService Logged out from ${serverName}`);
     } catch (error) {
-      console.error('[McpOAuthService] Failed to logout:', error);
+      logger.error("Error message");
       throw error;
     }
   }
@@ -190,7 +191,7 @@ export class McpOAuthService {
     try {
       return await this.tokenStorage.listServers();
     } catch (error) {
-      console.error('[McpOAuthService] Failed to list servers:', error);
+      logger.error("Error message");
       return [];
     }
   }

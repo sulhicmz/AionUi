@@ -2,6 +2,7 @@ import type { GeminiModelSelection } from '@/renderer/pages/conversation/gemini/
 import { Button, Dropdown, Menu, Tooltip } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 // 统一的模型下拉，供会话头部使用
 // Unified model dropdown rendered in the chat header

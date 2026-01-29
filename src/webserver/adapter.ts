@@ -7,6 +7,7 @@
 import type { WebSocketServer } from 'ws';
 import { registerWebSocketBroadcaster, getBridgeEmitter } from '../adapter/main';
 import { WebSocketManager } from './websocket/WebSocketManager';
+import { logger } from '@common/monitoring';
 
 // 存储取消注册函数，用于服务器停止时清理
 // Store unregister function for cleanup when server stops

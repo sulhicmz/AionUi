@@ -1,0 +1,160 @@
+<best_practices>
+  <general_principles>
+    <principle priority="high">
+      <name>Verify Before Installing</name>
+      <description>Always check existing installations before adding new plugins or skills to avoid conflicts</description>
+      <rationale>Prevents plugin conflicts and ensures compatibility</rationale>
+      <example>
+        <scenario>Installing oh-my-opencode</scenario>
+        <good>Check existing plugins in opencode.json, verify no conflicts, then add plugin</good>
+        <bad>Install plugin without checking existing configuration</bad>
+      </example>
+    </principle>
+
+    <principle priority="high">
+      <name>Configure Authentication First</name>
+      <description>Set up authentication (Google OAuth) before configuring premium models</description>
+      <rationale>Ensures access to premium models and prevents authentication errors</rationale>
+      <example>
+        <scenario>Setting up antigravity models</scenario>
+        <good>Run `opencode auth login` first, then configure model usage</good>
+        <bad>Configure models without authentication setup</bad>
+      </example>
+    </principle>
+
+    <principle priority="medium">
+      <name>Enable Autonomous Features Gradually</name>
+      <description>Enable self-healing, self-learning, and self-evolving features incrementally</description>
+      <rationale>Allows for testing and validation of each autonomous feature</rationale>
+      <example>
+        <scenario>Configuring autonomous behaviors</scenario>
+        <good>Enable self-healing first, test, then enable self-learning, then self-evolution</good>
+        <bad>Enable all autonomous features at once without testing</bad>
+      </example>
+    </principle>
+  </general_principles>
+
+  <plugin_management>
+    <convention category="installation">
+      <rule>Always use the latest stable version unless beta features are specifically needed</rule>
+      <examples>
+        <good>opencode-antigravity-auth@latest</good>
+        <bad>opencode-antigravity-auth@beta (unless specifically needed)</bad>
+      </examples>
+    </convention>
+
+    <convention category="configuration">
+      <rule>Configure plugins in the correct order: authentication → models → features</rule>
+      <template>
+        1. Set up authentication
+        2. Configure model definitions
+        3. Enable plugin features
+        4. Test functionality
+      </template>
+    </convention>
+  </plugin_management>
+
+  <skill_integration>
+    <convention category="skill_mapping">
+      <rule>Map skills to appropriate agent categories based on functionality</rule>
+      <examples>
+        <good>Debugging skills → oracle agent, Frontend skills → frontend-ui-ux-engineer</good>
+        <bad>All skills → sisyphus agent without categorization</bad>
+      </examples>
+    </convention>
+
+    <convention category="skill_enablement">
+      <rule>Enable skills incrementally and test each before proceeding</rule>
+      <template>
+        1. Install skill from SkillHub
+        2. Add to oh-my-opencode.json configuration
+        3. Test basic functionality
+        4. Enable in autonomous workflows
+      </template>
+    </convention>
+  </skill_integration>
+
+  <autonomous_configuration>
+    <convention category="self_healing">
+      <rule>Configure error detection and recovery mechanisms with appropriate thresholds</rule>
+      <template>
+        {
+          "self_healing": {
+            "enabled": true,
+            "error_threshold": 3,
+            "recovery_timeout": 30000,
+            "auto_retry": true,
+            "max_retries": 3
+          }
+        }
+      </template>
+    </convention>
+
+    <convention category="self_learning">
+      <rule>Enable knowledge retention and pattern recognition with tracking</rule>
+      <template>
+        {
+          "self_learning": {
+            "enabled": true,
+            "pattern_recognition": true,
+            "knowledge_retention": true,
+            "performance_tracking": true
+          }
+        }
+      </template>
+    </convention>
+
+    <convention category="self_evolving">
+      <rule>Configure behavior adaptation and strategy optimization</rule>
+      <template>
+        {
+          "self_evolving": {
+            "enabled": true,
+            "behavior_adaptation": true,
+            "strategy_optimization": true,
+            "continuous_improvement": true
+          }
+        }
+      </template>
+    </convention>
+  </autonomous_configuration>
+
+  <common_pitfalls>
+    <pitfall>
+      <description>Plugin conflicts due to incompatible versions</description>
+      <why_problematic>Causes crashes and unexpected behavior</why_problematic>
+      <correct_approach>Check compatibility matrix and use tested combinations</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Authentication issues with premium models</description>
+      <why_problematic>Prevents access to advanced features</why_problematic>
+      <correct_approach>Set up authentication before configuring premium models</correct_approach>
+    </pitfall>
+
+    <pitfall>
+      <description>Overwhelming autonomous features</description>
+      <why_problematic>Can lead to unpredictable behavior</why_problematic>
+      <correct_approach>Enable features gradually and test each one</correct_approach>
+    </pitfall>
+  </common_pitfalls>
+
+  <quality_checklist>
+    <category name="before_integration">
+      <item>Verify OpenCode CLI installation</item>
+      <item>Check existing plugin configurations</item>
+      <item>Review authentication status</item>
+    </category>
+    <category name="during_integration">
+      <item>Install plugins in correct order</item>
+      <item>Configure skills appropriately</item>
+      <item>Test each component before proceeding</item>
+    </category>
+    <category name="after_integration">
+      <item>Verify all plugins are loaded</item>
+      <item>Test autonomous behaviors</item>
+      <item>Validate skill functionality</item>
+      <item>Check system performance</item>
+    </category>
+  </quality_checklist>
+</best_practices>

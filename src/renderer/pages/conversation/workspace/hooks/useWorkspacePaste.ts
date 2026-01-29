@@ -11,6 +11,7 @@ import { usePasteService } from '@/renderer/hooks/usePasteService';
 import { useCallback, useState } from 'react';
 import type { MessageApi, PasteConfirmState, SelectedNodeRef } from '../types';
 import { getTargetFolderPath } from '../utils/treeHelpers';
+import { logger } from '@common/monitoring';
 
 interface UseWorkspacePasteOptions {
   workspace: string;

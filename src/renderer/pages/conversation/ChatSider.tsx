@@ -8,6 +8,7 @@ import type { TChatConversation } from '@/common/storage';
 import { Message } from '@arco-design/web-react';
 import React from 'react';
 import ChatWorkspace from './workspace';
+import { logger } from '@common/monitoring';
 
 const ChatSider: React.FC<{
   conversation?: TChatConversation;

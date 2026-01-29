@@ -9,6 +9,7 @@ import { conversation } from '@/common/ipcBridge';
 import { Button, Card, Radio, Typography } from '@arco-design/web-react';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 const { Text } = Typography;
 
@@ -69,11 +70,11 @@ const MessageAcpPermission: React.FC<MessageAcpPermissionProps> = React.memo(({ 
         setHasResponded(true);
       } else {
         // Handle failure case - could add error display here
-        console.error('Failed to confirm permission:', result);
+        logger.error("Error message");
       }
     } catch (error) {
       // Handle error case - could add error logging here
-      console.error('Error confirming permission:', error);
+      logger.error("Error message");
     } finally {
       setIsResponding(false);
     }

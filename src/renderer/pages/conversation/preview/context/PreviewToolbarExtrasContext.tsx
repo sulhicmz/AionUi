@@ -5,6 +5,7 @@
  */
 
 import { createContext, useContext, type ReactNode } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 自定义工具栏插槽的内容结构

@@ -9,6 +9,7 @@ import { Button, Slider } from '@arco-design/web-react';
 import { useTranslation } from 'react-i18next';
 import { useThemeContext } from '../context/ThemeContext';
 import { FONT_SCALE_DEFAULT, FONT_SCALE_MAX, FONT_SCALE_MIN, FONT_SCALE_STEP } from '../hooks/useFontScale';
+import { logger } from '@common/monitoring';
 
 // 浮点数比较容差 / Floating point comparison tolerance
 const EPSILON = 0.001;

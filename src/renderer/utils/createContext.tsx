@@ -6,6 +6,7 @@
 
 import type { FunctionComponent, PropsWithChildren } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 type FN<P> = FunctionComponent<PropsWithChildren<P>>;
 
@@ -18,7 +19,7 @@ export const createContext = <T extends any>(value: T): [() => T, FN<{ value: T 
   }>({
     value,
     setValue() {
-      console.warn('');
+      logger.warn("Warning message");
     },
   });
 

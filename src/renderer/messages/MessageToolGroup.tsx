@@ -21,6 +21,7 @@ import { ImagePreviewContext } from './MessageList';
 import MessageFileChanges from './codex/MessageFileChanges';
 import { COLLAPSE_CONFIG, TEXT_CONFIG } from './constants';
 import type { ImageGenerationResult, WriteFileResult } from './types';
+import { logger } from '@common/monitoring';
 
 // Alert 组件样式常量 Alert component style constant
 // 顶部对齐图标与内容，避免多行文本时图标垂直居中
@@ -211,7 +212,7 @@ const ImageDisplay: React.FC<{
           setLoading(false);
         })
         .catch((error) => {
-          console.error('Failed to load image:', error);
+          logger.error("Error message");
           setError(true);
           setLoading(false);
         });
@@ -239,7 +240,7 @@ const ImageDisplay: React.FC<{
           messageApi.success(t('messages.copySuccess', { defaultValue: 'Copied' }));
           return;
         } catch (clipboardError) {
-          console.warn('[ImageDisplay] Clipboard API failed, trying fallback:', clipboardError);
+          logger.warn("Warning message");
         }
       }
 
@@ -271,12 +272,12 @@ const ImageDisplay: React.FC<{
           ]);
           messageApi.success(t('messages.copySuccess', { defaultValue: 'Copied' }));
         } catch (canvasError) {
-          console.error('[ImageDisplay] Canvas fallback also failed:', canvasError);
+          logger.error("Error message");
           messageApi.error(t('messages.copyFailed', { defaultValue: 'Failed to copy' }));
         }
       }, 'image/png');
     } catch (error) {
-      console.error('Failed to copy image:', error);
+      logger.error("Error message");
       messageApi.error(t('messages.copyFailed', { defaultValue: 'Failed to copy' }));
     }
   }, [getImageBlob, imageUrl, t, messageApi]);
@@ -298,7 +299,7 @@ const ImageDisplay: React.FC<{
 
       messageApi.success(t('messages.downloadSuccess', { defaultValue: 'Download successful' }));
     } catch (error) {
-      console.error('Failed to download image:', error);
+      logger.error("Error message");
       messageApi.error(t('messages.downloadFailed', { defaultValue: 'Failed to download' }));
     }
   }, [getImageBlob, relativePath, t, messageApi]);
@@ -419,10 +420,10 @@ const MessageToolGroup: React.FC<IMessageToolGroupProps> = ({ message }) => {
                     conversation_id: message.conversation_id,
                   })
                   .then((res) => {
-                    console.log('------onConfirm.res>:', res);
+                    logger.info("Log message");
                   })
                   .catch((error) => {
-                    console.error('Failed to confirm message:', error);
+                    logger.error("Error message");
                   });
               }}
             ></ConfirmationDetails>

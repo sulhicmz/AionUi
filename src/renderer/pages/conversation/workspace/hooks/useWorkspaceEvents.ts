@@ -9,6 +9,7 @@ import type { IDirOrFile } from '@/common/ipcBridge';
 import { emitter, useAddEventListener } from '@/renderer/utils/emitter';
 import { useEffect } from 'react';
 import type { ContextMenuState } from '../types';
+import { logger } from '@common/monitoring';
 
 interface UseWorkspaceEventsOptions {
   conversation_id: string;

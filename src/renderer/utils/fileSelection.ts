@@ -5,6 +5,7 @@
  */
 
 import type { FileOrFolderItem } from '@/renderer/types/files';
+import { logger } from '@common/monitoring';
 
 export type FileSelectionItem = string | FileOrFolderItem;
 

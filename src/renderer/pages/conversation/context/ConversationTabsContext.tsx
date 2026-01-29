@@ -8,6 +8,7 @@ import type { TChatConversation } from '@/common/storage';
 import { STORAGE_KEYS } from '@/common/storageKeys';
 import { addEventListener } from '@/renderer/utils/emitter';
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /** 会话 Tab 数据结构 / Conversation Tab data structure */
 export interface ConversationTab {

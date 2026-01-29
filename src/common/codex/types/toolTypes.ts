@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import type { CodexAgentEventType } from './eventTypes';
+import { logger } from '@common/monitoring';
 
 // 工具类别枚举
 export enum ToolCategory {

@@ -5,6 +5,7 @@
  */
 import type { CodexError, ErrorCode } from '@/common/codex/types/errorTypes';
 import { ERROR_CODES } from '@/common/codex/types/errorTypes';
+import { logger } from '@common/monitoring';
 
 // Re-export types for convenience
 export type { CodexError, ErrorCode };

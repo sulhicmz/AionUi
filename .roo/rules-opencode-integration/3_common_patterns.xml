@@ -1,0 +1,251 @@
+<common_patterns>
+  <plugin_installation>
+    <pattern name="standard_plugin_install">
+      <description>Standard pattern for installing OpenCode plugins</description>
+      <template>
+# 1. Add plugin to opencode.json
+{
+  "plugin": ["existing-plugin", "new-plugin@latest"]
+}
+
+# 2. Configure plugin settings
+{
+  "plugin_settings": {
+    "new-plugin": {
+      "enabled": true,
+      "options": {}
+    }
+  }
+}
+
+# 3. Verify installation
+opencode --version
+opencode run "test" --model=plugin/model
+      </template>
+    </pattern>
+
+    <pattern name="authentication_setup">
+      <description>Pattern for setting up authentication with premium models</description>
+      <template>
+# 1. Install authentication plugin
+opencode plugin install auth-plugin
+
+# 2. Authenticate
+opencode auth login
+
+# 3. Configure premium models
+{
+  "provider": {
+    "google": {
+      "models": {
+        "premium-model": {
+          "name": "Premium Model",
+          "limit": { "context": 1048576, "output": 65536 }
+        }
+      }
+    }
+  }
+}
+      </template>
+    </pattern>
+  </plugin_installation>
+
+  <skill_integration>
+    <pattern name="skillhub_install">
+      <description>Pattern for installing skills from SkillHub</description>
+      <template>
+# 1. Install skill via API
+curl -sL "https://www.skillhub.club/api/v1/skills/skill-name/install?agents=opencode&format=sh" | bash
+
+# 2. Configure in oh-my-opencode.json
+{
+  "skills": {
+    "skill-name": {
+      "enabled": true,
+      "options": {}
+    }
+  }
+}
+
+# 3. Test skill functionality
+opencode run "test skill" --skill=skill-name
+      </template>
+    </pattern>
+
+    <pattern name="skill_mapping">
+      <description>Pattern for mapping skills to agents</description>
+      <template>
+{
+  "agents": {
+    "agent-name": {
+      "model": "model-name",
+      "skills": ["skill1", "skill2"],
+      "temperature": 0.1
+    }
+  },
+  "skills": {
+    "skill1": { "enabled": true },
+    "skill2": { "enabled": true }
+  }
+}
+      </template>
+    </pattern>
+  </skill_integration>
+
+  <autonomous_configuration>
+    <pattern name="self_healing_setup">
+      <description>Pattern for configuring self-healing capabilities</description>
+      <template>
+{
+  "hooks": {
+    "self_healing": {
+      "enabled": true,
+      "error_detection": true,
+      "auto_recovery": true,
+      "fallback_strategies": true,
+      "error_threshold": 3,
+      "recovery_timeout": 30000,
+      "max_retries": 3
+    }
+  },
+  "background_tasks": {
+    "auto_retry": true,
+    "max_retries": 3,
+    "learning_from_failures": true
+  }
+}
+      </template>
+    </pattern>
+
+    <pattern name="self_learning_setup">
+      <description>Pattern for configuring self-learning capabilities</description>
+      <template>
+{
+  "hooks": {
+    "self_learning": {
+      "enabled": true,
+      "pattern_recognition": true,
+      "knowledge_retention": true,
+      "performance_tracking": true,
+      "learning_rate": 0.1,
+      "knowledge_base": "./knowledge"
+    }
+  },
+  "memory": {
+    "enabled": true,
+    "retention_policy": "adaptive",
+    "learning_patterns": true
+  }
+}
+      </template>
+    </pattern>
+
+    <pattern name="self_evolving_setup">
+      <description>Pattern for configuring self-evolving capabilities</description>
+      <template>
+{
+  "hooks": {
+    "self_evolving": {
+      "enabled": true,
+      "behavior_adaptation": true,
+      "strategy_optimization": true,
+      "continuous_improvement": true,
+      "evolution_rate": 0.05,
+      "adaptation_threshold": 0.8
+    }
+  },
+  "agents": {
+    "sisyphus": {
+      "autonomous": true,
+      "self_evolving": true,
+      "adaptation_enabled": true
+    }
+  }
+}
+      </template>
+    </pattern>
+  </autonomous_configuration>
+
+  <agent_orchestration>
+    <pattern name="multi_agent_setup">
+      <description>Pattern for setting up multi-agent coordination</description>
+      <template>
+{
+  "agents": {
+    "sisyphus": {
+      "model": "primary-model",
+      "role": "orchestrator",
+      "autonomous": true
+    },
+    "oracle": {
+      "model": "debugging-model",
+      "role": "specialist",
+      "expertise": ["debugging", "architecture"]
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "frontend-model",
+      "role": "specialist",
+      "expertise": ["frontend", "ui", "ux"]
+    }
+  },
+  "background_tasks": {
+    "max_concurrent": 5,
+    "coordination": true,
+    "load_balancing": true
+  }
+}
+      </template>
+    </pattern>
+
+    <pattern name="task_delegation">
+      <description>Pattern for delegating tasks to specialized agents</description>
+      <template>
+# Task delegation workflow
+1. Sisyphus analyzes task requirements
+2. Identifies required expertise
+3. Delegates to appropriate specialist agent
+4. Monitors progress and provides support
+5. Integrates results and continues workflow
+      </template>
+    </pattern>
+  </agent_orchestration>
+
+  <testing_validation>
+    <pattern name="integration_test">
+      <description>Pattern for testing integration components</description>
+      <template>
+# 1. Test plugin loading
+opencode --list-plugins
+
+# 2. Test model access
+opencode run "test" --model=configured-model
+
+# 3. Test skill functionality
+opencode run "test skill" --skill=skill-name
+
+# 4. Test autonomous behaviors
+opencode run "autonomous test" --agent=autonomous-agent
+
+# 5. Validate configuration
+opencode config validate
+      </template>
+    </pattern>
+
+    <pattern name="performance_check">
+      <description>Pattern for checking system performance</description>
+      <template>
+# 1. Monitor resource usage
+opencode monitor --resources
+
+# 2. Check response times
+opencode benchmark --model=all
+
+# 3. Validate autonomous behaviors
+opencode test autonomous --duration=300
+
+# 4. Review error rates
+opencode logs --level=error --since=1h
+      </template>
+    </pattern>
+  </testing_validation>
+</common_patterns>

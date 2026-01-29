@@ -17,6 +17,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { CSSProperties } from 'react';
 import { injectBackgroundCssBlock } from './backgroundUtils';
+import { logger } from '@common/monitoring';
 
 /** CodeMirror 编辑器样式 / CodeMirror editor styles */
 const CODE_MIRROR_STYLE: CSSProperties = {
@@ -90,7 +91,7 @@ const CssThemeModal: React.FC<CssThemeModalProps> = ({ visible, theme, onClose, 
         }
       }
     } catch (error) {
-      console.error('Failed to upload cover:', error);
+      logger.error("Error message");
     }
   }, [applyBackgroundImageToCss]);
 

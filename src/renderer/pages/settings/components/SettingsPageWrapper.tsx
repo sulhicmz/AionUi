@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { useLayoutContext } from '@/renderer/context/LayoutContext';
 import { SettingsViewModeProvider } from '@/renderer/components/SettingsModal/settingsViewContext';
+import { logger } from '@common/monitoring';
 
 interface SettingsPageWrapperProps {
   children: React.ReactNode;

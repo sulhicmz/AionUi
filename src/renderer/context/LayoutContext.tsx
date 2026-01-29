@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 export interface LayoutContextValue {
   isMobile: boolean;

@@ -7,6 +7,7 @@
 import { ipcBridge } from '@/common';
 import type { FileMetadata } from './FileService';
 import { getFileExtension } from './FileService';
+import { logger } from '@common/monitoring';
 
 type PasteHandler = (event: React.ClipboardEvent | ClipboardEvent) => Promise<boolean>;
 
@@ -149,11 +150,11 @@ class PasteServiceClass {
                 });
               }
             } catch (error) {
-              console.error('创建临时文件失败:', error);
+              logger.error("Error message");
             }
           } else {
             // 不支持的文件类型，跳过但不报错（让后续过滤处理）
-            console.warn(`Unsupported image type: ${file.type}, extension: ${fileExt}`);
+            logger.warn(`Unsupported image type: ${file.type}, extension: ${fileExt}`);
           }
         } else if (filePath) {
           // 有文件路径的文件（从文件管理器拖拽的文件）
@@ -170,7 +171,7 @@ class PasteServiceClass {
             });
           } else {
             // 不支持的文件类型
-            console.warn(`Unsupported file type: ${file.name}, extension: ${fileExt}`);
+            logger.warn(`Unsupported file type: ${file.name}, extension: ${fileExt}`);
           }
         } else if (!file.type.startsWith('image/')) {
           // 没有文件路径的非图片文件（从文件管理器复制粘贴的文件）
@@ -199,10 +200,10 @@ class PasteServiceClass {
                 });
               }
             } catch (error) {
-              console.error('创建临时文件失败:', error);
+              logger.error("Error message");
             }
           } else {
-            console.warn(`Unsupported file type: ${file.name}, extension: ${fileExt}`);
+            logger.warn(`Unsupported file type: ${file.name}, extension: ${fileExt}`);
           }
         }
       }

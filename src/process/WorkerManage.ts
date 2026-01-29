@@ -12,6 +12,7 @@ import { ProcessChat } from './initStorage';
 import type AgentBaseTask from './task/BaseAgentManager';
 import { GeminiAgentManager } from './task/GeminiAgentManager';
 import { getDatabase } from './database/export';
+import { logger } from '@common/monitoring';
 
 const taskList: {
   id: string;
@@ -82,7 +83,7 @@ const getTaskByIdRollbackBuild = async (id: string): Promise<AgentBaseTask<unkno
     return buildConversation(conversation);
   }
 
-  console.error('[WorkerManage] Conversation not found in database or file storage:', id);
+  logger.error("Error message");
   return Promise.reject(new Error('Conversation not found'));
 };
 

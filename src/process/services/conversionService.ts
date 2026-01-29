@@ -14,6 +14,7 @@ import PPTX2Json from 'pptx2json';
 import TurndownService from 'turndown';
 import * as XLSX from 'xlsx-republish';
 import * as yauzl from 'yauzl';
+import { logger } from '@common/monitoring';
 
 class ConversionService {
   private turndownService: TurndownService;
@@ -37,7 +38,7 @@ class ConversionService {
       const markdown = this.turndownService.turndown(html);
       return { success: true, data: markdown };
     } catch (error) {
-      console.error('[ConversionService] wordToMarkdown failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -75,7 +76,7 @@ class ConversionService {
       await fs.writeFile(targetPath, buffer);
       return { success: true };
     } catch (error) {
-      console.error('[ConversionService] markdownToWord failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -103,7 +104,7 @@ class ConversionService {
 
       return { success: true, data: { sheets } };
     } catch (error) {
-      console.error('[ConversionService] excelToJson failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -128,7 +129,7 @@ class ConversionService {
       await fs.writeFile(targetPath, buffer);
       return { success: true };
     } catch (error) {
-      console.error('[ConversionService] jsonToExcel failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -143,7 +144,7 @@ class ConversionService {
       const pptx2json = new PPTX2Json();
       const json = await pptx2json.toJson(filePath);
 
-      console.log('[ConversionService] pptx2json raw result keys:', Object.keys(json));
+      logger.info("Log message");
 
       // 提取幻灯片信息 / Extract slide information
       const slides = [];
@@ -155,7 +156,7 @@ class ConversionService {
       for (const path of possiblePaths) {
         if (json[path]) {
           slidesData = json[path];
-          console.log(`[ConversionService] Found slides at path: ${path}`);
+          logger.info(`ConversionService Found slides at path: ${path}`);
           break;
         }
       }
@@ -163,12 +164,12 @@ class ConversionService {
       // 如果上面的路径都找不到，尝试查找所有包含 'slide' 的键
       if (!slidesData) {
         const allKeys = Object.keys(json);
-        console.log('[ConversionService] All keys in json:', allKeys);
+        logger.info("Log message");
 
         // 查找所有以 slide 开头的键
         const slideKeys = allKeys.filter((key) => key.toLowerCase().includes('slide') && key.endsWith('.xml'));
 
-        console.log('[ConversionService] Found slide keys:', slideKeys);
+        logger.info("Log message");
 
         if (slideKeys.length > 0) {
           for (let i = 0; i < slideKeys.length; i++) {
@@ -180,7 +181,7 @@ class ConversionService {
         }
       } else if (typeof slidesData === 'object') {
         const slideFiles = Object.keys(slidesData).filter((key) => key.startsWith('slide') && key.endsWith('.xml'));
-        console.log('[ConversionService] Found slide files:', slideFiles);
+        logger.info("Log message");
 
         for (let i = 0; i < slideFiles.length; i++) {
           slides.push({
@@ -190,7 +191,7 @@ class ConversionService {
         }
       }
 
-      console.log('[ConversionService] Total slides extracted:', slides.length);
+      logger.info("Log message");
 
       return {
         success: true,
@@ -200,7 +201,7 @@ class ConversionService {
         },
       };
     } catch (error) {
-      console.error('[ConversionService] pptToJson failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }
@@ -275,7 +276,7 @@ class ConversionService {
 
       return result;
     } catch (error) {
-      console.warn('[ConversionService] extractExcelImages failed:', error);
+      logger.warn("Warning message");
       return {};
     }
   }
@@ -516,7 +517,7 @@ class ConversionService {
       await fs.writeFile(targetPath, data);
       return { success: true };
     } catch (error) {
-      console.error('[ConversionService] htmlToPdf failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     } finally {
       if (win) {
@@ -554,7 +555,7 @@ class ConversionService {
       const html = `<pre style="white-space: pre-wrap; font-family: monospace;">${markdown}</pre>`;
       return await this.htmlToPdf(html, targetPath);
     } catch (error) {
-      console.error('[ConversionService] markdownToPdf failed:', error);
+      logger.error("Error message");
       return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   }

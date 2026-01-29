@@ -5,6 +5,7 @@
  */
 
 import type { GenerateContentResponse } from '@google/genai';
+import { logger } from '@common/monitoring';
 
 export function getResponseText(response: GenerateContentResponse): string | undefined {
   const parts = response.candidates?.[0]?.content?.parts;

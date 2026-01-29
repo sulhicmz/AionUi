@@ -6,6 +6,7 @@
 
 import { bridge, logger } from '@office-ai/platform';
 import type { ElectronBridgeAPI } from '@/types/electron';
+import { logger } from '@common/monitoring';
 
 interface CustomWindow extends Window {
   electronAPI?: ElectronBridgeAPI;
@@ -32,7 +33,7 @@ if (win.electronAPI) {
           const { name, data } = JSON.parse(value);
           emitter.emit(name, data);
         } catch (e) {
-          console.warn('JSON parsing error:', e);
+          logger.warn("Warning message");
         }
       });
     },
@@ -119,7 +120,7 @@ if (win.electronAPI) {
         // 处理认证过期 - 停止重连并跳转到登录页
         // Handle auth expiration - stop reconnecting and redirect to login
         if (payload.name === 'auth-expired') {
-          console.warn('[WebSocket] Authentication expired, stopping reconnection');
+          logger.warn("Warning message");
           shouldReconnect = false;
 
           // 清除所有待执行的重连定时器
@@ -208,7 +209,7 @@ if (win.electronAPI) {
 
 logger.provider({
   log(log) {
-    console.log('process.log', log.type, ...log.logs);
+    logger.info("Log message");
   },
   path() {
     return Promise.resolve('');

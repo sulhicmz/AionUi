@@ -10,6 +10,7 @@ import { Message } from '@arco-design/web-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MarkdownPreview from './MarkdownViewer';
+import { logger } from '@common/monitoring';
 
 interface WordPreviewProps {
   filePath?: string;

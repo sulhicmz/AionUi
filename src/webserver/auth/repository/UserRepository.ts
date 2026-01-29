@@ -6,6 +6,7 @@
 
 import { getDatabase } from '@process/database/export';
 import type { IUser, IQueryResult } from '@process/database/types';
+import { logger } from '@common/monitoring';
 
 /**
  * 认证用户类型，仅包含必要的认证字段

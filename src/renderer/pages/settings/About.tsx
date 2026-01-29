@@ -7,6 +7,7 @@
 import React from 'react';
 import AboutModalContent from '@/renderer/components/SettingsModal/contents/AboutModalContent';
 import SettingsPageWrapper from './components/SettingsPageWrapper';
+import { logger } from '@common/monitoring';
 
 const About: React.FC = () => {
   return (

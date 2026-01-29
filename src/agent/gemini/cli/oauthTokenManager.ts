@@ -20,6 +20,7 @@
  */
 
 import { AuthType } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 // Token State / Token 状态
 export enum TokenState {
@@ -240,7 +241,7 @@ export class OAuthTokenManager {
     }
 
     if (!this.refreshCallback) {
-      console.warn('[OAuthTokenManager] No refresh callback set');
+      logger.warn("Warning message");
       return false;
     }
 

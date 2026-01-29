@@ -4,6 +4,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+type DeferredData = unknown;
+type HandlerData = unknown;
+type PipeData = { data: unknown; state: 'fulfilled' | 'rejected' };
+type CallbackData = { type: 'fulfilled' | 'rejected'; data: unknown };
+type LogArgs = unknown[];
+
 const uuid = (len = 4) => {
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -19,16 +25,16 @@ const uuid = (len = 4) => {
 const callbackKey = (key: string) => key + '.callback';
 
 class Deferred {
-  resolve: (data: any) => void;
-  reject: (data: any) => void;
-  private _promise: Promise<any>;
+  resolve: (data: DeferredData) => void;
+  reject: (data: DeferredData) => void;
+  private _promise: Promise<DeferredData>;
   private key: string;
   constructor(key: string) {
     this._promise = new Promise((resolve, reject) => {
-      this.resolve = (data: any) => {
+      this.resolve = (data: DeferredData) => {
         resolve(data);
       };
-      this.reject = (data: any) => {
+      this.reject = (data: DeferredData) => {
         reject(data);
       };
     });
@@ -37,19 +43,19 @@ class Deferred {
   promise() {
     return this._promise;
   }
-  then(onfulfilled: (data: any) => void, onrejected?: (data: any) => void) {
+  then(onfulfilled: (data: DeferredData) => void, onrejected?: (data: DeferredData) => void) {
     return this._promise.then(onfulfilled, onrejected);
   }
-  catch(onrejected: (data: any) => void) {
+  catch(onrejected: (data: DeferredData) => void) {
     return this._promise.catch(onrejected);
   }
   finally(onfinally: () => void) {
     return this._promise.finally(onfinally);
   }
-  with(promise: Promise<any>) {
+  with(promise: Promise<DeferredData>) {
     promise.then(this.resolve).catch(this.reject);
   }
-  pipe(handler: (key: string, data: { data: any; state: 'fulfilled' | 'rejected' }) => void) {
+  pipe(handler: (key: string, data: PipeData) => void) {
     const key = callbackKey(this.key);
     return this.promise()
       .then((data) => handler(key, { data, state: 'fulfilled' }))
@@ -57,7 +63,7 @@ class Deferred {
   }
 }
 
-type THandler = (data: any, deferred?: Deferred) => void;
+type THandler = (data: HandlerData, deferred?: Deferred) => void;
 
 export class Pipe {
   listener: {
@@ -70,12 +76,12 @@ export class Pipe {
       if (process.parentPort) {
         process.parentPort.on('message', (event) => {
           const { type, data, pipeId } = event.data || {};
-          // console.log("--------------->from main message", event.data);
+          // logger.info("Log message");
           if (type) {
             const deferred = this.deferred(pipeId);
             if (pipeId) {
               deferred.pipe(this.call.bind(this)).catch((error: Error) => {
-                console.error('Failed to pipe deferred call:', error);
+                logger.error("Error message");
               });
             }
             this.emit(type, data, deferred);
@@ -122,11 +128,11 @@ export class Pipe {
    */
   call(name: string, data: any, extPrams: any = {}) {
     if (this.isClose) {
-      console.log('---主进程已关闭', name, '执行失败！!');
+      logger.info("Log message");
       return;
     }
     if (!process.parentPort?.postMessage) {
-      console.error('---非子线程，无法使用主线程事件机制');
+      logger.error("Error message");
       return;
     }
     process.parentPort.postMessage({
@@ -142,9 +148,9 @@ export class Pipe {
       pipeId,
     });
     const promise = new Promise<T>((resolve, reject) => {
-      this.once(callbackKey(pipeId), (data) => {
+      this.once(callbackKey(pipeId), (data: CallbackData) => {
         if (data.type === 'fulfilled') {
-          resolve(data.data);
+          resolve(data.data as T);
         } else {
           reject(data.data);
         }
@@ -152,7 +158,7 @@ export class Pipe {
     });
     return promise;
   }
-  log(...args: any[]) {
+  log(...args: LogArgs) {
     this.call('log', args);
   }
   clear() {

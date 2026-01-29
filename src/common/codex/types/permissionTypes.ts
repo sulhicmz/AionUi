@@ -5,6 +5,7 @@
  */
 
 import type { ExecApprovalRequestData, ApplyPatchApprovalRequestData } from './eventData';
+import { logger } from '@common/monitoring';
 
 // ===== UI-facing permission request payloads for Codex =====
 

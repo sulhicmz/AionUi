@@ -5,6 +5,7 @@
  */
 
 import { AuthType } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 /**
  * 根据平台名称获取对应的认证类型

@@ -6,6 +6,7 @@
 
 import { useCallback, useState } from 'react';
 import type { ContextMenuState, RenameModalState, DeleteModalState, PasteConfirmState } from '../types';
+import { logger } from '@common/monitoring';
 
 /**
  * useWorkspaceModals - 管理所有模态框和菜单状态

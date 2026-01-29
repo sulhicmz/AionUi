@@ -10,6 +10,7 @@ import { createTwoFilesPatch } from 'diff';
 import React from 'react';
 import Diff2Html from '../../components/Diff2Html';
 import MarkdownView from '../../components/Markdown';
+import { logger } from '@common/monitoring';
 
 const StatusTag: React.FC<{ status: string }> = ({ status }) => {
   const getTagProps = () => {

@@ -9,6 +9,7 @@ import type { TMessage } from '@/common/chatLib';
 import type { CodexEventMsg } from '@/common/codex/types';
 import type { ICodexMessageEmitter } from '@/agent/codex/messaging/CodexMessageEmitter';
 import { ERROR_CODES, globalErrorService } from '@/agent/codex/core/ErrorService';
+import { logger } from '@common/monitoring';
 
 export class CodexMessageProcessor {
   private currentLoadingId: string | null = null;
@@ -94,7 +95,7 @@ export class CodexMessageProcessor {
       type: 'text' as const,
       position: 'left' as const,
       conversation_id: this.conversation_id,
-      content: { content: msg.message },
+      content: { content: msg.message, role: 'assistant' },
       createdAt: Date.now(),
     };
 

@@ -8,6 +8,7 @@ import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import classNames from 'classnames';
+import { logger } from '@common/monitoring';
 
 const FlexFullContainer: React.FC<
   PropsWithChildren<{

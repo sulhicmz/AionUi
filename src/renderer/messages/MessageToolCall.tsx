@@ -13,6 +13,7 @@ import 'diff2html/bundles/css/diff2html.min.css';
 import React, { useMemo, useState } from 'react';
 import MarkdownView from '../components/Markdown';
 import { iconColors } from '@/renderer/theme/colors';
+import { logger } from '@common/monitoring';
 
 const Diff2Html = ({ message }: { message: IMessageToolCall }) => {
   const [sideBySide, setSideBySide] = useState(false);

@@ -10,6 +10,7 @@ import { acpConversation } from '@/common/ipcBridge';
 import CodeMirror from '@uiw/react-codemirror';
 import { markdown } from '@codemirror/lang-markdown';
 import { useThemeContext } from '@/renderer/context/ThemeContext';
+import { logger } from '@common/monitoring';
 
 interface PresetManagementProps {
   message: ReturnType<typeof Message.useMessage>[0];
@@ -35,7 +36,7 @@ const PresetManagement: React.FC<PresetManagementProps> = ({ message }) => {
         setPresets(agents.filter((a) => a.isPreset));
       }
     } catch (error) {
-      console.error('Failed to load presets:', error);
+      logger.error("Error message");
     }
   }, []);
 

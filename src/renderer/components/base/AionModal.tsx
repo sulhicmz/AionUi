@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import type { CSSProperties } from 'react';
 import React from 'react';
 import { useThemeContext } from '@/renderer/context/ThemeContext';
+import { logger } from '@common/monitoring';
 
 // ==================== 类型定义导出 ====================
 

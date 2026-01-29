@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import type { IMcpServer } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 /**
  * MCP模态框状态管理Hook

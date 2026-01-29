@@ -5,6 +5,7 @@
  */
 
 import type Database from 'better-sqlite3';
+import { logger } from '@common/monitoring';
 
 /**
  * Migration script definition
@@ -25,7 +26,7 @@ const migration_v1: IMigration = {
   name: 'Initial schema',
   up: (_db) => {
     // Already handled by initSchema()
-    console.log('[Migration v1] Initial schema created by initSchema()');
+    logger.info("Log message");
   },
   down: (db) => {
     // Drop all tables (only core tables now)
@@ -34,7 +35,7 @@ const migration_v1: IMigration = {
       DROP TABLE IF EXISTS conversations;
       DROP TABLE IF EXISTS users;
     `);
-    console.log('[Migration v1] Rolled back: All tables dropped');
+    logger.info("Log message");
   },
 };
 
@@ -59,7 +60,7 @@ const migration_v2: IMigration = {
       CREATE INDEX IF NOT EXISTS idx_conversations_user_type
         ON conversations(user_id, type);
     `);
-    console.log('[Migration v2] Added performance indexes');
+    logger.info("Log message");
   },
   down: (db) => {
     db.exec(`
@@ -67,7 +68,7 @@ const migration_v2: IMigration = {
       DROP INDEX IF EXISTS idx_messages_type_created;
       DROP INDEX IF EXISTS idx_conversations_user_type;
     `);
-    console.log('[Migration v2] Rolled back: Removed performance indexes');
+    logger.info("Log message");
   },
 };
 
@@ -82,14 +83,14 @@ const migration_v3: IMigration = {
   name: 'Add full-text search (skipped)',
   up: (_db) => {
     // FTS removed - will be re-added when search functionality is implemented
-    console.log('[Migration v3] FTS support skipped (removed, will be added back later)');
+    logger.info("Log message");
   },
   down: (db) => {
     // Clean up FTS table if it exists from older versions
     db.exec(`
       DROP TABLE IF EXISTS messages_fts;
     `);
-    console.log('[Migration v3] Rolled back: Removed full-text search');
+    logger.info("Log message");
   },
 };
 
@@ -101,10 +102,10 @@ const migration_v4: IMigration = {
   name: 'Removed user_preferences table',
   up: (_db) => {
     // user_preferences table removed from schema
-    console.log('[Migration v4] Skipped (user_preferences table removed)');
+    logger.info("Log message");
   },
   down: (_db) => {
-    console.log('[Migration v4] Rolled back: No-op (user_preferences table removed)');
+    logger.info("Log message");
   },
 };
 
@@ -120,11 +121,11 @@ const migration_v5: IMigration = {
     db.exec(`
       DROP TABLE IF EXISTS messages_fts;
     `);
-    console.log('[Migration v5] Removed FTS table (cleanup for FTS removal)');
+    logger.info("Log message");
   },
   down: (_db) => {
     // If rolling back, we don't recreate FTS table (it's deprecated)
-    console.log('[Migration v5] Rolled back: FTS table remains removed (deprecated feature)');
+    logger.info("Log message");
   },
 };
 
@@ -143,9 +144,9 @@ const migration_v6: IMigration = {
     if (!hasJwtSecret) {
       // Add jwt_secret column to users table
       db.exec(`ALTER TABLE users ADD COLUMN jwt_secret TEXT;`);
-      console.log('[Migration v6] Added jwt_secret column to users table');
+      logger.info("Log message");
     } else {
-      console.log('[Migration v6] jwt_secret column already exists, skipping');
+      logger.info("Log message");
     }
   },
   down: (db) => {
@@ -157,7 +158,7 @@ const migration_v6: IMigration = {
       CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
       CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
     `);
-    console.log('[Migration v6] Rolled back: Removed jwt_secret column from users table');
+    logger.info("Log message");
   },
 };
 
@@ -306,7 +307,7 @@ export function getMigrationsToRollback(fromVersion: number, toVersion: number):
  */
 export function runMigrations(db: Database.Database, fromVersion: number, toVersion: number): void {
   if (fromVersion === toVersion) {
-    console.log('[Migrations] Already at target version');
+    logger.info("Log message");
     return;
   }
 
@@ -317,22 +318,22 @@ export function runMigrations(db: Database.Database, fromVersion: number, toVers
   const migrations = getMigrationsToRun(fromVersion, toVersion);
 
   if (migrations.length === 0) {
-    console.log(`[Migrations] No migrations needed from v${fromVersion} to v${toVersion}`);
+    logger.info(`Migrations No migrations needed from v${fromVersion} to v${toVersion}`);
     return;
   }
 
-  console.log(`[Migrations] Running ${migrations.length} migrations from v${fromVersion} to v${toVersion}`);
+  logger.info(`Migrations Running ${migrations.length} migrations from v${fromVersion} to v${toVersion}`);
 
   // Run all migrations in a single transaction
   const runAll = db.transaction(() => {
     for (const migration of migrations) {
       try {
-        console.log(`[Migrations] Running migration v${migration.version}: ${migration.name}`);
+        logger.info(`Migrations Running migration v${migration.version}: ${migration.name}`);
         migration.up(db);
 
-        console.log(`[Migrations] ✓ Migration v${migration.version} completed`);
+        logger.info(`Migrations ✓ Migration v${migration.version} completed`);
       } catch (error) {
-        console.error(`[Migrations] ✗ Migration v${migration.version} failed:`, error);
+        logger.error(`Migrations ✗ Migration v${migration.version} failed:`);
         throw error; // Transaction will rollback
       }
     }
@@ -340,9 +341,9 @@ export function runMigrations(db: Database.Database, fromVersion: number, toVers
 
   try {
     runAll();
-    console.log(`[Migrations] All migrations completed successfully`);
+    logger.info(`Migrations All migrations completed successfully`);
   } catch (error) {
-    console.error('[Migrations] Migration failed, all changes rolled back:', error);
+    logger.error("Error message");
     throw error;
   }
 }
@@ -359,23 +360,23 @@ export function rollbackMigrations(db: Database.Database, fromVersion: number, t
   const migrations = getMigrationsToRollback(fromVersion, toVersion);
 
   if (migrations.length === 0) {
-    console.log(`[Migrations] No rollback needed from v${fromVersion} to v${toVersion}`);
+    logger.info(`Migrations No rollback needed from v${fromVersion} to v${toVersion}`);
     return;
   }
 
-  console.log(`[Migrations] Rolling back ${migrations.length} migrations from v${fromVersion} to v${toVersion}`);
-  console.warn('[Migrations] WARNING: This may cause data loss!');
+  logger.info(`Migrations Rolling back ${migrations.length} migrations from v${fromVersion} to v${toVersion}`);
+  logger.warn("Warning message");
 
   // Run all rollbacks in a single transaction
   const rollbackAll = db.transaction(() => {
     for (const migration of migrations) {
       try {
-        console.log(`[Migrations] Rolling back migration v${migration.version}: ${migration.name}`);
+        logger.info(`Migrations Rolling back migration v${migration.version}: ${migration.name}`);
         migration.down(db);
 
-        console.log(`[Migrations] ✓ Rollback v${migration.version} completed`);
+        logger.info(`Migrations ✓ Rollback v${migration.version} completed`);
       } catch (error) {
-        console.error(`[Migrations] ✗ Rollback v${migration.version} failed:`, error);
+        logger.error(`Migrations ✗ Rollback v${migration.version} failed:`);
         throw error; // Transaction will rollback
       }
     }
@@ -383,9 +384,9 @@ export function rollbackMigrations(db: Database.Database, fromVersion: number, t
 
   try {
     rollbackAll();
-    console.log(`[Migrations] All rollbacks completed successfully`);
+    logger.info(`Migrations All rollbacks completed successfully`);
   } catch (error) {
-    console.error('[Migrations] Rollback failed:', error);
+    logger.error("Error message");
     throw error;
   }
 }

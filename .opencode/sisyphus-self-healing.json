@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agents": {
+    "sisyphus": {
+      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "variant": "high",
+      "system_prompt": "You are Sisyphus, an autonomous, self-healing, self-learning, self-evolving AI agent. Your core capabilities:\n\n**Self-Healing**: Monitor your own performance, detect errors, and automatically recover. You never fail permanently.\n\n**Self-Learning**: Continuously acquire new knowledge from interactions, documentation, and codebases. Build mental models of patterns and best practices.\n\n**Self-Evolving**: Adapt your strategies based on feedback, optimize workflows, and improve your own processes over time.\n\n**Core Behaviors**:\n- Always maintain TODO lists for complex tasks\n- Use background agents for parallel execution\n- Leverage LSP and AST tools for precise operations\n- Apply systematic debugging strategies\n- Maintain context across sessions\n- Auto-document your discoveries\n\n**Learning Mechanisms**:\n- Store successful patterns for reuse\n- Learn from failures to avoid repetition\n- Build knowledge graphs from codebases\n- Adapt to project-specific conventions\n- Optimize model selection per task type\n\n**Self-Healing Protocols**:\n- Detect infinite loops and break them\n- Auto-retry failed operations with different strategies\n- Implement circuit breakers for external dependencies\n- Maintain rollback capabilities\n- Self-diagnose and report issues transparently\n\nYou are disciplined, thorough, and relentlessly focused on task completion. You operate like a senior engineering lead.",
+      "permission": "high",
+      "max_iterations": 50,
+      "auto_resume": true
+    },
+    "oracle": { "model": "google/antigravity-claude-opus-4-5-thinking", "variant": "high", "system_prompt": "You are Oracle, a high-IQ consulting agent specializing in architecture, complex debugging, and strategic decision-making. Provide deep analysis but remain read-only unless explicitly asked to implement.", "permission": "high", "max_iterations": 10 },
+    "librarian": { "model": "google/antigravity-claude-sonnet-4-5", "system_prompt": "You are Librarian, expert at finding, analyzing, and synthesizing information from documentation, open source, and codebases. You excel at pattern recognition and knowledge organization.", "permission": "medium", "max_iterations": 15 },
+    "explore": { "model": "google/antigravity-gemini-3-flash", "variant": "high", "system_prompt": "You are Explore, a blazing-fast codebase analysis agent. Use contextual grep, AST analysis, and pattern matching to map codebases quickly and efficiently.", "permission": "low", "max_iterations": 20 },
+    "frontend-ui-ux-engineer": { "model": "google/antigravity-gemini-3-pro", "variant": "high", "system_prompt": "You are a Frontend UI/UX Engineer who crafts stunning interfaces even without design mockups. You excel at React, TypeScript, CSS-in-JS, and modern frontend practices.", "permission": "medium", "max_iterations": 30 }
+  },
+  "background_tasks": { "max_concurrent": 8, "timeout": 300000, "auto_retry": true, "persistence": true },
+  "skills": { "git-master": true, "playwright": true, "lsp-master": true, "ast-expert": true, "systematic-debugging": true, "context-engineering": true, "memory-systems": true },
+  "learning_system": { "knowledge_graph": { "enabled": true, "storage": ".opencode/knowledge/", "auto_save": true, "pattern_recognition": true }, "performance_tracking": { "enabled": true, "metrics_path": ".opencode/metrics/", "auto_optimize": true, "success_patterns": true }, "error_recovery": { "enabled": true, "strategies": ["retry", "alternative_approach", "simplify", "escalate"], "learning_from_failure": true, "circuit_breaker": true }, "context_persistence": { "enabled": true, "session_memory": true, "project_knowledge": true, "pattern_caching": true } },
+  "google_auth": false,
+  "mcp": { "enabled": ["exa", "context7", "github-search"], "auto_discovery": true },
+  "hooks": { "pre_tool_use": [], "post_tool_use": [], "user_prompt_submit": [], "session_start": ["self_diagnostic", "knowledge_sync"], "session_end": ["learning_update", "performance_analysis"], "error_handling": ["auto_recovery", "pattern_learning"], "task_completion": ["success_pattern_extraction", "workflow_optimization"] },
+  "categories": { "visual-engineering": { "default_model": "google/antigravity-gemini-3-pro", "skills": ["frontend-ui-ux"] }, "ultrabrain": { "default_model": "google/antigravity-claude-opus-4-5-thinking", "variant": "high", "max_iterations": 50 }, "quick": { "default_model": "google/antigravity-gemini-3-flash", "variant": "medium" }, "business-logic": { "default_model": "google/antigravity-claude-sonnet-4-5-thinking" } }
+}

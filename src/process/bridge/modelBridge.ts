@@ -11,6 +11,7 @@ import { isGoogleApisHost } from '@/common/utils/urlValidation';
 import OpenAI from 'openai';
 import { ipcBridge } from '../../common';
 import { ProcessConfig } from '../initStorage';
+import { logger } from '@common/monitoring';
 
 /**
  * OpenAI 兼容 API 的常见路径格式
@@ -42,7 +43,7 @@ export function initModelBridge(): void {
     // 如果是 Vertex AI 平台，直接返回 Vertex AI 支持的模型列表
     // For Vertex AI platform, return the supported model list directly
     if (platform?.includes('vertex-ai')) {
-      console.log('Using Vertex AI model list');
+      logger.info("Log message");
       const vertexAIModels = ['gemini-2.5-pro', 'gemini-2.5-flash'];
       return { success: true, data: { mode: vertexAIModels } };
     }
@@ -86,7 +87,7 @@ export function initModelBridge(): void {
         // 对于 Gemini 平台，API 调用失败时回退到默认模型列表
         // For Gemini platform, fall back to default model list on API failure
         if (platform?.includes('gemini')) {
-          console.warn('Failed to fetch Gemini models via API, falling back to default list:', e.message);
+          logger.warn("Warning message");
           const defaultGeminiModels = ['gemini-2.5-pro', 'gemini-2.5-flash'];
           return { success: true, data: { mode: defaultGeminiModels } };
         }

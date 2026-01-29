@@ -11,6 +11,7 @@ import { ToolRegistry } from '@/common/codex/utils';
 import type { ICodexMessageEmitter } from '@/agent/codex/messaging/CodexMessageEmitter';
 import type { IResponseMessage } from '@/common/ipcBridge';
 import { NavigationInterceptor } from '@/common/navigation';
+import { logger } from '@common/monitoring';
 
 export class CodexToolHandlers {
   private cmdBuffers: Map<string, { stdout: string; stderr: string; combined: string }> = new Map();

@@ -12,6 +12,7 @@ import { getFileTypeInfo } from '@/renderer/utils/fileType';
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { WriteFileResult } from '../types';
+import { logger } from '@common/monitoring';
 
 type TurnDiffContent = Extract<CodexToolCallUpdate, { subtype: 'turn_diff' }>;
 

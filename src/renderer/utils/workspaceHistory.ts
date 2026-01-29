@@ -33,6 +33,6 @@ export const updateWorkspaceTime = (workspace: string): void => {
     times[workspace] = Date.now();
     localStorage.setItem(WORKSPACE_UPDATE_TIME_KEY, JSON.stringify(times));
   } catch (error) {
-    console.error('[WorkspaceHistory] Failed to update workspace time:', error);
+    logger.error("Error message");
   }
 };

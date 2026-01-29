@@ -5,6 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 检测并监听主题变化

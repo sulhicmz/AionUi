@@ -11,6 +11,7 @@ import type { TChatConversation } from '@/common/storage';
 import { ConfigStorage } from '@/common/storage';
 import CoworkLogo from '@/renderer/assets/cowork.svg';
 import useSWR from 'swr';
+import { logger } from '@common/monitoring';
 
 export interface PresetAssistantInfo {
   name: string;

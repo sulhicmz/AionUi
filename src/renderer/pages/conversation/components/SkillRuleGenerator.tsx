@@ -8,6 +8,7 @@ import { uuid } from '@/common/utils';
 import type { TMessage } from '@/common/chatLib';
 import type { IDirOrFile } from '@/common/ipcBridge';
 import type { AcpBackendConfig } from '@/types/acpTypes';
+import { logger } from '@common/monitoring';
 
 interface SkillRuleGeneratorProps {
   conversationId: string;
@@ -57,7 +58,7 @@ const LoadRuleModal: React.FC<{
       flatList.sort((a, b) => a.name.localeCompare(b.name));
       setFiles(flatList);
     } catch (error) {
-      console.error('Failed to load files:', error);
+      logger.error("Error message");
       Message.error(t('conversation.skill_generator.load_error', { defaultValue: 'Failed to load files' }));
     } finally {
       setLoading(false);
@@ -90,7 +91,7 @@ Please acknowledge receiving this rule/skill and confirm you will apply it.
       Message.success(t('conversation.skill_generator.rule_loaded', { defaultValue: 'Rule loaded successfully' }));
       onCancel();
     } catch (error) {
-      console.error('Failed to read file:', error);
+      logger.error("Error message");
       Message.error(t('conversation.skill_generator.read_error', { defaultValue: 'Failed to read file' }));
     } finally {
       setLoadingFile(false);
@@ -221,7 +222,7 @@ Requirements:
       setPresetName('');
       Message.success(t('conversation.skill_generator.request_sent', { defaultValue: 'Request sent to agent' }));
     } catch (error) {
-      console.error('Failed to generate skill/rule:', error);
+      logger.error("Error message");
       Message.error(t('conversation.skill_generator.failed', { defaultValue: 'Failed to generate' }));
     } finally {
       setLoading(false);
@@ -243,7 +244,7 @@ Requirements:
       await ipcBridge.acpConversation.refreshCustomAgents.invoke();
       Message.success(t('conversation.skill_generator.preset_registered', { defaultValue: 'Agent preset registered successfully!' }));
     } catch (error) {
-      console.error('Failed to register preset:', error);
+      logger.error("Error message");
     }
   };
 

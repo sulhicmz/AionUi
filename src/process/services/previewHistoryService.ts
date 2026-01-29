@@ -9,6 +9,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import type { PreviewHistoryTarget, PreviewSnapshotInfo } from '@/common/types/preview';
 import { getSystemDir } from '../initStorage';
+import { logger } from '@common/monitoring';
 
 interface StoredSnapshot extends PreviewSnapshotInfo {
   storagePath: string; // 相对 baseDir 的路径 / Path relative to base dir

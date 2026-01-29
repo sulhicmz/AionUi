@@ -21,6 +21,7 @@ import SystemModalContent from './contents/SystemModalContent';
 import ToolsModalContent from './contents/ToolsModalContent';
 import WebuiModalContent from './contents/WebuiModalContent';
 import { SettingsViewModeProvider } from './settingsViewContext';
+import { logger } from '@common/monitoring';
 
 // ==================== 常量定义 / Constants ====================
 

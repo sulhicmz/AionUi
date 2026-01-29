@@ -10,6 +10,7 @@ import { usePreviewToolbarExtras } from '../../context/PreviewToolbarExtrasConte
 import { Button, Message } from '@arco-design/web-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 interface ExcelPreviewProps {
   filePath?: string;

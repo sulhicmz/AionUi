@@ -7,6 +7,7 @@ import { ConfigStorage } from '@/common/storage';
 import type { AcpBackendConfig } from '@/types/acpTypes';
 import { acpConversation } from '@/common/ipcBridge';
 import CustomAcpAgentModal from './CustomAcpAgentModal';
+import { logger } from '@common/monitoring';
 
 interface CustomAcpAgentProps {
   message: ReturnType<typeof import('@arco-design/web-react').Message.useMessage>[0];
@@ -68,13 +69,13 @@ const CustomAcpAgent: React.FC<CustomAcpAgentProps> = ({ message }) => {
           await (ConfigStorage as any).remove('acp.customAgent');
 
           setCustomAgents(migratedAgents);
-          console.log('[CustomAcpAgent] Migrated legacy single agent to new array format');
+          logger.info("Log message");
 
           // 用新数据刷新检测 / Refresh detection with new data
           await refreshAgentDetection();
         }
       } catch (error) {
-        console.error('Failed to load custom agents config:', error);
+        logger.error("Error message");
       }
     };
     void loadConfig();
@@ -105,7 +106,7 @@ const CustomAcpAgent: React.FC<CustomAcpAgentProps> = ({ message }) => {
 
         await refreshAgentDetection();
       } catch (error) {
-        console.error('Failed to save custom agent config:', error);
+        logger.error("Error message");
         message.error(t('settings.customAcpAgentSaveFailed') || 'Failed to save custom agent');
       }
     },
@@ -130,7 +131,7 @@ const CustomAcpAgent: React.FC<CustomAcpAgentProps> = ({ message }) => {
 
       await refreshAgentDetection();
     } catch (error) {
-      console.error('Failed to delete custom agent config:', error);
+      logger.error("Error message");
       message.error(t('settings.customAcpAgentDeleteFailed') || 'Failed to delete custom agent');
     }
   }, [agentToDelete, customAgents, message, t, refreshAgentDetection]);

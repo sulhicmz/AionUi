@@ -7,6 +7,7 @@
 import { uuid } from '@/common/utils';
 import type { ICodexMessageEmitter } from '@/agent/codex/messaging/CodexMessageEmitter';
 import { randomBytes } from 'crypto';
+import { logger } from '@common/monitoring';
 
 export type CodexSessionStatus = 'initializing' | 'connecting' | 'connected' | 'authenticated' | 'session_active' | 'error' | 'disconnected';
 

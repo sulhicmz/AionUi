@@ -9,6 +9,7 @@ import { Down, Up } from '@icon-park/react';
 import classNames from 'classnames';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 // 渐变遮罩常量 Gradient mask constants
 // mask-image 模式：让内容本身淡出，适用于有背景色的场景（如 Alert）

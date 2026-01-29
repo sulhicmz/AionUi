@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import useSWR from 'swr';
 import { ipcBridge } from '../../common';
+import { logger } from '@common/monitoring';
 
 const useConfigModelListWithImage = () => {
   const { data } = useSWR('configModelListWithImage', () => {

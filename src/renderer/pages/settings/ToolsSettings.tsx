@@ -7,6 +7,7 @@
 import React from 'react';
 import ToolsModalContent from '@/renderer/components/SettingsModal/contents/ToolsModalContent';
 import SettingsPageWrapper from './components/SettingsPageWrapper';
+import { logger } from '@common/monitoring';
 
 const ToolsSettings: React.FC = () => {
   return (

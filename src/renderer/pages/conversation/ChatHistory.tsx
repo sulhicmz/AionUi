@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
+import { logger } from '@common/monitoring';
 
 const useTimeline = () => {
   const { t } = useTranslation();
@@ -69,7 +70,7 @@ const ChatHistory: React.FC<{ onSessionClick?: () => void; collapsed?: boolean }
   const handleSelect = (conversation: TChatConversation) => {
     // ipcBridge.conversation.createWithConversation.invoke({ conversation }).then(() => {
     Promise.resolve(navigate(`/conversation/${conversation.id}`)).catch((error) => {
-      console.error('Navigation failed:', error);
+      logger.error("Error message");
     });
     // 点击session后自动隐藏sidebar
     if (onSessionClick) {
@@ -94,7 +95,7 @@ const ChatHistory: React.FC<{ onSessionClick?: () => void; collapsed?: boolean }
           }
         })
         .catch((error) => {
-          console.error('[ChatHistory] Failed to load conversations from database:', error);
+          logger.error("Error message");
           setChatHistory([]);
         });
     };
@@ -110,12 +111,12 @@ const ChatHistory: React.FC<{ onSessionClick?: () => void; collapsed?: boolean }
           // Trigger refresh to reload from database
           emitter.emit('chat.history.refresh');
           void Promise.resolve(navigate('/')).catch((error) => {
-            console.error('Navigation failed:', error);
+            logger.error("Error message");
           });
         }
       })
       .catch((error) => {
-        console.error('Failed to remove conversation:', error);
+        logger.error("Error message");
       });
   };
 
@@ -138,7 +139,7 @@ const ChatHistory: React.FC<{ onSessionClick?: () => void; collapsed?: boolean }
         emitter.emit('chat.history.refresh');
       }
     } catch (error) {
-      console.error('Failed to update conversation name:', error);
+      logger.error("Error message");
     } finally {
       setEditingId(null);
       setEditingName('');

@@ -7,6 +7,7 @@
 // hooks/useColorScheme.ts - Color Scheme Management Hook 配色方案管理
 import { ConfigStorage } from '@/common/storage';
 import { useCallback, useEffect, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 // Supported color schemes 支持的配色方案类型
 export type ColorScheme = 'default';
@@ -24,7 +25,7 @@ const initColorScheme = async () => {
     document.documentElement.setAttribute('data-color-scheme', initialScheme);
     return initialScheme;
   } catch (error) {
-    console.error('Failed to load initial color scheme:', error);
+    logger.error("Error message");
     document.documentElement.setAttribute('data-color-scheme', DEFAULT_COLOR_SCHEME);
     return DEFAULT_COLOR_SCHEME;
   }
@@ -62,7 +63,7 @@ const useColorScheme = (): [ColorScheme, (scheme: ColorScheme) => Promise<void>]
         applyColorScheme(newScheme);
         await ConfigStorage.set('colorScheme', newScheme);
       } catch (error) {
-        console.error('Failed to save color scheme:', error);
+        logger.error("Error message");
         // Revert on error 保存失败时回滚
         setColorSchemeState(colorScheme);
         applyColorScheme(colorScheme);
@@ -82,7 +83,7 @@ const useColorScheme = (): [ColorScheme, (scheme: ColorScheme) => Promise<void>]
           setColorSchemeState(initialScheme);
         })
         .catch((error) => {
-          console.error('Failed to initialize color scheme:', error);
+          logger.error("Error message");
         });
     }
   }, []);

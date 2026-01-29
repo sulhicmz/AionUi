@@ -6,6 +6,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { TAB_OVERFLOW_THRESHOLD } from '../constants';
+import { logger } from '@common/monitoring';
 
 /**
  * Tab 渐变状态

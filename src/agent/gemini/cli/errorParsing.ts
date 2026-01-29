@@ -5,6 +5,7 @@
  */
 
 import { AuthType, DEFAULT_GEMINI_FLASH_MODEL, DEFAULT_GEMINI_MODEL, isApiError, isStructuredError, UserTierId } from '@office-ai/aioncli-core';
+import { logger } from '@common/monitoring';
 
 /**
  * 检查错误是否为 Pro 模型配额超限错误

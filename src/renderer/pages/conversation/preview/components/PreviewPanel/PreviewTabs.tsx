@@ -10,6 +10,7 @@ import { IconShrink } from '@arco-design/web-react/icon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { TabFadeState } from '../../hooks/useTabOverflow';
+import { logger } from '@common/monitoring';
 
 /**
  * Tab 信息

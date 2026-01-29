@@ -7,6 +7,7 @@
 import type { CodexToolCallUpdate } from '@/common/chatLib';
 import { Card, Tag } from '@arco-design/web-react';
 import React from 'react';
+import { logger } from '@common/monitoring';
 
 type GenericUpdate = Extract<CodexToolCallUpdate, { subtype: 'generic' }>;
 

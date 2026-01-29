@@ -23,15 +23,9 @@ function runPostInstall() {
       console.log('CI environment detected, skipping rebuild to use prebuilt binaries');
       console.log('Native modules will be handled by electron-forge during packaging');
     } else {
-      // In local environment, use electron-builder to install dependencies
-      console.log('Local environment, installing app deps');
-      execSync('npx electron-builder install-app-deps', {
-        stdio: 'inherit',
-        env: {
-          ...process.env,
-          npm_config_build_from_source: 'true'
-        }
-      });
+      // In local environment, skip electron-builder since we use Electron Forge
+      console.log('Local environment detected, skipping electron-builder (using Electron Forge)');
+      console.log('Native modules will be handled by electron-forge during packaging');
     }
   } catch (e) {
     console.error('Postinstall failed:', e.message);

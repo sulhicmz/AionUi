@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ipcBridge } from '@/common';
 import { useConversationTabs } from '@/renderer/pages/conversation/context/ConversationTabsContext';
 import { emitter } from '@/renderer/utils/emitter';
+import { logger } from '@common/monitoring';
 
 export const useAutoTitle = () => {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export const useAutoTitle = () => {
           emitter.emit('chat.history.refresh');
         }
       } catch (error) {
-        console.error('Failed to auto-update conversation title:', error);
+        logger.error("Error message");
       }
     },
     [t, updateTabName]

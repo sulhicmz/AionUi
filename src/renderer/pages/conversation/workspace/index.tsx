@@ -30,6 +30,7 @@ import { useWorkspaceTree } from './hooks/useWorkspaceTree';
 import { useWorkspaceDragImport } from './hooks/useWorkspaceDragImport';
 import type { WorkspaceProps } from './types';
 import { extractNodeData, extractNodeKey, findNodeByKey, getTargetFolderPath } from './utils/treeHelpers';
+import { logger } from '@common/monitoring';
 
 const ChangeWorkspaceIcon: React.FC<React.SVGProps<SVGSVGElement>> = ({ className, ...rest }) => {
   const clipPathId = useId();
@@ -235,7 +236,7 @@ const ChatWorkspace: React.FC<WorkspaceProps> = ({ conversation_id, workspace, e
           setSelectedTargetPath(files[0]);
         }
       } catch (error) {
-        console.error('Failed to open directory dialog:', error);
+        logger.error("Error message");
         messageApi.error(t('conversation.workspace.migration.selectFolderError'));
       }
     } else {
@@ -339,7 +340,7 @@ const ChatWorkspace: React.FC<WorkspaceProps> = ({ conversation_id, workspace, e
       emitter.emit('chat.history.refresh');
       messageApi.success(t('conversation.workspace.migration.success'));
     } catch (error) {
-      console.error('Failed to migrate workspace:', error);
+      logger.error("Error message");
       messageApi.error(t('conversation.workspace.migration.error'));
       setMigrationLoading(false);
     }

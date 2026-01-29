@@ -9,6 +9,7 @@ import { CoreToolScheduler } from '@office-ai/aioncli-core';
 import { useCallback, useMemo, useState } from 'react';
 import type { HistoryItemToolGroup, HistoryItemWithoutId, IndividualToolCallDisplay } from './types';
 import { ToolCallStatus } from './types';
+import { logger } from '@common/monitoring';
 
 export type ScheduleFn = (request: ToolCallRequestInfo | ToolCallRequestInfo[], signal: AbortSignal) => void;
 export type MarkToolsAsSubmittedFn = (callIds: string[]) => void;
@@ -136,7 +137,7 @@ function mapCoreStatusToDisplayStatus(coreStatus: CoreStatus): ToolCallStatus {
       return ToolCallStatus.Pending;
     default: {
       const exhaustiveCheck: never = coreStatus;
-      console.warn(`Unknown core status encountered: ${exhaustiveCheck}`);
+      logger.warn(`Unknown core status encountered: ${exhaustiveCheck}`);
       return ToolCallStatus.Error;
     }
   }

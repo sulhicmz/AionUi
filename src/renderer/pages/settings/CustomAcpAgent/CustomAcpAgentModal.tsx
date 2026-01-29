@@ -22,6 +22,7 @@ import GooseLogo from '@/renderer/assets/logos/goose.svg';
 import AuggieLogo from '@/renderer/assets/logos/auggie.svg';
 import KimiLogo from '@/renderer/assets/logos/kimi.svg';
 import OpencodeLogo from '@/renderer/assets/logos/opencode.svg';
+import { logger } from '@common/monitoring';
 
 /**
  * 后端 Logo 映射表，用于在 CLI 卡片中显示对应的图标
@@ -88,7 +89,7 @@ const CustomAcpAgentModal: React.FC<CustomAcpAgentModalProps> = ({ visible, agen
         setDetectedAgents(filteredAgents);
       }
     } catch (error) {
-      console.error('Failed to load detected agents:', error);
+      logger.error("Error message");
     } finally {
       setLoadingAgents(false);
     }

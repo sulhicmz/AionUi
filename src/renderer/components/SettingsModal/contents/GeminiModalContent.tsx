@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { useSettingsViewMode } from '../settingsViewContext';
+import { logger } from '@common/monitoring';
 
 interface GeminiModalContentProps {
   /** 请求关闭设置弹窗 / Request closing the settings modal */
@@ -72,7 +73,7 @@ const GeminiModalContent: React.FC<GeminiModalContentProps> = ({ onRequestClose 
         }
       })
       .catch((error) => {
-        console.warn('Failed to check Google auth status:', error);
+        logger.warn("Warning message");
       })
       .finally(() => {
         setGoogleAccountLoading(false);
@@ -140,7 +141,7 @@ const GeminiModalContent: React.FC<GeminiModalContentProps> = ({ onRequestClose 
         loadGoogleAuthStatus(geminiConfig?.proxy, geminiConfig);
       })
       .catch((error) => {
-        console.error('Failed to load configuration:', error);
+        logger.error("Error message");
       });
   }, []);
 
@@ -176,7 +177,7 @@ const GeminiModalContent: React.FC<GeminiModalContentProps> = ({ onRequestClose 
                                 form.setFieldValue('googleAccount', '');
                               })
                               .catch((error) => {
-                                console.error('Failed to logout from Google:', error);
+                                logger.error("Error message");
                               });
                           }}
                         >
@@ -203,12 +204,12 @@ const GeminiModalContent: React.FC<GeminiModalContentProps> = ({ onRequestClose 
                                 // Login failed, show error message
                                 const errorMsg = result.msg || t('settings.googleLoginFailed', { defaultValue: 'Login failed. Please try again.' });
                                 message.error(errorMsg);
-                                console.error('[GoogleAuth] Login failed:', result.msg);
+                                logger.error("Error message");
                               }
                             })
                             .catch((error) => {
                               message.error(t('settings.googleLoginFailed', { defaultValue: 'Login failed. Please try again.' }));
-                              console.error('Failed to login to Google:', error);
+                              logger.error("Error message");
                             })
                             .finally(() => {
                               setGoogleAccountLoading(false);

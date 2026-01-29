@@ -5,6 +5,7 @@
  */
 
 import React, { createContext, useContext } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * Conversation context interface
@@ -27,7 +28,7 @@ export interface ConversationContextValue {
    * Conversation type
    * 会话类型
    */
-  type: 'gemini' | 'acp' | 'codex';
+  type: 'gemini' | 'acp' | 'codex' | 'opencode';
 }
 
 /**

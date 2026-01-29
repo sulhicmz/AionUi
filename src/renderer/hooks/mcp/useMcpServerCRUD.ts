@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfigStorage } from '@/common/storage';
 import type { IMcpServer } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 /**
  * MCP服务器CRUD操作Hook

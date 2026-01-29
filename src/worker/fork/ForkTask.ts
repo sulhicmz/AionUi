@@ -14,6 +14,7 @@ import { uuid } from '@/renderer/utils/common';
 import type { UtilityProcess } from 'electron';
 import { app, utilityProcess } from 'electron';
 import { Pipe } from './pipe';
+import { logger } from '@common/monitoring';
 
 /**
  * 获取 worker 进程的工作目录
@@ -69,7 +70,7 @@ export class ForkTask<Data> extends Pipe {
     });
     // 接受子进程发送的消息
     fcp.on('message', (e: IForkData) => {
-      // console.log("---------接受来子进程消息>", e);
+      // logger.info("Log message");
       // 接爱子进程消息
       if (e.type === 'complete') {
         fcp.kill();
@@ -84,7 +85,7 @@ export class ForkTask<Data> extends Pipe {
         if (e.pipeId) {
           // 如果存在回调，则将回调信息发送到子进程
           Promise.resolve(deferred.pipe(this.postMessage.bind(this))).catch((error) => {
-            console.error('Failed to pipe message:', error);
+            logger.error("Error message");
           });
         }
         return this.emit(e.type, e.data, deferred);
@@ -104,9 +105,9 @@ export class ForkTask<Data> extends Pipe {
   protected postMessagePromise(type: string, data: any) {
     return new Promise<any>((resolve, reject) => {
       const pipeId = uuid(8);
-      // console.log("---------发送消息>", this.callbackKey(pipeId), type, data);
+      // logger.info("Log message");
       this.once(this.callbackKey(pipeId), (data) => {
-        // console.log("---------子进程消息加调监听>", data);
+        // logger.info("Log message");
         if (data.state === 'fulfilled') {
           resolve(data.data);
         } else {

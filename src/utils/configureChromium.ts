@@ -5,6 +5,7 @@
  */
 
 import { app } from 'electron';
+import { logger } from '@common/monitoring';
 
 // Configure Chromium command-line flags for WebUI and CLI modes
 // 为 WebUI 和 CLI 模式配置 Chromium 命令行参数

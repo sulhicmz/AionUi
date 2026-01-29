@@ -5,6 +5,7 @@
  */
 
 import { CSRF_COOKIE_NAME, CSRF_HEADER_NAME } from '@/webserver/config/constants';
+import { logger } from '@common/monitoring';
 
 // Read cookie by name in browser environment
 // 在浏览器环境中根据名称读取指定 Cookie

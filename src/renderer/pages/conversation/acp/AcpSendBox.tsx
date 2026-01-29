@@ -21,6 +21,7 @@ import HorizontalFileList from '@/renderer/components/HorizontalFileList';
 import { usePreviewContext } from '@/renderer/pages/conversation/preview';
 import { useLatestRef } from '@/renderer/hooks/useLatestRef';
 import { useAutoTitle } from '@/renderer/hooks/useAutoTitle';
+import { logger } from '@common/monitoring';
 
 const useAcpSendBoxDraft = getSendBoxDraftHook('acp', {
   _type: 'acp',
@@ -298,7 +299,7 @@ const AcpSendBox: React.FC<{
           emitter.emit('chat.history.refresh');
         } else {
           // Handle send failure
-          console.error('[ACP-FRONTEND] Failed to send initial message:', result);
+          logger.error("Error message");
           // Create error message in UI
           const errorMessage: TMessage = {
             id: uuid(),
@@ -317,7 +318,7 @@ const AcpSendBox: React.FC<{
           setAiProcessing(false); // Stop loading state on failure
         }
       } catch (error) {
-        console.error('Error sending initial message:', error);
+        logger.error("Error message");
         sessionStorage.removeItem(storageKey);
         sendingInitialMessageRef.current = false; // Reset flag on error
         setAiProcessing(false); // Stop loading state on error
@@ -325,7 +326,7 @@ const AcpSendBox: React.FC<{
     };
 
     sendInitialMessage().catch((error) => {
-      console.error('Failed to send initial message:', error);
+      logger.error("Error message");
     });
   }, [conversation_id, backend, acpStatus]);
 

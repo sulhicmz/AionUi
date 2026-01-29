@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { logger } from '@common/monitoring';
 
 /**
  * 共享的输入法合成事件处理hook

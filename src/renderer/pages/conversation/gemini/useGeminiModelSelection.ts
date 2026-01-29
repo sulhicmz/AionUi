@@ -5,6 +5,7 @@ import type { GeminiModeOption } from '@/renderer/hooks/useModeModeList';
 import { hasSpecificModelCapability } from '@/renderer/utils/modelCapabilities';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
+import { logger } from '@common/monitoring';
 
 export interface GeminiModelSelection {
   currentModel?: TProviderWithModel;

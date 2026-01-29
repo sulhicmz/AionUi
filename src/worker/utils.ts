@@ -6,6 +6,7 @@
 
 import type { Pipe } from './fork/pipe';
 import pipe from './fork/pipe';
+import { logger } from '@common/monitoring';
 
 export const forkTask = (task: (data?: any, pipe?: Pipe) => Promise<any>) => {
   pipe.on('start', (data: any, deferred) => {

@@ -14,6 +14,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { SSEClientTransport } from '@modelcontextprotocol/sdk/client/sse.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
+import { logger } from '@common/monitoring';
 
 /**
  * MCP源类型 - 包括所有ACP后端和AionUi内置
@@ -129,7 +130,7 @@ export abstract class AbstractMcpAgent implements IMcpProtocol {
     const newOperation = currentQueue
       .then(() => operation())
       .catch((error) => {
-        console.warn(`[${this.backend} MCP] ${operationName} failed:`, error);
+        logger.warn(`${this.backend} MCP ${operationName} failed:`);
         // 即使操作失败，也要继续执行队列中的下一个操作
         throw error;
       });
@@ -259,7 +260,7 @@ export abstract class AbstractMcpAgent implements IMcpProtocol {
         try {
           await mcpClient.close();
         } catch (closeError) {
-          console.error('[Stdio] Error closing connection:', closeError);
+          logger.error("Error message");
         }
       }
     }
@@ -347,7 +348,7 @@ export abstract class AbstractMcpAgent implements IMcpProtocol {
         try {
           await mcpClient.close();
         } catch (closeError) {
-          console.error('[SSE] Error closing connection:', closeError);
+          logger.error("Error message");
         }
       }
     }
@@ -493,7 +494,7 @@ export abstract class AbstractMcpAgent implements IMcpProtocol {
         try {
           await mcpClient.close();
         } catch (closeError) {
-          console.error('[StreamableHTTP] Error closing connection:', closeError);
+          logger.error("Error message");
         }
       }
     }

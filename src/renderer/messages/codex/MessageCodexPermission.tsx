@@ -9,6 +9,7 @@ import React from 'react';
 import ExecApprovalDisplay from './PermissionComponent/ExecApprovalDisplay';
 import ApplyPatchApprovalDisplay from './PermissionComponent/ApplyPatchApprovalDisplay';
 import type { CodexPermissionRequest } from '@/common/codex/types';
+import { logger } from '@common/monitoring';
 
 // Type extractions for different permission subtypes
 type ExecApprovalContent = Extract<CodexPermissionRequest, { subtype: 'exec_approval_request' }>;

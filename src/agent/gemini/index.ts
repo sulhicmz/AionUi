@@ -24,6 +24,7 @@ import { getPromptCount, handleCompletedTools, processGeminiStreamEvents, startN
 import { globalToolCallGuard, type StreamConnectionEvent } from './cli/streamResilience';
 import { getGlobalTokenManager } from './cli/oauthTokenManager';
 import fs from 'fs';
+import { logger } from '@common/monitoring';
 
 // Global registry for current agent instance (used by flashFallbackHandler)
 let currentGeminiAgent: GeminiAgent | null = null;
@@ -266,7 +267,7 @@ export class GeminiAgent {
     if (this.enabledSkills && this.enabledSkills.length > 0) {
       const enabledSet = new Set(this.enabledSkills);
       this.config.getSkillManager().filterSkills((skill) => enabledSet.has(skill.name));
-      console.log(`[GeminiAgent] Filtered skills after initialize: ${this.enabledSkills.join(', ')}`);
+      logger.info(`GeminiAgent Filtered skills after initialize: ${this.enabledSkills.join(', ')}`);
     }
 
     // 对于 Google OAuth 认证，清除缓存的 OAuth 客户端以确保使用最新凭证
@@ -397,12 +398,12 @@ export class GeminiAgent {
     // Stream connection event handler
     const onConnectionEvent = (event: StreamConnectionEvent) => {
       if (event.type === 'heartbeat_timeout') {
-        console.warn(`[GeminiAgent] Stream heartbeat timeout at ${new Date(event.lastEventTime).toISOString()}`);
+        logger.warn(`GeminiAgent Stream heartbeat timeout at ${new Date(event.lastEventTime).toISOString()}`);
         if (!heartbeatWarned) {
           heartbeatWarned = true;
         }
       } else if (event.type === 'state_change' && event.state === 'failed') {
-        console.error(`[GeminiAgent] Stream connection failed: ${event.reason}`);
+        logger.error(`GeminiAgent Stream connection failed: ${event.reason}`);
         this.onStreamEvent({
           type: 'error',
           data: `Connection lost: ${event.reason}. Please try again.`,
@@ -430,7 +431,7 @@ export class GeminiAgent {
           invalidStreamDetected = true;
           const eventData = data.data as { message: string; retryable: boolean };
           if (eventData.retryable && retryCount < MAX_INVALID_STREAM_RETRIES && query && !abortController.signal.aborted) {
-            console.warn(`[GeminiAgent] Invalid stream detected, will retry (attempt ${retryCount + 1}/${MAX_INVALID_STREAM_RETRIES})`);
+            logger.warn(`GeminiAgent Invalid stream detected, will retry (attempt ${retryCount + 1}/${MAX_INVALID_STREAM_RETRIES})`);
             // 向用户显示重试提示
             // Show retry hint to user
             this.onStreamEvent({
@@ -453,7 +454,7 @@ export class GeminiAgent {
         // 如果检测到 invalid_stream 且可以重试，执行重试
         // If invalid_stream detected and can retry, perform retry
         if (invalidStreamDetected && retryCount < MAX_INVALID_STREAM_RETRIES && query && !abortController.signal.aborted) {
-          console.log(`[GeminiAgent] Retrying after invalid stream (attempt ${retryCount + 1})`);
+          logger.info(`GeminiAgent Retrying after invalid stream (attempt ${retryCount + 1})`);
 
           // 延迟后重试
           // Delay before retry
@@ -634,10 +635,10 @@ export class GeminiAgent {
         const tokenManager = getGlobalTokenManager(this.authType);
         const isTokenValid = await tokenManager.checkAndRefreshIfNeeded();
         if (!isTokenValid) {
-          console.warn('[GeminiAgent] OAuth token validation failed, proceeding anyway');
+          logger.warn("Warning message");
         }
       } catch (tokenError) {
-        console.warn('[GeminiAgent] OAuth token check error:', tokenError);
+        logger.warn("Warning message");
         // 继续执行，让后续流程处理认证错误
       }
     }

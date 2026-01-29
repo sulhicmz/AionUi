@@ -10,6 +10,7 @@ import type { TFunction } from 'i18next';
 import { ipcBridge } from '@/common';
 import { FileService } from '@/renderer/services/FileService';
 import type { MessageApi } from '../types';
+import { logger } from '@common/monitoring';
 
 interface UseWorkspaceDragImportOptions {
   onFilesDropped: (files: Array<{ path: string; name: string }>) => Promise<void> | void;
@@ -99,7 +100,7 @@ export function useWorkspaceDragImport({ onFilesDropped, messageApi, t }: UseWor
         const kind = metadata.isDirectory ? 'directory' : 'file';
         unique.set(item.path, { path: item.path, name: itemName, kind });
       } catch (error) {
-        console.warn('[WorkspaceDragImport] Failed to inspect dropped path:', item.path, error);
+        logger.warn("Warning message");
         const fallbackName = item.name || getBaseName(item.path);
         unique.set(item.path, { path: item.path, name: fallbackName, kind: 'file' });
       }
@@ -129,7 +130,7 @@ export function useWorkspaceDragImport({ onFilesDropped, messageApi, t }: UseWor
             try {
               filePath = window.electronAPI.getPathForFile(file);
             } catch (err) {
-              console.warn('[WorkspaceDragImport] getPathForFile failed:', err);
+              logger.warn("Warning message");
             }
           }
 
@@ -152,7 +153,7 @@ export function useWorkspaceDragImport({ onFilesDropped, messageApi, t }: UseWor
             const entry = item?.webkitGetAsEntry?.();
             if (entry?.isDirectory) {
               // 目录但没有 path，无法处理
-              console.warn('[WorkspaceDragImport] Directory without path property, cannot process:', entry.name);
+              logger.warn("Warning message");
             } else {
               // 普通文件，需要创建临时文件
               filesWithoutPath.push(file);
@@ -166,7 +167,7 @@ export function useWorkspaceDragImport({ onFilesDropped, messageApi, t }: UseWor
         try {
           tempItems = await createTempItemsFromFiles(filesWithoutPath);
         } catch (error) {
-          console.error('[WorkspaceDragImport] Failed to create temp files:', error);
+          logger.error("Error message");
         }
       }
 
@@ -185,7 +186,7 @@ export function useWorkspaceDragImport({ onFilesDropped, messageApi, t }: UseWor
       try {
         await onFilesDropped(targets.map(({ path, name }) => ({ path, name })));
       } catch (error) {
-        console.error('Failed to import dropped files:', error);
+        logger.error("Error message");
         messageApi.error(
           t('conversation.workspace.dragFailed', {
             defaultValue: 'Failed to import dropped files.',

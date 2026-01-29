@@ -14,6 +14,7 @@
 
 import { BrowserWindow } from 'electron';
 import { ipcBridge } from '@/common';
+import { logger } from '@common/monitoring';
 
 /**
  * 为指定窗口注册最大化状态监听器

@@ -13,6 +13,7 @@ import BetterSqlite3 from 'better-sqlite3';
 import bcrypt from 'bcryptjs';
 import { getDataPath, ensureDirectory } from '@process/utils';
 import path from 'path';
+import { logger } from '@common/monitoring';
 
 // 颜色输出 / Color output
 const colors = {
@@ -26,11 +27,11 @@ const colors = {
 };
 
 const log = {
-  info: (msg: string) => console.log(`${colors.blue}ℹ${colors.reset} ${msg}`),
-  success: (msg: string) => console.log(`${colors.green}✓${colors.reset} ${msg}`),
-  error: (msg: string) => console.log(`${colors.red}✗${colors.reset} ${msg}`),
-  warning: (msg: string) => console.log(`${colors.yellow}⚠${colors.reset} ${msg}`),
-  highlight: (msg: string) => console.log(`${colors.cyan}${colors.bright}${msg}${colors.reset}`),
+  info: (msg: string) => logger.info(`${colors.blue}ℹ${colors.reset} ${msg}`),
+  success: (msg: string) => logger.info(`${colors.green}✓${colors.reset} ${msg}`),
+  error: (msg: string) => logger.info(`${colors.red}✗${colors.reset} ${msg}`),
+  warning: (msg: string) => logger.info(`${colors.yellow}⚠${colors.reset} ${msg}`),
+  highlight: (msg: string) => logger.info(`${colors.cyan}${colors.bright}${msg}${colors.reset}`),
 };
 
 const hashPasswordAsync = (password: string, saltRounds: number): Promise<string> =>
@@ -129,26 +130,26 @@ export async function resetPasswordCLI(username: string): Promise<void> {
     db.prepare('UPDATE users SET jwt_secret = ?, updated_at = ? WHERE id = ?').run(newJwtSecret, now, user.id);
 
     // Display result
-    console.log('');
+    logger.info("Log message");
     log.success('Password reset successfully!');
-    console.log('');
+    logger.info("Log message");
     log.highlight('═══════════════════════════════════════');
     log.highlight(`  Username: ${user.username}`);
     log.highlight(`  New Password: ${newPassword}`);
     log.highlight('═══════════════════════════════════════');
-    console.log('');
+    logger.info("Log message");
     log.warning('⚠ JWT secret has been rotated');
     log.warning('⚠ All previous tokens are now invalid');
-    console.log('');
+    logger.info("Log message");
     log.info('💡 Next steps:');
     log.info('   1. Refresh your browser (Cmd+R or Ctrl+R)');
     log.info('   2. You will be redirected to login page');
     log.info('   3. Login with the new password above');
-    console.log('');
+    logger.info("Log message");
   } catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     log.error(`Error: ${errorMessage}`);
-    console.error(error);
+    logger.error("Error message");
     process.exit(1);
   } finally {
     // Close database connection

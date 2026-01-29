@@ -2,6 +2,7 @@ import { ConfigStorage } from '@/common/storage';
 import AionSelect from '@/renderer/components/base/AionSelect';
 import React, { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
@@ -14,12 +15,12 @@ const LanguageSwitcher: React.FC = () => {
       selectRef.current?.blur?.();
 
       ConfigStorage.set('language', value).catch((error) => {
-        console.error('Failed to save language preference:', error);
+        logger.error("Error message");
       });
 
       const applyLanguage = () => {
         i18n.changeLanguage(value).catch((error) => {
-          console.error('Failed to change language:', error);
+          logger.error("Error message");
         });
       };
 

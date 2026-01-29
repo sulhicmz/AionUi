@@ -10,6 +10,7 @@ import { getFileExtension } from '@/renderer/services/FileService';
 import { ipcBridge } from '@/common';
 import { Image } from '@arco-design/web-react';
 import fileIcon from '@/renderer/assets/file-icon.svg';
+import { logger } from '@common/monitoring';
 
 const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg'];
 
@@ -36,7 +37,7 @@ interface FilePreviewProps {
 const FilePreview: React.FC<FilePreviewProps> = ({ path, onRemove, readonly = false }) => {
   // Defensive check: ensure path is a string
   if (typeof path !== 'string') {
-    console.error('[FilePreview] Invalid path type:', typeof path, path);
+    logger.error("Error message");
     return null;
   }
 
@@ -56,7 +57,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({ path, onRemove, readonly = fa
         setFileSize(formatFileSize(metadata.size));
       })
       .catch((error) => {
-        console.error('[FilePreview] Failed to get file metadata:', { path, error });
+        logger.error("Error message");
       });
 
     // 如果是图片，获取图片的base64
@@ -67,7 +68,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({ path, onRemove, readonly = fa
           setImageUrl(base64);
         })
         .catch((error) => {
-          console.error('[FilePreview] Failed to load image:', { path, error });
+          logger.error("Error message");
         });
     }
   }, [path, isImage]);

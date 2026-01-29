@@ -12,6 +12,7 @@ import useTheme from '../hooks/useTheme';
 import type { ColorScheme } from '../hooks/useColorScheme';
 import useColorScheme from '../hooks/useColorScheme';
 import useFontScale from '../hooks/useFontScale';
+import { logger } from '@common/monitoring';
 
 /**
  * Theme context value interface 主题上下文值接口

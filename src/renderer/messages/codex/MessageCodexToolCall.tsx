@@ -12,6 +12,7 @@ import PatchDisplay from './ToolCallComponent/PatchDisplay';
 import McpToolDisplay from './ToolCallComponent/McpToolDisplay';
 import TurnDiffDisplay from './ToolCallComponent/TurnDiffDisplay';
 import GenericDisplay from './ToolCallComponent/GenericDisplay';
+import { logger } from '@common/monitoring';
 
 type ExecCommandContent = Extract<CodexToolCallUpdate, { subtype: 'exec_command_begin' | 'exec_command_output_delta' | 'exec_command_end' }>;
 type WebSearchContent = Extract<CodexToolCallUpdate, { subtype: 'web_search_begin' | 'web_search_end' }>;

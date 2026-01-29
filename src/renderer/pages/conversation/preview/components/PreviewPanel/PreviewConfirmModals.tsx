@@ -7,6 +7,7 @@
 import { Modal } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 /**
  * 关闭 Tab 确认状态

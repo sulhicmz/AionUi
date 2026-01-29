@@ -6,3 +6,4 @@
 
 export * as ipcBridge from './ipcBridge';
 export { conversation } from './ipcBridge';
+export * from './opencode';

@@ -10,6 +10,7 @@ import type { ChildProcess, SpawnOptions } from 'child_process';
 import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { logger } from '@common/monitoring';
 
 interface PendingRequest<T = unknown> {
   resolve: (value: T) => void;
@@ -133,7 +134,7 @@ export class AcpConnection {
   private async connectClaude(workingDir: string = process.cwd()): Promise<void> {
     // Use NPX to run Claude Code ACP bridge directly from npm registry
     // This eliminates dependency packaging issues and simplifies deployment
-    console.error('[ACP] Using NPX approach for Claude ACP bridge');
+    logger.error("Error message");
 
     // Clean environment
     const cleanEnv = { ...process.env };
@@ -160,7 +161,7 @@ export class AcpConnection {
     let spawnError: Error | null = null;
 
     this.child.stderr?.on('data', (data) => {
-      console.error(`[ACP ${backend} STDERR]:`, data.toString());
+      logger.error(`ACP ${backend} STDERR:`);
     });
 
     this.child.on('error', (error) => {
@@ -168,7 +169,7 @@ export class AcpConnection {
     });
 
     this.child.on('exit', (code, signal) => {
-      console.error(`[ACP ${backend}] Process exited with code: ${code}, signal: ${signal}`);
+      logger.error(`ACP ${backend} Process exited with code: ${code}, signal: ${signal}`);
       if (code !== 0) {
         if (!spawnError) {
           spawnError = new Error(`${backend} ACP process failed with exit code: ${code}`);
@@ -201,7 +202,7 @@ export class AcpConnection {
         if (line.trim()) {
           try {
             const message = JSON.parse(line) as AcpMessage;
-            console.log('AcpMessage==>', JSON.stringify(message));
+            logger.info("Log message");
             this.handleMessage(message);
           } catch (error) {
             // Ignore parsing errors for non-JSON messages
@@ -468,7 +469,7 @@ export class AcpConnection {
       };
     } catch (error) {
       // 处理超时或其他错误情况，默认拒绝
-      console.error('Permission request failed:', error);
+      logger.error("Error message");
       return {
         outcome: {
           outcome: 'rejected',
@@ -512,7 +513,7 @@ export class AcpConnection {
         };
         ipcBridge.fileStream.contentUpdate.emit(eventData);
       } catch (emitError) {
-        console.error('[AcpConnection] ❌ Failed to emit file stream update:', emitError);
+        logger.error("Error message");
       }
 
       return null;
@@ -587,7 +588,7 @@ export class AcpConnection {
         return relative.length === 0 ? defaultPath : relative;
       }
     } catch (error) {
-      console.warn('[ACP] Failed to normalize cwd for agent, using default "."', error);
+      logger.warn("Warning message");
     }
 
     return defaultPath;

@@ -16,6 +16,7 @@ import remarkGfm from 'remark-gfm';
 import SelectionToolbar from '../renderers/SelectionToolbar';
 import { useTranslation } from 'react-i18next';
 import { extractContentFromDiff } from '@/renderer/utils/diffUtils';
+import { logger } from '@common/monitoring';
 
 interface DiffPreviewProps {
   content: string; // Diff 内容 / Diff content

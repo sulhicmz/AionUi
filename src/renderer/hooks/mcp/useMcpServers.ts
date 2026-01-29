@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ConfigStorage } from '@/common/storage';
 import type { IMcpServer } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 /**
  * MCP服务器状态管理Hook
@@ -18,7 +19,7 @@ export const useMcpServers = () => {
         }
       })
       .catch((error) => {
-        console.error('[useMcpServers] Failed to load MCP config:', error);
+        logger.error("Error message");
       });
   }, []);
 
@@ -34,7 +35,7 @@ export const useMcpServers = () => {
           ConfigStorage.set('mcp.config', newServers)
             .then(() => resolve())
             .catch((error) => {
-              console.error('Failed to save MCP servers:', error);
+              logger.error("Error message");
               reject(error);
             });
         });

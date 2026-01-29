@@ -8,6 +8,7 @@ import { ipcBridge } from '@/common';
 import { Button } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { logger } from '@common/monitoring';
 
 interface PPTPreviewProps {
   /**

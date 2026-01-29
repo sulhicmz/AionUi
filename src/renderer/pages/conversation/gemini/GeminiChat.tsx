@@ -15,6 +15,7 @@ import LocalImageView from '../../../components/LocalImageView';
 import ConversationChatConfirm from '../components/ConversationChatConfirm';
 import GeminiSendBox from './GeminiSendBox';
 import type { GeminiModelSelection } from './useGeminiModelSelection';
+import { logger } from '@common/monitoring';
 
 // GeminiChat 接收共享的模型选择状态，避免组件内重复管理
 // GeminiChat consumes shared model selection state to avoid duplicate logic

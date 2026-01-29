@@ -6,6 +6,7 @@
 
 import { ipcBridge } from '@/common';
 import { useCallback, useEffect, useState } from 'react';
+import { logger } from '@common/monitoring';
 
 const UI_SCALE_DEFAULT = 1;
 const UI_SCALE_MIN = 0.8;
@@ -36,7 +37,7 @@ const useFontScale = (): [number, (scale: number) => Promise<void>] => {
         setFontScaleState(clampFontScale(currentFactor));
       }
     } catch (error) {
-      console.error('Failed to fetch zoom factor:', error);
+      logger.error("Error message");
     }
   }, []);
 
@@ -55,7 +56,7 @@ const useFontScale = (): [number, (scale: number) => Promise<void>] => {
           setFontScaleState(clampFontScale(updatedFactor));
         }
       } catch (error) {
-        console.error('Failed to set zoom factor:', error);
+        logger.error("Error message");
         void fetchZoomFactor();
       }
     },

@@ -25,6 +25,7 @@ import { initShellBridge } from './shellBridge';
 import { initUpdateBridge } from './updateBridge';
 import { initWebuiBridge } from './webuiBridge';
 import { initWindowControlsBridge } from './windowControlsBridge';
+import { logger } from '@common/monitoring';
 
 /**
  * 初始化所有IPC桥接模块
@@ -60,7 +61,7 @@ export async function initializeAcpDetector(): Promise<void> {
   try {
     await acpDetector.initialize();
   } catch (error) {
-    console.error('[ACP] Failed to initialize detector:', error);
+    logger.error("Error message");
   }
 }
 

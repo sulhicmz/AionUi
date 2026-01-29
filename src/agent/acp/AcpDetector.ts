@@ -8,6 +8,7 @@ import { execSync } from 'child_process';
 import type { AcpBackendAll, PresetAgentType } from '@/types/acpTypes';
 import { POTENTIAL_ACP_CLIS } from '@/types/acpTypes';
 import { ProcessConfig } from '@/process/initStorage';
+import { logger } from '@common/monitoring';
 
 interface DetectedAgent {
   backend: AcpBackendAll;
@@ -62,7 +63,7 @@ class AcpDetector {
         // 未配置自定义代理 - 这是正常情况 / No custom agents configured - this is normal
         return;
       }
-      console.warn('[AcpDetector] Unexpected error loading custom agents:', error);
+      logger.warn("Warning message");
     }
   }
 
@@ -72,7 +73,7 @@ class AcpDetector {
   async initialize(): Promise<void> {
     if (this.isDetected) return;
 
-    console.log('[ACP] Starting agent detection...');
+    logger.info("Log message");
     const startTime = Date.now();
 
     const isWindows = process.platform === 'win32';
@@ -154,7 +155,7 @@ class AcpDetector {
     this.isDetected = true;
 
     const elapsed = Date.now() - startTime;
-    console.log(`[ACP] Detection completed in ${elapsed}ms, found ${detected.length} agents`);
+    logger.info(`ACP Detection completed in ${elapsed}ms, found ${detected.length} agents`);
   }
 
   /**

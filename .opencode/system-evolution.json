@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "task_manager": { "max_concurrent": 8, "timeout": 600000, "auto_retry": true, "max_retries": 3, "learning_enabled": true, "priority_queue": true, "resource_monitoring": true },
+  "evolution": { "cycle_interval": 86400000, "performance_tracking": true, "pattern_analysis": true, "auto_optimization": true, "knowledge_retention": true },
+  "self_healing": { "error_threshold": 3, "recovery_timeout": 30000, "fallback_strategies": true, "learning_from_failures": true, "auto_recovery": true },
+  "self_learning": { "pattern_recognition": true, "knowledge_retention": true, "performance_tracking": true, "adaptation_rate": 0.05, "learning_windows": ["daily", "weekly", "monthly"] },
+  "self_evolving": { "behavior_adaptation": true, "strategy_optimization": true, "continuous_improvement": true, "evolution_rate": 0.05, "mutation_rate": 0.01 },
+  "diagnostics": { "health_checks": { "interval": 300000, "components": ["mcp_servers", "agents", "skills", "background_tasks"] }, "performance_metrics": { "track_task_completion": true, "track_agent_efficiency": true, "track_error_rates": true, "track_learning_progress": true } }
+}

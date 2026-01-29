@@ -10,6 +10,7 @@ import bcrypt from 'bcryptjs';
 import type { AuthUser } from '../repository/UserRepository';
 import { UserRepository } from '../repository/UserRepository';
 import { AUTH_CONFIG } from '../../config/constants';
+import { logger } from '@common/monitoring';
 
 interface TokenPayload {
   userId: string;
@@ -179,11 +180,11 @@ export class AuthService {
       }
 
       // Fallback: 如果 admin 用户不存在(不应该发生)
-      console.warn('[AuthService] Admin user not found, using temporary secret');
+      logger.warn("Warning message");
       this.jwtSecret = this.generateSecretKey();
       return this.jwtSecret;
     } catch (error) {
-      console.error('Failed to get/save JWT secret:', error);
+      logger.error("Error message");
       this.jwtSecret = this.generateSecretKey();
       return this.jwtSecret;
     }
@@ -197,7 +198,7 @@ export class AuthService {
     try {
       const adminUser = UserRepository.findByUsername(AUTH_CONFIG.DEFAULT_USER.USERNAME);
       if (!adminUser) {
-        console.warn('[AuthService] Admin user not found, cannot invalidate tokens');
+        logger.warn("Warning message");
         return;
       }
 
@@ -205,7 +206,7 @@ export class AuthService {
       UserRepository.updateJwtSecret(adminUser.id, newSecret);
       this.jwtSecret = newSecret;
     } catch (error) {
-      console.error('Failed to invalidate tokens:', error);
+      logger.error("Error message");
     }
   }
 
@@ -279,7 +280,7 @@ export class AuthService {
       if (error instanceof jwt.TokenExpiredError || error instanceof jwt.JsonWebTokenError || error instanceof jwt.NotBeforeError) {
         return null;
       }
-      console.error('Token verification failed:', error);
+      logger.error("Error message");
       return null;
     }
   }
@@ -310,7 +311,7 @@ export class AuthService {
         userId: this.normalizeUserId(decoded.userId),
       };
     } catch (error) {
-      console.error('WebSocket token verification failed:', error);
+      logger.error("Error message");
       return null;
     }
   }

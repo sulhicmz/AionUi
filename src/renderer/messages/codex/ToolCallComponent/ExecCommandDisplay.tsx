@@ -9,6 +9,7 @@ import { Tag } from '@arco-design/web-react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import BaseToolCallDisplay from './BaseToolCallDisplay';
+import { logger } from '@common/monitoring';
 
 type ExecCommandUpdate = Extract<CodexToolCallUpdate, { subtype: 'exec_command_begin' | 'exec_command_output_delta' | 'exec_command_end' }>;
 

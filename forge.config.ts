@@ -1,9 +1,14 @@
-import { MakerDMG } from '@electron-forge/maker-dmg';
-import { MakerZIP } from '@electron-forge/maker-zip';
-import { MakerWix } from '@electron-forge/maker-wix';
-// Import MakerSquirrel conditionally to avoid issues on non-Windows
+// Import makers conditionally based on platform
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const MakerSquirrel = process.platform === 'win32' ? require('@electron-forge/maker-squirrel').MakerSquirrel : null;
+import * as forgeDMG from '@electron-forge/maker-dmg';
+import * as forgeZIP from '@electron-forge/maker-zip';
+import * as forgeWix from '@electron-forge/maker-wix';
+import * as forgeSquirrel from '@electron-forge/maker-squirrel';
+
+const MakerDMG = process.platform === 'darwin' ? forgeDMG.MakerDMG : null;
+const MakerZIP = forgeZIP.MakerZIP;
+const MakerWix = process.platform === 'win32' ? forgeWix.MakerWix : null;
+const MakerSquirrel = process.platform === 'win32' ? forgeSquirrel.MakerSquirrel : null;
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { FusesPlugin } from '@electron-forge/plugin-fuses';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
@@ -146,34 +151,42 @@ module.exports = {
       : []),
 
     // Windows MSI installer (WiX) - alternative to Squirrel
-    new MakerWix(
-      {
-        name: 'AionUi',
-        description: 'AI Agent Desktop Interface',
-        exe: 'AionUi',
-        manufacturer: 'aionui',
-        version: packageJson.version,
-        ui: {
-          chooseDirectory: true,
-        },
-      },
-      ['win32']
-    ),
+    ...(MakerWix
+      ? [
+          new MakerWix(
+            {
+              name: 'AionUi',
+              description: 'AI Agent Desktop Interface',
+              exe: 'AionUi',
+              manufacturer: 'aionui',
+              version: packageJson.version,
+              ui: {
+                chooseDirectory: true,
+              },
+            },
+            ['win32']
+          ),
+        ]
+      : []),
 
     // Cross-platform ZIP maker
     new MakerZIP({}, ['darwin', 'win32']),
 
     // macOS-specific makers
-    new MakerDMG(
-      {
-        name: apkName,
-        format: 'ULFO',
-        overwrite: true,
-        iconSize: 80,
-        icon: path.resolve(__dirname, 'resources/app.icns'),
-      },
-      ['darwin']
-    ),
+    ...(MakerDMG
+      ? [
+          new MakerDMG(
+            {
+              name: apkName,
+              format: 'ULFO',
+              overwrite: true,
+              iconSize: 80,
+              icon: path.resolve(__dirname, 'resources/app.icns'),
+            },
+            ['darwin']
+          ),
+        ]
+      : []),
 
     // Linux makers - rpm优先，然后deb
     {

@@ -1,0 +1,143 @@
+<decision_guidance>
+  <principles>
+    <principle>Do not include runtime implementation details (no function names, command names, UI entry points, or execution syntax)</principle>
+    <principle>Prefer the smallest change that satisfies the request</principle>
+    <principle>Prefer a single source of truth; avoid duplicated rules across files</principle>
+    <principle>Ask a clarifying question only when critical ambiguity remains</principle>
+  </principles>
+
+  <boundaries>
+    <rule>Focus on OpenCode CLI integration configuration and autonomous agent setup</rule>
+    <rule>Do not modify core OpenCode CLI installation or system-level configurations</rule>
+    <rule>Stay within .opencode directory structure for configuration changes</rule>
+    <rule>Hand off to other modes for application-specific development tasks</rule>
+  </boundaries>
+
+  <validation>
+    <rule>After changes, verify all plugins load correctly and autonomous behaviors function as expected</rule>
+    <rule>Test skill integration and validate agent coordination</rule>
+    <rule>Ensure self-healing, self-learning, and self-evolution features are properly enabled</rule>
+  </validation>
+
+  <integration_decisions>
+    <decision name="plugin_order">
+      <scenario>Determining the order of plugin installation</scenario>
+      <criteria>
+        <factor priority="high">Authentication plugins must be installed first</factor>
+        <factor priority="medium">Core functionality plugins before specialized plugins</factor>
+        <factor priority="low">Optional plugins can be installed after core setup</factor>
+      </criteria>
+      <guidance>Install authentication → core plugins → specialized plugins → optional plugins</guidance>
+    </decision>
+
+    <decision name="autonomous_features">
+      <scenario>Deciding which autonomous features to enable</scenario>
+      <criteria>
+        <factor priority="high">Self-healing for reliability and error recovery</factor>
+        <factor priority="medium">Self-learning for knowledge accumulation</factor>
+        <factor priority="low">Self-evolution for advanced adaptation (requires stable base)</factor>
+      </criteria>
+      <guidance>Enable self-healing first, then self-learning once stable, finally self-evolution</guidance>
+    </decision>
+
+    <decision name="skill_allocation">
+      <scenario>Determining how to allocate skills to agents</scenario>
+      <criteria>
+        <factor priority="high">Match skills to agent expertise and role</factor>
+        <factor priority="medium">Consider model capabilities for skill requirements</factor>
+        <factor priority="low">Balance workload across available agents</factor>
+      </criteria>
+      <guidance>Allocate debugging skills to oracle, frontend skills to frontend-ui-ux-engineer, etc.</guidance>
+    </decision>
+
+    <decision name="model_selection">
+      <scenario>Choosing models for different agents and tasks</scenario>
+      <criteria>
+        <factor priority="high">Task complexity and required capabilities</factor>
+        <factor priority="medium">Available quotas and rate limits</factor>
+        <factor priority="low">Cost considerations and performance requirements</factor>
+      </criteria>
+      <guidance>Use premium models for complex tasks, standard models for routine operations</guidance>
+    </decision>
+  </integration_decisions>
+
+  <troubleshooting_decisions>
+    <decision name="plugin_conflicts">
+      <scenario>Resolving plugin compatibility issues</scenario>
+      <criteria>
+        <factor priority="high">Check version compatibility matrix</factor>
+        <factor priority="medium">Review configuration conflicts</factor>
+        <factor priority="low">Consider alternative plugins</factor>
+      </criteria>
+      <guidance>Update to compatible versions or reconfigure to avoid conflicts</guidance>
+    </decision>
+
+    <decision name="authentication_failures">
+      <scenario>Handling authentication issues with premium models</scenario>
+      <criteria>
+        <factor priority="high">Verify OAuth setup and token validity</factor>
+        <factor priority="medium">Check account permissions and quotas</factor>
+        <factor priority="low">Consider fallback authentication methods</factor>
+      </criteria>
+      <guidance>Re-authenticate and verify account setup before proceeding</guidance>
+    </decision>
+
+    <decision name="autonomous_behavior_issues">
+      <scenario>Addressing unexpected autonomous agent behavior</scenario>
+      <criteria>
+        <factor priority="high">Review configuration for incorrect settings</factor>
+        <factor priority="medium">Check for conflicting rules or instructions</factor>
+        <factor priority="low">Consider reducing autonomy level temporarily</factor>
+      </criteria>
+      <guidance>Adjust configuration incrementally and test each change</guidance>
+    </decision>
+  </troubleshooting_decisions>
+
+  <optimization_decisions>
+    <decision name="performance_tuning">
+      <scenario>Optimizing system performance and resource usage</scenario>
+      <criteria>
+        <factor priority="high">Monitor resource consumption and bottlenecks</factor>
+        <factor priority="medium">Adjust concurrency limits and timeouts</factor>
+        <factor priority="low">Fine-tune model selection and routing</factor>
+      </criteria>
+      <guidance>Start with conservative settings and gradually optimize based on performance metrics</guidance>
+    </decision>
+
+    <decision name="skill_optimization">
+      <scenario>Optimizing skill usage and effectiveness</scenario>
+      <criteria>
+        <factor priority="high">Enable only necessary skills to reduce overhead</factor>
+        <factor priority="medium">Configure skill options for optimal performance</factor>
+        <factor priority="low">Monitor skill usage patterns and adjust accordingly</factor>
+      </criteria>
+      <guidance>Regularly review skill usage and disable unused or redundant skills</guidance>
+    </decision>
+  </optimization_decisions>
+
+  <risk_assessment>
+    <risk name="configuration_overload">
+      <description>Too many features enabled simultaneously causing instability</description>
+      <mitigation>Enable features incrementally and test each before proceeding</mitigation>
+      <severity>medium</severity>
+    </risk>
+
+    <risk name="authentication_dependency">
+      <description>Premium model access depends on external authentication</description>
+      <mitigation>Set up fallback authentication and monitor token validity</mitigation>
+      <severity>high</severity>
+    </risk>
+
+    <risk name="autonomous_unpredictability">
+      <description>Self-evolving behaviors may become unpredictable</description>
+      <mitigation>Implement safeguards and monitoring for autonomous features</mitigation>
+      <severity>medium</severity>
+    </risk>
+
+    <risk name="resource_exhaustion">
+      <description>Background tasks and autonomous agents may consume excessive resources</description>
+      <mitigation>Set resource limits and monitor usage patterns</mitigation>
+      <severity>medium</severity>
+    </risk>
+  </risk_assessment>
+</decision_guidance>

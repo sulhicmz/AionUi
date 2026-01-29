@@ -9,6 +9,7 @@ import type { GeminiClient, Config, ToolResult, ToolInvocation, ToolLocation, To
 import { BaseDeclarativeTool, BaseToolInvocation, Kind, getErrorMessage, ToolErrorType, DEFAULT_GEMINI_FLASH_MODEL } from '@office-ai/aioncli-core';
 import { getResponseText } from './utils';
 import { convert } from 'html-to-text';
+import { logger } from '@common/monitoring';
 
 const URL_FETCH_TIMEOUT_MS = 10000;
 const MAX_CONTENT_LENGTH = 100000;

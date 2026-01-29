@@ -3,9 +3,11 @@ import { Spin } from '@arco-design/web-react';
 import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
+import { ConversationErrorBoundary } from '@/renderer/components/ErrorBoundary';
 import ChatConversation from './ChatConversation';
 import { usePreviewContext } from '@/renderer/pages/conversation/preview';
 import { useConversationTabs } from './context/ConversationTabsContext';
+import { logger } from '@common/monitoring';
 
 const ChatConversationIndex: React.FC = () => {
   const { id } = useParams();
@@ -38,7 +40,11 @@ const ChatConversationIndex: React.FC = () => {
   }, [data, openTab]);
 
   if (isLoading) return <Spin loading></Spin>;
-  return <ChatConversation conversation={data}></ChatConversation>;
+  return (
+    <ConversationErrorBoundary conversationId={id}>
+      <ChatConversation conversation={data}></ChatConversation>
+    </ConversationErrorBoundary>
+  );
 };
 
 export default ChatConversationIndex;

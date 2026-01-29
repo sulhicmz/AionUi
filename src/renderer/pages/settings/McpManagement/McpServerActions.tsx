@@ -3,6 +3,7 @@ import { DeleteFour, SettingOne, Write } from '@icon-park/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import type { IMcpServer } from '@/common/storage';
+import { logger } from '@common/monitoring';
 
 interface McpServerActionsProps {
   server: IMcpServer;

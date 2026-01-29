@@ -8,6 +8,7 @@ import type { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../service/AuthService';
 import { createAuthMiddleware } from './TokenMiddleware';
 import { SECURITY_CONFIG } from '../../config/constants';
+import { logger } from '@common/monitoring';
 
 // Express Request type extension is defined in src/types/express.d.ts
 // Express Request 类型扩展定义在 src/types/express.d.ts
@@ -83,13 +84,13 @@ export class AuthMiddleware {
     const start = Date.now();
     const ip = req.ip || req.connection.remoteAddress || 'unknown';
 
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${ip}`);
+    logger.info(`${new Date().toISOString()} ${req.method} ${req.url} - ${ip}`);
 
     // 记录响应时间
     // Log response time
     res.on('finish', () => {
       const duration = Date.now() - start;
-      console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} - ${res.statusCode} - ${duration}ms`);
+      logger.info(`${new Date().toISOString()} ${req.method} ${req.url} - ${res.statusCode} - ${duration}ms`);
     });
 
     next();

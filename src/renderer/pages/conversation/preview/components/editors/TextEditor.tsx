@@ -7,6 +7,7 @@
 import { useThemeContext } from '@/renderer/context/ThemeContext';
 import CodeMirror from '@uiw/react-codemirror';
 import React, { useCallback, useMemo } from 'react';
+import { logger } from '@common/monitoring';
 
 interface TextEditorProps {
   value: string; // 编辑器内容 / Editor content
